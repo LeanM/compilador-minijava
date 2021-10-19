@@ -9,7 +9,7 @@ dynamic void met1(int a, int b){}
 dynamic int met2(){}
 
 }
-class B extends Fa {
+class B extends F {
 //atributos
 public int texto;
 public char caracter;
@@ -22,4 +22,3 @@ dynamic int met1(int a){}
 class C extends B {
 static void main(){}
 }
-

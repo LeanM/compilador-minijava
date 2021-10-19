@@ -16,7 +16,7 @@ public abstract class Tipo {
         return token_tipo.get_lexema();
     }
     public abstract boolean esPrimitivo();
-    public abstract boolean es_de_tipo(Tipo tipo);
+    public abstract boolean es_de_tipo(Tipo tipo) throws ExcepcionSemantica;
     public boolean mismo_tipo_exacto(Tipo tipo_a_comparar){
         return tipo_a_comparar.getNombre().equals(this.getNombre());
     }

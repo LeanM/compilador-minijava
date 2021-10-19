@@ -22,4 +22,3 @@ dynamic int met1(int a){}
 class C extends B {
 static void main(){}
 }
-

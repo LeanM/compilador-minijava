@@ -27,6 +27,7 @@ public class EntradaClase_Standar extends EntradaClase{
         if(this.clase_super == null)
             throw new ExcepcionSemantica(token_clase,"Error Semantico en linea "+ token_clase.get_nro_linea() +": La clase "+this.getNombre()+" no hereda de ninguna clase.");
 
+        herenciaCircular();
 
         if(lista_constructores.isEmpty()) {
             //agregar constructor predeterminado
@@ -58,14 +59,16 @@ public class EntradaClase_Standar extends EntradaClase{
             throw new ExcepcionSemantica(token_clase,"Error Semantico en linea "+token_clase.get_nro_linea() +": La clase "+token_clase.get_lexema()+" posee herencia circular.");
     }
 
-    protected void get_lista_ancestros(LinkedList<String> jerarquia_ancestros) {
+    protected void get_lista_ancestros(LinkedList<String> jerarquia_ancestros) throws ExcepcionSemantica {
         String ancestro = this.clase_super.get_lexema();
-        if(!jerarquia_ancestros.contains(ancestro)){
-            jerarquia_ancestros.add(ancestro);
-            TablaSimbolos.getInstance().get_entrada_clase(clase_super.get_lexema()).get_lista_ancestros(jerarquia_ancestros);
-        }
-        else
-            jerarquia_ancestros.add(ancestro);
+        if (TablaSimbolos.getInstance().clase_esta_declarada(ancestro)) {
+            if (!jerarquia_ancestros.contains(ancestro)) {
+                jerarquia_ancestros.add(ancestro);
+                TablaSimbolos.getInstance().get_entrada_clase(clase_super.get_lexema()).get_lista_ancestros(jerarquia_ancestros);
+            } else
+                jerarquia_ancestros.add(ancestro);
 
+        }
+        else throw new ExcepcionSemantica(clase_super,"Error Semantico en linea "+ clase_super.get_nro_linea() +": La clase "+this.getNombre()+" hereda de una clase "+ancestro+" que no esta declarada.");
     }
 }

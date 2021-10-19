@@ -108,5 +108,5 @@ public abstract class EntradaClase {
     public abstract void setClaseSuper(Token claseSuper);
     public abstract Token getClaseSuper();
     public abstract void esta_bien_declarada() throws ExcepcionSemantica;
-    protected abstract void get_lista_ancestros(LinkedList<String> jerarquia_ancestros);
+    protected abstract void get_lista_ancestros(LinkedList<String> jerarquia_ancestros) throws ExcepcionSemantica;
 }

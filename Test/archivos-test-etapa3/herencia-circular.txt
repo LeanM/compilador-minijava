@@ -1,4 +1,4 @@
-class Fa{
+class Fa extends C{
 //atributos
 public String texto;
 public int numero;
@@ -22,4 +22,3 @@ dynamic int met1(int a){}
 class C extends B {
 static void main(){}
 }
-

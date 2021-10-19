@@ -17,7 +17,7 @@ public class EntradaParametro {
     }
     public Token get_token_parametro(){ return token_parametro;}
     public Tipo get_tipo(){return tipo_parametro;};
-    public boolean son_iguales(EntradaParametro param_a_comparar) {
+    public boolean son_iguales(EntradaParametro param_a_comparar) throws ExcepcionSemantica {
         return this.tipo_parametro.es_de_tipo(param_a_comparar.get_tipo());
     }
 

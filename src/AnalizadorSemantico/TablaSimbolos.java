@@ -66,23 +66,10 @@ public class TablaSimbolos {
         try {
             boolean existe_main = false;
             EntradaClase entradaClase;
-            Token clase_super;
             Enumeration<EntradaClase> enum_clases = tabla_clases.elements();
-            //Verifico que todas las clases hereden de una clase que esta declarada
-            while (enum_clases.hasMoreElements()){
-                entradaClase = enum_clases.nextElement();
-                clase_super = entradaClase.getClaseSuper();
-                if (!tabla_clases.containsKey(entradaClase.getClaseSuper().get_lexema()))
-                    throw new ExcepcionSemantica(clase_super,"Error Semantico en linea "+ clase_super.get_nro_linea() +": La clase "+clase_super.get_lexema()+" no esta declarada.");
-            }
-            //Verifico que en ninguna clase haya herencia circular MOVER ESTO A EL CHEQUEO DE LA CLASE
-            enum_clases = tabla_clases.elements();
-            while (enum_clases.hasMoreElements()){
-                enum_clases.nextElement().herenciaCircular();
-            }
+
             //Verifico para cada clase si esta bien declarada y consolido metodos y atributos
             //Tambien verifico que exista un y solo un main entre todas las clases del sistema
-            enum_clases = tabla_clases.elements();
             while (enum_clases.hasMoreElements()) {
                 entradaClase = enum_clases.nextElement();
                 entradaClase.esta_bien_declarada();
@@ -115,31 +102,7 @@ public class TablaSimbolos {
     public EntradaClase get_entrada_clase(String nombre_clase) {
         return tabla_clases.get(nombre_clase);
     }
-    /*
-    private void consolidarMetodos(EntradaClase clase) throws ExcepcionSemantica {
-        Hashtable<String,LinkedList<EntradaMetodo>> tabla_metodos;
-        LinkedList<EntradaMetodo> lista_metodos_actuales;
-        if(clase.getClaseSuper().get_lexema().equals("Object")){
-            tabla_metodos = tabla_clases.get(clase.getClaseSuper().get_lexema()).get_tabla_metodos();
-            Enumeration<LinkedList<EntradaMetodo>> enum_metodos = tabla_metodos.elements();
-            while (enum_metodos.hasMoreElements()) {
-                lista_metodos_actuales = enum_metodos.nextElement();
-                for(EntradaMetodo em : lista_metodos_actuales)
-                    consolidarMetodo_a_clase(em,clase);
-            }
-        }
-        else {
-            consolidarMetodos(tabla_clases.get(clase.getClaseSuper().get_lexema()));
-            tabla_metodos = tabla_clases.get(clase.getClaseSuper().get_lexema()).get_tabla_metodos();
-            Enumeration<LinkedList<EntradaMetodo>> enum_metodos = tabla_metodos.elements();
-            while (enum_metodos.hasMoreElements()) {
-                lista_metodos_actuales = enum_metodos.nextElement();
-                for (EntradaMetodo em : lista_metodos_actuales)
-                    consolidarMetodo_a_clase(em,clase);
-            }
-        }
-    }
-*/
+
     private void consolidarMetodos(EntradaClase clase) throws ExcepcionSemantica {
         Hashtable<String,LinkedList<EntradaMetodo>> tabla_metodos;
         LinkedList<EntradaMetodo> lista_metodos_actuales;

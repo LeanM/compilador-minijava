@@ -17,7 +17,7 @@ public abstract class EntradaUnidad {
         //public abstract void setVariable(EntradaVariable variable);   No de esta etapa var locales
 
 
-        public boolean mismos_argumentos(LinkedList<EntradaParametro> lista_atrs_a_comparar){
+        public boolean mismos_argumentos(LinkedList<EntradaParametro> lista_atrs_a_comparar) throws ExcepcionSemantica {
             boolean toReturn = true;
             if(lista_atrs_a_comparar.size() == this.lista_argumentos.size()) {
                 for (int i = 0; i < lista_atrs_a_comparar.size() && toReturn; i++){

@@ -30,16 +30,31 @@ public class ModuloPrincipalTest {
     @Test
     public void main() {
         assertEquals("asd","asd");
-        pruebas_etapa_3(0);
-        pruebas_etapa_3(1);
+        for(int i=0;i<=4;i++){
+            //pruebas_etapa_3(i);
+        }
+        sin_errores();
+
         //pruebas_etapa_4();
     }
 
+    //------------------------------------------ETAPA 3-----------------------------------------------------------------------------//
     void pruebas_etapa_3(int tipo_prueba){
         switch (tipo_prueba) {
-            case 0 : clase_duplicada();
-            case 1 : atributos_duplicados();
+            case 1 : clase_duplicada();
+            case 2 : atributos_duplicados();
+            case 3 : herencia_circular();
+            case 4 : super_no_declarado();
+            case 0 : sin_errores();
         }
+    }
+
+    void sin_errores(){
+        //Prueba dos clases con el mismo nombre
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos+"sin-errores.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
 
     void clase_duplicada () {
@@ -57,4 +72,22 @@ public class ModuloPrincipalTest {
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
+
+    void herencia_circular() {
+        //Prueba una clase con dos atributos con el mismo nombre
+        errorCode = "herencia circular";
+        String [] args = {directorio_archivos+"herencia-circular.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void super_no_declarado(){
+        //Prueba una clase con dos atributos con el mismo nombre
+        errorCode = "no esta declarada";
+        String [] args = {directorio_archivos+"super-nulo.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+//--------------------------------------------------------------------------------------------------------------------------//
 }

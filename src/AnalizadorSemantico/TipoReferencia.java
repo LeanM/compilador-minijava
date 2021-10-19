@@ -23,7 +23,7 @@ public class TipoReferencia extends Tipo{
     }
 
     @Override
-    public boolean es_de_tipo(Tipo tipo) {
+    public boolean es_de_tipo(Tipo tipo) throws ExcepcionSemantica {
         boolean toReturn = false;
         if(!tipo.getNombre().equals(this.getNombre())) {
             LinkedList<String> lista_ancestros = new LinkedList<String>();

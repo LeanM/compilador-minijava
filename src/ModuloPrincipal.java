@@ -31,8 +31,7 @@ public class ModuloPrincipal {
             analizador_sintactico = new Analizador_Sintactico(analizador_lexico);
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
-            //fines de prueba
-            //mostrarClases();
+            //mostrarClases(); //fines de prueba
             if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores()) {
                 System.out.println("Compilacion Exitosa");
                 System.out.println();
