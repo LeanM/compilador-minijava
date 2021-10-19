@@ -1,0 +1,40 @@
+class Asd<T,E> extends Object {
+
+	public String text;
+	public static B atrB;
+	private int x;
+	private ClaseA<T,E> a;
+
+	Asd(int f , char j){
+		a = new ClaseA<T,E>();
+		text = "hola \n asd";
+		ClasePrueba<ClaseA> prueba = new ClasePrueba<ClaseA>();
+		char c		= 'a';
+		x = Asd.atrB + 4;
+		Asd.atrB;
+		
+	}
+	
+	dynamic int metodo1(boolean a){
+		int f=0;
+		A variable = 5;
+		if(a) //a es verdadero
+		f=1;
+		else f=-1;
+		int contador=10;
+		for(int i=0;i<f;i++){
+			for (int x = 0;x<10;x++){
+				
+			}
+			contador--;
+		}
+		
+		return f;
+	}
+
+}
+
+
+
+
+

@@ -1,0 +1,11 @@
+String texto = "hola";
+int a; char c = 'u';
+if (texto.size() == 8){
+	a=0;//comentario
+}
+else a=1;
+/*
+voy a declarar
+la variable b
+*/
+int b = 5+6753;

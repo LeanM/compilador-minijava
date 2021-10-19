@@ -1,0 +1,25 @@
+class Fa {
+//atributos
+public String texto;
+public int numero;
+private C asd;
+//constructores
+//metodos
+dynamic void met1(int a, int b){}
+dynamic int met2(){}
+
+}
+class B extends Fa {
+//atributos
+public int texto;
+public char caracter;
+//metodos
+dynamic void met1(){}
+dynamic int met1(int a){}
+
+}
+
+class C extends B {
+static void main(){}
+}
+

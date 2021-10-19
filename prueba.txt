@@ -1,0 +1,63 @@
+class A {
+//atributos
+public String texto;
+//constructores
+A(int b){}
+A(int a,char c){}
+A(int b,String a){}
+//metodos
+dynamic void met1(int a, int b){}
+dynamic int met2(){}
+}
+class B extends A {
+//atributos
+public int texto;
+//metodos
+dynamic void met1(){}
+dynamic int met1(int a){}
+}
+
+class ClaseA <T,E> {
+static void main(){}
+}
+
+class Asd<T,E> {
+
+	public String text;
+	public static B atrB;
+	private int x;
+	private ClaseA<T> a;
+
+	Asd(int f , char j){
+		a = new ClaseA<T,E>();
+		text = "hola \n asd";
+		ClasePrueba<ClaseA> prueba = new ClasePrueba<ClaseA>();
+		char c		= 'a';
+		x = Asd.atrB + 4;
+		(A) v = 1;
+		Asd atrB = 1;
+		A.b().c = 1;
+	}
+	
+	dynamic A metodo1(boolean a){
+		int f=0;
+		if(a) //a es verdadero
+		f=1;
+		else f=-1;
+		int contador=10;
+		for(int i=0;i<f;i++){
+			for (int x = 0;x<10;x++){
+				
+			}
+			contador--;
+		}
+		
+		return f;
+	}
+
+}
+
+
+
+
+

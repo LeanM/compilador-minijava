@@ -1,0 +1,1 @@
+String texto = "hola, este string no va a cerrarse

@@ -1,0 +1,12 @@
+"asd$
+String texto = "Hola como va";
+char c = 'av';
+int g = a/b;
+int a = 1234567890123;# //comentario
+/* asd
+asd
+asd
+*/
+/*
+
+boolean esVerdad = true;
