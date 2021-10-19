@@ -38,7 +38,7 @@ public class ModuloPrincipal {
                 System.out.println();
                 System.out.println("[SinErrores]");
             }
-            //TablaSimbolos.getInstance().vaciarTablaSimbolos(); Para los testers
+            TablaSimbolos.getInstance().vaciarTablaSimbolos(); //Para los testers
         }
         catch (IOException | ExcepcionSemantica e) {
             e.printStackTrace();

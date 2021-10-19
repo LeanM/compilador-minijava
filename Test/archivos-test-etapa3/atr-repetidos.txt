@@ -1,0 +1,5 @@
+class A {
+    private String texto;
+    public int texto;
+
+}
