@@ -6,7 +6,9 @@ private C asd;
 //constructores
 //metodos
 dynamic void met1(int a, int b){}
-dynamic int met2(){}
+dynamic int met2(){
+
+}
 
 }
 class B extends Fa {

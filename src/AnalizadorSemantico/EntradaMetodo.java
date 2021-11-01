@@ -41,16 +41,23 @@ public class EntradaMetodo extends EntradaUnidad {
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_metodo.esPrimitivo())
             if(!TablaSimbolos.getInstance().clase_esta_declarada(tipo_metodo.getNombre()))
-                throw new ExcepcionSemantica(token_metodo,"Error Semantico en linea "+token_metodo.get_nro_linea() +": El tipo de retorno del metodo "+token_metodo.get_lexema()+" es una clase que no esta declarada.");
+                throw new ExcepcionSemantica(tipo_metodo.get_token_tipo(),"Error Semantico en linea "+token_metodo.get_nro_linea() +": El tipo de retorno del metodo "+token_metodo.get_lexema()+" es la clase "+tipo_metodo.getNombre()+" que no esta declarada.");
 
         for (EntradaParametro ea : lista_argumentos)
             ea.esta_bien_declarado();
 
     }
 
+    /* *--En la comparacion entre metodos para verificar redefinicion debe recibir el mensaje el metodo de la clase hija--*
+     *
+     * Verifica que el metodo que recibe el mensaje tenga los argumentos exactamente iguales (mismo orden y exactamente mismo tipo)
+     * que los argumentos del metodo parametrizado.
+     * Tambien que el metodo que recibe el mensaje retorne un objeto del mismo tipo (no exactamente el mismo) que el metodo parametrizado.
+     * Y por ultimo que el metodo que recibe el mensaje tenga exactamente el mismo alcance que el metodo parametrizado.
+     */
     public boolean metodos_iguales(EntradaMetodo metodo_a_comparar) throws ExcepcionSemantica {
         boolean toReturn = false;
-        if (metodo_a_comparar.mismos_argumentos(this.lista_argumentos) && metodo_a_comparar.tipo_metodo.mismo_tipo_exacto(this.tipo_metodo) && metodo_a_comparar.get_alcance().equals(this.alcance_metodo)){
+        if (this.mismos_argumentos(metodo_a_comparar.get_lista_argumentos()) && this.tipo_metodo.es_de_tipo(metodo_a_comparar.get_tipo()) && metodo_a_comparar.get_alcance().equals(this.alcance_metodo)){
             //Redefinicion correcta
             toReturn = true;
         }

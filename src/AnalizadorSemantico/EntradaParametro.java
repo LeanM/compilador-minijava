@@ -16,15 +16,19 @@ public class EntradaParametro {
         return token_parametro.get_lexema();
     }
     public Token get_token_parametro(){ return token_parametro;}
-    public Tipo get_tipo(){return tipo_parametro;};
+    public Tipo get_tipo(){return tipo_parametro;}
+
+    /*  Verifica que ambos parametros, tanto el que recibio el mensaje como
+     *  el parametro parametrizado sean de el mismo tipo exacto.
+     */
     public boolean son_iguales(EntradaParametro param_a_comparar) throws ExcepcionSemantica {
-        return this.tipo_parametro.es_de_tipo(param_a_comparar.get_tipo());
+        return this.tipo_parametro.mismo_tipo_exacto(param_a_comparar.get_tipo());
     }
 
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_parametro.esPrimitivo()){
             if(!TablaSimbolos.getInstance().clase_esta_declarada(tipo_parametro.getNombre()))
-                throw new ExcepcionSemantica(token_parametro,"Error Semantico en linea "+token_parametro.get_nro_linea() +": El tipo del parametro "+token_parametro.get_lexema()+" es una clase que no esta declarada.");
+                throw new ExcepcionSemantica(tipo_parametro.get_token_tipo(),"Error Semantico en linea "+token_parametro.get_nro_linea() +": El tipo del parametro "+token_parametro.get_lexema()+" es la clase "+tipo_parametro.getNombre()+" que no esta declarada.");
         }
     }
 }

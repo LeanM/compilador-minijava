@@ -32,8 +32,9 @@ public class EntradaAtributo {
 
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_atributo.esPrimitivo()){
+            Token clase_tipo = tipo_atributo.get_token_tipo();
             if(!TablaSimbolos.getInstance().clase_esta_declarada(tipo_atributo.getNombre()))
-                throw new ExcepcionSemantica(token_atributo,"Error Semantico en linea "+token_atributo.get_nro_linea() +": El tipo del atributo "+token_atributo.get_lexema()+" es una clase que no esta declarada.");
+                throw new ExcepcionSemantica(clase_tipo,"Error Semantico en linea "+token_atributo.get_nro_linea() +": La clase "+tipo_atributo.getNombre()+" que es el tipo del atributo "+token_atributo.get_lexema()+" , no esta declarada.");
         }
     }
 }

@@ -1,0 +1,9 @@
+class A {
+    public int x;
+    A(){
+        B.m1().m2().m3().a;
+
+    }
+
+    static void main(){}
+}

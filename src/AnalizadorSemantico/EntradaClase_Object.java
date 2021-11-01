@@ -8,7 +8,8 @@ public class EntradaClase_Object extends EntradaClase{
 
     public EntradaClase_Object(Token token_clase) {
         super(token_clase);
-
+        consolido_metodos = true;
+        consolido_atributos = true;
     }
 
     @Override

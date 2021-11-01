@@ -31,7 +31,7 @@ public class ModuloPrincipal {
             analizador_sintactico = new Analizador_Sintactico(analizador_lexico);
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
-            //mostrarClases(); //fines de prueba
+            mostrarClases(); //fines de prueba
             if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores()) {
                 System.out.println("Compilacion Exitosa");
                 System.out.println();
@@ -39,7 +39,7 @@ public class ModuloPrincipal {
             }
             TablaSimbolos.getInstance().vaciarTablaSimbolos(); //Para los testers
         }
-        catch (IOException | ExcepcionSemantica e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
     }

@@ -30,12 +30,26 @@ public class ModuloPrincipalTest {
     @Test
     public void main() {
         assertEquals("asd","asd");
-        for(int i=0;i<=4;i++){
-            //pruebas_etapa_3(i);
+
+        for(int i=6;i<=6;i++){
+            pruebas_etapa_3(i);
         }
-        sin_errores();
+
+        //pruebas_etapa_2();
 
         //pruebas_etapa_4();
+    }
+
+    void pruebas_etapa_2(){
+        acceso_estatico();
+    }
+
+    void acceso_estatico(){
+        //Prueba dos clases con el mismo nombre
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos+"acceso_estatico.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
 
     //------------------------------------------ETAPA 3-----------------------------------------------------------------------------//
@@ -45,8 +59,26 @@ public class ModuloPrincipalTest {
             case 2 : atributos_duplicados();
             case 3 : herencia_circular();
             case 4 : super_no_declarado();
+            case 5 : atr_tipo_no_declarado();
+            case 6 : redefinicion();
             case 0 : sin_errores();
         }
+    }
+
+    void redefinicion(){
+        //Prueba dos clases con el mismo nombre
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos+"redefinicion.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void atr_tipo_no_declarado(){
+        //Prueba dos clases con el mismo nombre
+        errorCode = "no esta declarada";
+        String [] args = {directorio_archivos+"atr-tipo-no-declarado.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
 
     void sin_errores(){

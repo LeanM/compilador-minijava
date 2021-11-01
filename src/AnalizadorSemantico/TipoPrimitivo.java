@@ -15,6 +15,6 @@ public class TipoPrimitivo extends Tipo {
 
     @Override
     public boolean es_de_tipo(Tipo tipo) {
-        return tipo.getNombre().equals(this.getNombre());
+        return this.mismo_tipo_exacto(tipo);
     }
 }

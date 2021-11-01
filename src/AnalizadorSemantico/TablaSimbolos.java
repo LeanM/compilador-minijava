@@ -56,7 +56,7 @@ public class TablaSimbolos {
         return toReturn;
     }
 
-    public void chequeo_semantico() throws ExcepcionSemantica {
+    public void chequeo_semantico() {
 
         //Esta es la segunda pasada del analisis semantico
         //Primero aca debo actualizar los metodos y atributos pertenecientes a cada clase los cuales van a cambiar por la herencia
@@ -73,9 +73,9 @@ public class TablaSimbolos {
             while (enum_clases.hasMoreElements()) {
                 entradaClase = enum_clases.nextElement();
                 entradaClase.esta_bien_declarada();
-                if(!entradaClase.consolido_metodos())
+                if(!entradaClase.get_consolido_metodos())
                     consolidarMetodos(entradaClase);    //Realizo la consolidacion de metodos
-                if(!entradaClase.consolido_atributos())
+                if(!entradaClase.get_consolido_atributos())
                     consolidar_atributos(entradaClase); //Realizo la consolidacion de atributos
 
                 if (entradaClase.get_tabla_metodos().containsKey("main")) {
@@ -106,7 +106,7 @@ public class TablaSimbolos {
     private void consolidarMetodos(EntradaClase clase) throws ExcepcionSemantica {
         Hashtable<String,LinkedList<EntradaMetodo>> tabla_metodos;
         LinkedList<EntradaMetodo> lista_metodos_actuales;
-        if(!clase.getClaseSuper().get_lexema().equals("Object")){
+        if(!clase.getClaseSuper().get_lexema().equals("Object") && !this.get_entrada_clase(clase.getClaseSuper().get_lexema()).get_consolido_metodos()){
             consolidarMetodos(tabla_clases.get(clase.getClaseSuper().get_lexema()));
         }
         tabla_metodos = tabla_clases.get(clase.getClaseSuper().get_lexema()).get_tabla_metodos();
@@ -128,24 +128,28 @@ public class TablaSimbolos {
             for (EntradaMetodo em : lista_metodos) {
                 if (!em.metodos_iguales(metodo)) {
                     if(em.mismos_argumentos(metodo.get_lista_argumentos()))
-                        //Si los metodos no son iguales, tienen el mismo nombre pero distintos parametros y/o tipo
+                        //Si los metodos no son iguales y tienen mismos argumentos, entonces el alcance y/o los tipos de retorno del metodo de clase hija no son del tipo del tipo de retorno del metodo de la clase padre
+                        //Por lo tanto hay error por no cumplir las condiciones de redefinicion
                         throw new ExcepcionSemantica(em.get_token_metodo(), "Error Semantico en linea " + em.get_token_metodo().get_nro_linea() + ": El metodo " + metodo.getNombre() + " tiene el mismo nombre y parametros que uno en la clase super, pero distintos tipos de retorno. No cumple las condiciones de redefinicion.");
                     else {
-                        //Tiene distintos argumentos, por lo tanto lo debo pasar a la clase hija
-
+                        //Tiene distintos argumentos, por lo tanto lo debo pasar a la clase hija, no es redefinicion
+                        //Seguir iterando por si hay errores con otros metodos o redefinicion
                     }
                 }
                 else {
                     hayRedefinicion = true;
                     break;
+                    //Si los metodos son iguales, no hago nada, es decir, no paso el metodo de super a la clase hija por que este esta redefinido.
                 }
-                //Si los metodos son iguales, no hago nada, es decir, no paso el metodo de super a la clase hija por que este esta redefinido.
+
             }
             if (!hayRedefinicion) //No hay error de metodos en la clase hija con mismos argumentos pero distinto tipo de retorno
                 //Si no hubo redefinicion, al no haber errores con metodos en la clase hija se debe agregar
                 clase.setMetodo(metodo.getNombre(),metodo);
         }
         else {
+            //En la clase hija no hay metodos con el nombre del metodo a agregar, por lo tanto
+            //no hay conflicto y debe ser agregado.
             clase.setMetodo(metodo.getNombre(),metodo);
         }
     }
@@ -153,20 +157,18 @@ public class TablaSimbolos {
     private void consolidar_atributos(EntradaClase clase) throws ExcepcionSemantica {
         Hashtable<String,EntradaAtributo> tabla_atributos;
         EntradaAtributo atr_actual;
-        if(clase.getClaseSuper().get_lexema().equals("Object")){
+        if(!clase.getClaseSuper().get_lexema().equals("Object") && !this.get_entrada_clase(clase.getClaseSuper().get_lexema()).get_consolido_atributos()){
             // Object no tiene atributos, no hacer nada
-        }
-        else {
             consolidar_atributos(tabla_clases.get(clase.getClaseSuper().get_lexema()));
-            tabla_atributos = tabla_clases.get(clase.getClaseSuper().get_lexema()).get_tabla_atributos();
-            Enumeration<EntradaAtributo> enum_atributos = tabla_atributos.elements();
-            while (enum_atributos.hasMoreElements()) {
-                atr_actual = enum_atributos.nextElement();
-                if (atr_actual.get_visibilidad().equals("public"))
-                    consolidar_atributo_a_clase(atr_actual, clase);
-            }
-            clase.atributos_consolidados();
         }
+        tabla_atributos = tabla_clases.get(clase.getClaseSuper().get_lexema()).get_tabla_atributos();
+        Enumeration<EntradaAtributo> enum_atributos = tabla_atributos.elements();
+        while (enum_atributos.hasMoreElements()) {
+            atr_actual = enum_atributos.nextElement();
+            if (atr_actual.get_visibilidad().equals("public"))
+                consolidar_atributo_a_clase(atr_actual, clase);
+        }
+        clase.atributos_consolidados();
     }
 
     private void consolidar_atributo_a_clase(EntradaAtributo atr, EntradaClase clase) throws ExcepcionSemantica {
@@ -174,6 +176,7 @@ public class TablaSimbolos {
             clase.setAtributo(atr.getNombre(),atr);
         else {
             //Agregar atributo a atributos ocultos de la clase
+
         }
         //else throw new ExcepcionSemantica(clase.get_tabla_atributos().get(atr.getNombre()).get_token_atributo(),"Error Semantico en linea "+clase.get_tabla_atributos().get(atr.getNombre()).get_token_atributo().get_nro_linea() +": El atributo "+atr.getNombre()+" tiene el mismo nombre que uno en la clase super.");
         //no hago nada (logro atributos tapados)

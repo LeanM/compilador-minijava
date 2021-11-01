@@ -89,7 +89,6 @@ public abstract class EntradaClase {
         tabla_metodos.put(nombre,lista);
     }
 
-
     public Hashtable<String,LinkedList<EntradaMetodo>> get_tabla_metodos(){
         return tabla_metodos;
     }
@@ -101,8 +100,8 @@ public abstract class EntradaClase {
     public void atributos_consolidados(){
         consolido_atributos = true;
     }
-    public boolean consolido_metodos() { return consolido_metodos;}
-    public boolean consolido_atributos(){return consolido_atributos;}
+    public boolean get_consolido_metodos() { return consolido_metodos;}
+    public boolean get_consolido_atributos(){return consolido_atributos;}
 
     public abstract void herenciaCircular() throws ExcepcionSemantica;
     public abstract void setClaseSuper(Token claseSuper);

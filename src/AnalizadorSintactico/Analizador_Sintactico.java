@@ -408,27 +408,23 @@ public class Analizador_Sintactico {
     private void accesoEstatico_Continuacion() throws ExcepcionSintactica {
         match("pun.");
         match("idMetVar");
-        var_metodo_asignacion();
+        metodo_var();
+        estatico_encadenado_asignacion();
     }
 
-    private void var_metodo_asignacion() throws ExcepcionSintactica {
-        //Primeros <argsActuales>
-        if(token_actual.get_id_token().equals("parAbre")) {
-            argsActuales();
-            accesoEstatico_Continuacion();
+    private void estatico_encadenado_asignacion() throws ExcepcionSintactica {
+
+        if(token_actual.get_id_token().equals("asig=")){
+            match("asig=");
+            expresion();
         }
         else
-            if(token_actual.get_id_token().equals("asig=")){
-                match("asig=");
-                expresion();
+            //Primeros <accesoEstatico_continuacion>
+            if(token_actual.get_id_token().equals("pun."))
+                accesoEstatico_Continuacion();
+            else {
+                //nada por que -> e
             }
-            else
-                //Primeros <accesoEstatico_continuacion>
-                if(token_actual.get_id_token().equals("pun."))
-                    accesoEstatico_Continuacion();
-                else {
-                    //nada por que -> e
-                }
     }
 
     private void varLocal_Continuacion(Tipo tipo) throws ExcepcionSintactica {
@@ -556,7 +552,10 @@ public class Analizador_Sintactico {
 
     private void accesoEstatico() throws ExcepcionSintactica {
         match("idClase");
-        accesoEstatico_Continuacion();
+        match("pun.");
+        match("idMetVar");
+        metodo_var();
+        estatico_encadenado_asignacion();
     }
 
     private void accesoIdMetVar() throws ExcepcionSintactica {
