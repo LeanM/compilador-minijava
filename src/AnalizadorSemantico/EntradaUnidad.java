@@ -1,5 +1,7 @@
 package AnalizadorSemantico;
 
+import AST.NodoBloque;
+
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -7,6 +9,7 @@ public abstract class EntradaUnidad {
 
         protected Hashtable<String,EntradaParametro> tabla_argumentos;
         protected LinkedList<EntradaParametro> lista_argumentos;
+        protected NodoBloque bloque_sentencias;
 
         public EntradaUnidad(){
             tabla_argumentos = new Hashtable<String,EntradaParametro>();
@@ -29,6 +32,10 @@ public abstract class EntradaUnidad {
             else toReturn = false;
 
             return toReturn;
+        }
+
+        public void set_bloque_sentencias(NodoBloque bloque) {
+            this.bloque_sentencias = bloque;
         }
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}

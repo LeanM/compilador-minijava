@@ -1,5 +1,7 @@
 package AnalizadorSintactico;
 
+import AST.NodoBloque;
+import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Analizador_Lexico;
 import AnalizadorLexico.ExcepcionLexica;
 import AnalizadorLexico.Token;
@@ -330,12 +332,14 @@ public class Analizador_Sintactico {
 
     private void bloque() throws ExcepcionSintactica {
         match("llaveAbre");
+        //LinkedList<NodoSentencia> lista = listaSentencias();
+        //NodoBloque nodo_bloque = new NodoBloque(lista);
+        //TS.getUnidadActual().set_bloque_sentencias(nodo_bloque);
         listaSentencias();
         match("llaveCierra");
     }
 
     private void listaSentencias() throws ExcepcionSintactica {
-
         //Primeros sentencia
         if (Arrays.asList("idClase","pr_boolean","pr_char","pr_int","pr_String","pr_this","idMetVar","pr_new","parAbre","pun;","pr_if","pr_for","pr_return","llaveAbre").contains(token_actual.get_id_token())){
             sentencia();
