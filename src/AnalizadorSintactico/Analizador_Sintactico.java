@@ -1,7 +1,9 @@
 package AnalizadorSintactico;
 
+import AST.Acceso.*;
+import AST.Expresion.*;
 import AST.NodoBloque;
-import AST.Sentencia.NodoSentencia;
+import AST.Sentencia.*;
 import AnalizadorLexico.Analizador_Lexico;
 import AnalizadorLexico.ExcepcionLexica;
 import AnalizadorLexico.Token;
@@ -243,7 +245,9 @@ public class Analizador_Sintactico {
         TS.setUnidadActual(metodo);
         match("idMetVar");
         argsFormales();
-        bloque();
+
+        TS.getUnidadActual().set_bloque_sentencias(bloque()); //Preguntar
+
         TS.getClaseActual().setMetodo(metodo.getNombre(),metodo);
     }
 
@@ -287,7 +291,9 @@ public class Analizador_Sintactico {
         TS.setUnidadActual(cons);
         match("idClase");
         argsFormales();
-        bloque();
+
+        TS.getUnidadActual().set_bloque_sentencias(bloque()); //PREGUNTAR
+
         TS.getClaseActual().setConstructor(cons.getNombre(),cons);
     }
 
@@ -330,27 +336,31 @@ public class Analizador_Sintactico {
 
     }
 
-    private void bloque() throws ExcepcionSintactica {
+    private NodoBloque bloque() throws ExcepcionSintactica {
+        NodoBloque toReturn;
         match("llaveAbre");
-        //LinkedList<NodoSentencia> lista = listaSentencias();
-        //NodoBloque nodo_bloque = new NodoBloque(lista);
-        //TS.getUnidadActual().set_bloque_sentencias(nodo_bloque);
-        listaSentencias();
+        LinkedList<NodoSentencia> lista = new LinkedList<NodoSentencia>();
+        listaSentencias(lista);
+        toReturn = new NodoBloque(lista);
+        //TS.getUnidadActual().set_bloque_sentencias(toReturn);
         match("llaveCierra");
+
+        return toReturn;
     }
 
-    private void listaSentencias() throws ExcepcionSintactica {
+    private void listaSentencias(LinkedList<NodoSentencia> lista_sentencias) throws ExcepcionSintactica {
         //Primeros sentencia
         if (Arrays.asList("idClase","pr_boolean","pr_char","pr_int","pr_String","pr_this","idMetVar","pr_new","parAbre","pun;","pr_if","pr_for","pr_return","llaveAbre").contains(token_actual.get_id_token())){
-            sentencia();
-            listaSentencias();
+            lista_sentencias.add(sentencia());
+            listaSentencias(lista_sentencias);
         }
         else {
             //nada por que listaSentencias -> e
         }
     }
 
-    private void sentencia() throws ExcepcionSintactica {
+    private NodoSentencia sentencia() throws ExcepcionSintactica {
+        NodoSentencia toReturn = new NodoSentenciaVacia();
 
         if (token_actual.get_id_token().equals("pun;"))
             match("pun;");
@@ -358,65 +368,81 @@ public class Analizador_Sintactico {
         if (token_actual.get_id_token().equals("idClase")){
             Tipo tipo = new TipoReferencia(token_actual);
             match("idClase");
-            genericidad_Vacio();    //cambiar
-            accesoEstatico_VarLocal(tipo);
+            //genericidad_Vacio(); no va mas
+            toReturn = accesoEstatico_VarLocal(tipo);
             match("pun;");
         }
         else
             //Primeros Asignacion_Llamada = Primeros Acceso
             if (Arrays.asList("parAbre" , "idMetVar", "pr_this", "pr_new").contains(token_actual.get_id_token())) {
-                acceso_sin_Estatico();
-                asignacion_llamada();
+                NodoAcceso nodoAcceso = acceso_sin_Estatico();
+                toReturn = asignacion_llamada(nodoAcceso);
                 match("pun;");
             } else
                 //Primeros varLocal
                 if (Arrays.asList("pr_boolean", "pr_int", "pr_char", "pr_String").contains(token_actual.get_id_token())) {
-                    varLocal_sin_TipoClase();
+                    toReturn = varLocal_sin_TipoClase();
                     match("pun;");
                 } else
                     //Primeros return
                     if (token_actual.get_id_token().equals("pr_return")) {
-                        nt_return();
+                        toReturn = nt_return();
                         match("pun;");
                     } else
                         //Primeros if
                         if (token_actual.get_id_token().equals("pr_if"))
-                            nt_if();
+                            toReturn = nt_if();
                         else
                             //Primeros for
                             if (token_actual.get_id_token().equals("pr_for"))
-                                nt_for();
+                                toReturn = nt_for();
                             else
                                 //Primeros bloque
                                 if (token_actual.get_id_token().equals("llaveAbre"))
-                                    bloque();
+                                    toReturn = bloque();
                                 else {
                                     throw new ExcepcionSintactica(token_actual,"; , { , pr_for , pr_if , pr_return , pr_boolean , pr_int , pr_char , pr_String , idClase , parAbre , idMetVar , pr_this o pr_new");
                                 }
+        return toReturn;
     }
 
-    private void accesoEstatico_VarLocal(Tipo tipo) throws ExcepcionSintactica {
+    private NodoSentencia accesoEstatico_VarLocal(Tipo tipo) throws ExcepcionSintactica {
+        NodoSentencia toReturn;
         //Primero accesoEstatico_Continuacion
-        if (token_actual.get_id_token().equals("pun."))
-            accesoEstatico_Continuacion();
+        if (token_actual.get_id_token().equals("pun.")) {
+            NodoAccesoEstatico nodoAccesoEstatico = new NodoAccesoEstatico(tipo.get_token_tipo());
+            accesoEstatico_Continuacion(nodoAccesoEstatico);
+            toReturn = asignacion_llamada(nodoAccesoEstatico);
+        }
         else
             //Es declaracion de var local
             if (token_actual.get_id_token().equals("idMetVar")) {
-                varLocal_Continuacion(tipo);
+                toReturn = varLocal_Continuacion(tipo);
             }
             else
                 throw new ExcepcionSintactica(token_actual,". o idMetVar");
+
+        return toReturn;
     }
 
 
-    private void accesoEstatico_Continuacion() throws ExcepcionSintactica {
-        match("pun.");
-        match("idMetVar");
-        metodo_var();
-        estatico_encadenado_asignacion();
-    }
+    private void accesoEstatico_Continuacion(NodoAccesoEstatico nodo_acceso_estatico) throws ExcepcionSintactica {
+        if(token_actual.get_id_token().equals("pun.")) {
+            match("pun.");
+            Token idMetVar = token_actual;
+            match("idMetVar");
+            NodoEncadenado encadenado = metodo_var(idMetVar);
+            nodo_acceso_estatico.setEncadenado(encadenado);
 
-    private void estatico_encadenado_asignacion() throws ExcepcionSintactica {
+            accesoEstatico_Continuacion(nodo_acceso_estatico);
+            //estatico_encadenado_asignacion(nodo_acceso_estatico);
+        }
+        else {
+            //nada
+        }
+    }
+    /*
+    private void estatico_encadenado_asignacion(NodoAccesoEstatico nodoAccesoEstatico) throws ExcepcionSintactica {
 
         if(token_actual.get_id_token().equals("asig=")){
             match("asig=");
@@ -430,203 +456,253 @@ public class Analizador_Sintactico {
                 //nada por que -> e
             }
     }
+    */
 
-    private void varLocal_Continuacion(Tipo tipo) throws ExcepcionSintactica {
+
+    private NodoVarLocal varLocal_Continuacion(Tipo tipo) throws ExcepcionSintactica {
+        NodoVarLocal toReturn;
         if (token_actual.get_id_token().equals("idMetVar")) {
-            //EntradaVariable var = new EntradaVariable(token_actual,tipo); NO DE ESTA ETAPA
+            Token nombre_Var = token_actual;
             match("idMetVar");
-            varLocal_Expresion();
-            //TS.getUnidadActual().setVariable(var.getNombre(),var);
+            toReturn = varLocal_Expresion(tipo,nombre_Var);
         }
         else throw new ExcepcionSintactica(token_actual,"idMetVar");
+
+        return toReturn;
     }
 
-    private void acceso_sin_Estatico() throws ExcepcionSintactica {
+    private NodoAcceso acceso_sin_Estatico() throws ExcepcionSintactica {
+        NodoAcceso toReturn;
         if(token_actual.get_id_token().equals("parAbre")) {
             match("parAbre");
-            casting_ExpresionParentizada();
+            toReturn = casting_ExpresionParentizada();
         }
         else {
-            primario_sin_expParentizada_sinEstatico();
-            encadenado();
+            NodoPrimario nodoPrimario = primario_sin_expParentizada_sinEstatico();
+            encadenado(nodoPrimario);
+            toReturn = nodoPrimario;
         }
+        return toReturn;
     }
 
-    private void primario_sin_expParentizada_sinEstatico() throws ExcepcionSintactica {
-
+    private NodoPrimario primario_sin_expParentizada_sinEstatico() throws ExcepcionSintactica {
+        NodoPrimario toReturn;
         if (token_actual.get_id_token().equals("idMetVar")){
+            Token nombre_met_var = token_actual;
             match("idMetVar");
-            accesoIdMetVar();
+            toReturn = accesoIdMetVar(nombre_met_var);
         }
         else
             //Primero AccesoThis
             if (token_actual.get_id_token().equals("pr_this"))
-                accesoThis();
+                toReturn = accesoThis();
             else
                 //Primero accesoConstructor
                 if (token_actual.get_id_token().equals("pr_new"))
-                    accesoConstructor();
+                    toReturn = accesoConstructor();
                 else {
                     throw new ExcepcionSintactica(token_actual,"id metodo/variable , this , new , ( o Id de clase");
                 }
+        return toReturn;
     }
 
-    private void varLocal_sin_TipoClase() throws ExcepcionSintactica {
+    private NodoVarLocal varLocal_sin_TipoClase() throws ExcepcionSintactica {
         Tipo tipo = tipoPrimitivo();
-        //EntradaVariable var = new EntradaVariable(token_actual,tipo); NO DE ESTA ETAPA
+        Token nombre_var = token_actual;
         match("idMetVar");
-        varLocal_Expresion();
-        //TS.getMetodoActual().setVariable(var.getNombre(),var);
+        return varLocal_Expresion(tipo,nombre_var);
     }
 
-    private void acceso() throws ExcepcionSintactica {
+    private NodoAcceso acceso() throws ExcepcionSintactica {
+        NodoAcceso toReturn;
         if(token_actual.get_id_token().equals("parAbre")) {
             match("parAbre");
-            casting_ExpresionParentizada();
+            toReturn = casting_ExpresionParentizada();
         }
         else {
-            primario_sin_expParentizada();
-            encadenado();
+            NodoPrimario nodoPrimario = primario_sin_expParentizada();
+            encadenado(nodoPrimario);
+            toReturn = nodoPrimario;
         }
+
+        return toReturn;
     }
 
-    private void casting_ExpresionParentizada() throws ExcepcionSintactica {
-
+    private NodoAcceso casting_ExpresionParentizada() throws ExcepcionSintactica {
+        NodoAcceso toReturn;
         if (token_actual.get_id_token().equals("idClase")) {
+            Token clase = token_actual;
             match("idClase");
             match("parCierra");
-            primario();
-            encadenado();
+            NodoPrimario nodoPrimario = primario();
+            encadenado(nodoPrimario);
+            NodoCasting nodoCasting = new NodoCasting(nodoPrimario,clase);
+            toReturn = nodoCasting;
         }
         else {
-            expresion();
+            NodoExpParentizada nodoExpParentizada = new NodoExpParentizada(expresion());
             match("parCierra");
-            encadenado();
+            encadenado(nodoExpParentizada);
+            toReturn = nodoExpParentizada;
         }
+
+        return toReturn;
     }
 
-    private void primario() throws ExcepcionSintactica {
-
+    private NodoPrimario primario() throws ExcepcionSintactica {
+        NodoPrimario toReturn;
         if (token_actual.get_id_token().equals("idMetVar")){
+            Token nombre_met_var = token_actual;
             match("idMetVar");
-            accesoIdMetVar();
+            toReturn = accesoIdMetVar(nombre_met_var);
         }
         else
             //Primero AccesoThis
-            if (token_actual.get_id_token().equals("pr_this"))
-                accesoThis();
+            if (token_actual.get_id_token().equals("pr_this")) {
+                toReturn = accesoThis();
+            }
             else
                 //Primero accesoConstructor
-                if (token_actual.get_id_token().equals("pr_new"))
-                    accesoConstructor();
+                if (token_actual.get_id_token().equals("pr_new")) {
+                    toReturn = accesoConstructor();
+                }
                 else
                     //Primeros expresionParentizada
                     if (token_actual.get_id_token().equals("parAbre"))
-                        expresionParentizada();
+                        toReturn = expresionParentizada();
                     else
                         //Primero accesoEstatico
                         if (token_actual.get_id_token().equals("idClase"))
-                            accesoEstatico();
+                            toReturn = accesoEstatico();
                         else{
                             throw new ExcepcionSintactica(token_actual,"id metodo/variable , this , new , ( o Id de clase");
                         }
+        return toReturn;
     }
 
-    private void primario_sin_expParentizada() throws ExcepcionSintactica {
+    private NodoPrimario primario_sin_expParentizada() throws ExcepcionSintactica {
+        NodoPrimario toReturn;
         if (token_actual.get_id_token().equals("idMetVar")){
+            Token nombre_met_var = token_actual;
             match("idMetVar");
-            accesoIdMetVar();
+            toReturn = accesoIdMetVar(nombre_met_var);
         }
         else
             //Primero AccesoThis
             if (token_actual.get_id_token().equals("pr_this"))
-                accesoThis();
+                toReturn = accesoThis();
             else
                 //Primero accesoConstructor
                 if (token_actual.get_id_token().equals("pr_new"))
-                    accesoConstructor();
+                    toReturn = accesoConstructor();
                 else
                     //Primero accesoEstatico
                     if (token_actual.get_id_token().equals("idClase"))
-                        accesoEstatico();
+                        toReturn = accesoEstatico();
                     else{
                         throw new ExcepcionSintactica(token_actual,"id metodo/variable , this , new , ( o Id de clase");
                     }
+        return toReturn;
     }
 
-    private void accesoEstatico() throws ExcepcionSintactica {
+    private NodoAccesoEstatico accesoEstatico() throws ExcepcionSintactica {
+        NodoAccesoEstatico toReturn = new NodoAccesoEstatico(token_actual);
         match("idClase");
         match("pun.");
+        Token nombre_met_var = token_actual;
         match("idMetVar");
-        metodo_var();
-        estatico_encadenado_asignacion();
+        NodoEncadenado encadenado = metodo_var(nombre_met_var);
+        toReturn.setEncadenado(encadenado);
+        accesoEstatico_Continuacion(toReturn);
+
+        return toReturn;
     }
 
-    private void accesoIdMetVar() throws ExcepcionSintactica {
+    private NodoPrimario accesoIdMetVar(Token nombre_met_var) throws ExcepcionSintactica {
+        NodoPrimario toReturn;
         //Primeros argsActuales
         if (token_actual.get_id_token().equals("parAbre"))
-            argsActuales();
+            toReturn = new NodoAccesoMetodo(nombre_met_var,argsActuales());
         else {
+            toReturn = new NodoAccesoVar(nombre_met_var);
             //nada por que accesoIdMetVar -> e
         }
+
+        return toReturn;
     }
 
-    private void accesoThis() throws ExcepcionSintactica {
+    private NodoAccesoThis accesoThis() throws ExcepcionSintactica {
+        NodoAccesoThis toReturn = new NodoAccesoThis(token_actual);
         match("pr_this");
+
+        return toReturn;
     }
 
-    private void accesoConstructor() throws ExcepcionSintactica {
+    private NodoAccesoConstructor accesoConstructor() throws ExcepcionSintactica {
+        NodoAccesoConstructor toReturn;
         match("pr_new");
+        toReturn = new NodoAccesoConstructor(token_actual,argsActuales());
         match("idClase");
         //genericidad_Vacio();
-        argsActuales();
+
+        return toReturn;
     }
 
-    private void argsActuales() throws ExcepcionSintactica {
+    private LinkedList<NodoExpresion> argsActuales() throws ExcepcionSintactica {
+        LinkedList<NodoExpresion> toReturn = new LinkedList<NodoExpresion>();
         match("parAbre");
-        listaExps_Vacio();
+        listaExps_Vacio(toReturn);
         match("parCierra");
+
+        return toReturn;
     }
 
-    private void listaExps_Vacio() throws ExcepcionSintactica {
+    private void listaExps_Vacio(LinkedList<NodoExpresion> args) throws ExcepcionSintactica {
         //Primeros listaExps = Primeros Expresion
-        if (Arrays.asList("op+","op-","op!","pr_null","pr_true","pr_false","Entero","Char","String","idMetVar","pr_this","pr_new","parAbre").contains(token_actual.get_id_token()))
-            lista_Exps();
+        if (Arrays.asList("op+","op-","op!","pr_null","pr_true","pr_false","Entero","Char","String","idMetVar","pr_this","pr_new","parAbre").contains(token_actual.get_id_token())) {
+            lista_Exps(args);
+        }
         else {
             //nada por que listaExps_Vacio -> e
         }
     }
 
-    private void lista_Exps() throws ExcepcionSintactica {
-        expresion();
-        otraExpresion_Vacio();
+    private void lista_Exps(LinkedList<NodoExpresion> args) throws ExcepcionSintactica {
+        args.add(expresion());
+        otraExpresion_Vacio(args);
     }
 
-    private void otraExpresion_Vacio() throws ExcepcionSintactica {
+    private void otraExpresion_Vacio(LinkedList<NodoExpresion> args) throws ExcepcionSintactica {
         if(token_actual.get_id_token().equals("pun,")) {
             match("pun,");
-            lista_Exps();
+            lista_Exps(args);
         }
         else {
             //nada por que otraExpresion_Vacio -> e
         }
     }
 
-    private void expresion() throws ExcepcionSintactica {
-        expresionUnaria();
-        expresionRecDerecha_Vacio();
+    private NodoExpresion expresion() throws ExcepcionSintactica {
+        NodoExpresion toReturn;
+        toReturn = expresionUnaria();
+        toReturn = expresionRecDerecha_Vacio(toReturn);
+
+        return toReturn;
     }
 
-    private void expresionRecDerecha_Vacio() throws ExcepcionSintactica {
+    private NodoExpresion expresionRecDerecha_Vacio(NodoExpresion nodo) throws ExcepcionSintactica {
+        NodoExpresion toReturn = nodo;
         //Primeros operadorBinario
         if (Arrays.asList("op||","op&&","op==","op!=","op<","op>","op<=","op>=","op+","op-","op*","op/","op%").contains(token_actual.get_id_token())){
+            Token operador_binario = token_actual;
             operadorBinario();
-            expresionUnaria();
-            expresionRecDerecha_Vacio();
+            toReturn = new NodoExpresionBinaria(nodo,operador_binario,expresionUnaria());
+            toReturn = expresionRecDerecha_Vacio(toReturn);
         }
         else {
             //nada por que -> e
         }
+        return toReturn;
     }
 
     private void operadorBinario() throws ExcepcionSintactica {
@@ -660,197 +736,258 @@ public class Analizador_Sintactico {
         }
     }
 
-    private void expresionUnaria() throws ExcepcionSintactica {
+    private NodoExpresion expresionUnaria() throws ExcepcionSintactica {
+        NodoExpresion toReturn;
         //Primeros operador unario
         if (Arrays.asList("op+","op-","op!").contains(token_actual.get_id_token())){
-            operadorUnario();
-            operando();
+            Token operador = operadorUnario();
+            NodoOperando operando = operando();
+            toReturn = new NodoExpresionUnaria(operador,operando);
         }
         else
             //Primeros operando
             if(Arrays.asList("idClase","pr_null","pr_true","pr_false","Entero","Char","String","parAbre","idMetVar","pr_this","pr_new").contains(token_actual.get_id_token())){
-                operando();
+                toReturn = operando();
             }
             else {
                 throw new ExcepcionSintactica(token_actual,"op+,op-,op!,pr_null,pr_true,pr_false,Entero,Char,String,parAbre,idMetVar,pr_this,pr_new");
             }
+        return toReturn;
     }
 
-    private void operadorUnario() throws ExcepcionSintactica {
+    private Token operadorUnario() throws ExcepcionSintactica {
+        Token toReturn = token_actual;
         if (token_actual.get_id_token().equals("op+"))
             match("op+");
         else
         if (token_actual.get_id_token().equals("op-"))
             match("op-");
-        else
-        if (token_actual.get_id_token().equals("op!"))
-            match("op!");
-        else {
-            //throw error? nunca entraria aca
-        }
+        else match("op!");
+
+        return toReturn;
     }
 
-    private void operando() throws ExcepcionSintactica {
+    private NodoOperando operando() throws ExcepcionSintactica {
+        NodoOperando toReturn;
         //Primeros literal
         if (Arrays.asList("pr_null","pr_true","pr_false","Entero","Char","String").contains(token_actual.get_id_token()))
-            literal();
+            toReturn = literal();
         else
             //Primeros Acceso
             if (Arrays.asList("parAbre","idMetVar","pr_this","pr_new","idClase").contains(token_actual.get_id_token()))
-                acceso();
+                toReturn = acceso();
             else {
                 throw new ExcepcionSintactica(token_actual,"Entero, Char, String, (, idMetVar, idClase o Palabras reservadas : null, true , false, this, new");
             }
+        return toReturn;
     }
 
-    private void literal() throws ExcepcionSintactica {
+    private NodoOperando_Literal literal() throws ExcepcionSintactica {
+        NodoOperando_Literal nodo = new NodoNull(token_actual);
         if (token_actual.get_id_token().equals("pr_null"))
             match("pr_null");
         else
-        if (token_actual.get_id_token().equals("pr_true"))
+        if (token_actual.get_id_token().equals("pr_true")) {
+            nodo = new NodoBoolean(token_actual);
             match("pr_true");
+        }
         else
-        if (token_actual.get_id_token().equals("pr_false"))
+        if (token_actual.get_id_token().equals("pr_false")) {
+            nodo = new NodoBoolean(token_actual);
             match("pr_false");
+        }
         else
         if (token_actual.get_id_token().equals("Entero")) {
+            nodo = new NodoEntero(token_actual);
             match("Entero");
         }
         else
-        if (token_actual.get_id_token().equals("Char"))
+        if (token_actual.get_id_token().equals("Char")) {
+            nodo = new NodoChar(token_actual);
             match("Char");
+        }
         else
-        if (token_actual.get_id_token().equals("String"))
+        if (token_actual.get_id_token().equals("String")) {
+            nodo = new NodoString(token_actual);
             match("String");
-        else {
-            // throw?
         }
 
+        return nodo;
     }
 
-    private void expresionParentizada() throws ExcepcionSintactica {
+    private NodoExpParentizada expresionParentizada() throws ExcepcionSintactica {
+        NodoExpParentizada toReturn;
         match("parAbre");
-        expresion();
+        NodoExpresion expresion = expresion();
+        toReturn = new NodoExpParentizada(expresion);
         match("parCierra");
+
+        return toReturn;
     }
 
-    private void varLocal() throws ExcepcionSintactica {
+    private NodoVarLocal varLocal() throws ExcepcionSintactica {
+        NodoVarLocal toReturn;
         Tipo tipoVariable = tipo();
-        //EntradaVariable var = new EntradaVariable(token_actual,tipoVariable); NO DE ESTA ETAPA
+        Token nombre_var = token_actual;
         match("idMetVar");
-        varLocal_Expresion();
-        //TS.getMetodoActual().setVariable(var.getNombre(),var);
+        toReturn = varLocal_Expresion(tipoVariable,nombre_var);
+
+        return toReturn;
     }
 
-    private void varLocal_Expresion() throws ExcepcionSintactica {
+    private NodoVarLocal varLocal_Expresion(Tipo tipo, Token nombre) throws ExcepcionSintactica {
+        NodoVarLocal toReturn;
         if (token_actual.get_id_token().equals("asig=")) {
             match("asig=");
-            expresion();
+            toReturn = new NodoVarLocal_Asignacion(tipo,nombre,expresion());
         }
         else {
             //nada por que varLocal_Expresion -> e
+            toReturn = new NodoVarLocal(tipo,nombre);
         }
+
+        return toReturn;
     }
 
-    private void encadenado() throws ExcepcionSintactica {
+    private void encadenado(NodoPrimario primario) throws ExcepcionSintactica {
         //Primeros varOMetodoEncadenado
         if (token_actual.get_id_token().equals("pun.")) {
-            varOMetodoEncadenado();
-            encadenado();
+            varOMetodoEncadenado(primario);
+            encadenado(primario);
         }
         else {
             //nada por que -> e
         }
     }
 
-    private void varOMetodoEncadenado() throws ExcepcionSintactica {
+    private void varOMetodoEncadenado(NodoPrimario primario) throws ExcepcionSintactica {
         match("pun.");
+        Token nombre = token_actual;
         match("idMetVar");
-        metodo_var();
+        primario.setEncadenado(metodo_var(nombre));
     }
 
-    private void metodo_var() throws ExcepcionSintactica {
+    private NodoEncadenado metodo_var(Token nombre_met_var) throws ExcepcionSintactica {
+        NodoEncadenado toReturn;
         //Primeros argActuales
-        if (token_actual.get_id_token().equals("parAbre"))
-            argsActuales();
+        if (token_actual.get_id_token().equals("parAbre")) {
+            toReturn = new NodoMetodoEncadenado(nombre_met_var,argsActuales());
+        }
         else{
             //nada por que -> e
+            toReturn = new NodoVarEncadenada(nombre_met_var);
         }
+
+        return toReturn;
     }
 
-    private void asignacion_llamada() throws ExcepcionSintactica {
+    private NodoSentencia asignacion_llamada(NodoAcceso nodoAcceso) throws ExcepcionSintactica {
+        NodoSentencia toReturn;
         //Primeros tipoDeAsignacion
-        if (Arrays.asList("asig=","asig++","asig--").contains(token_actual.get_id_token()))
-            tipoDeAsignacion();
+        if (Arrays.asList("asig=","asig++","asig--").contains(token_actual.get_id_token())) {
+            toReturn = tipoDeAsignacion(nodoAcceso);
+        }
         else {
             //nada por que -> e
+            toReturn = new NodoLlamada(nodoAcceso);
         }
+        return toReturn;
     }
 
-    private void nt_return() throws ExcepcionSintactica {
+    private NodoReturn nt_return() throws ExcepcionSintactica {
+        NodoReturn toReturn;
+        Token token_return = token_actual;
         match("pr_return");
-        expresion_Vacio();
+        NodoExpresion nodoExpresion = expresion_Vacio();
+        if (nodoExpresion != null)
+            toReturn = new NodoReturn(token_return,nodoExpresion);
+        else toReturn = new NodoReturn(token_return);
+
+        return toReturn;
     }
 
-    private void expresion_Vacio() throws ExcepcionSintactica {
+    private NodoExpresion expresion_Vacio() throws ExcepcionSintactica {
+        NodoExpresion toReturn = null;
         //Primeros expresion
         if (Arrays.asList("op+","op-","op!","pr_null","pr_true","pr_false","Entero","Char","String","parAbre","idMetVar","pr_this","pr_new").contains(token_actual.get_id_token()))
-            expresion();
+            toReturn = expresion();
         else {
             //nada por que -> e
         }
+        return toReturn;
     }
 
-    private void nt_if() throws ExcepcionSintactica {
+    private NodoIf nt_if() throws ExcepcionSintactica {
+        NodoIf toReturn;
         match("pr_if");
         match("parAbre");
-        expresion();
+        NodoExpresion condicion = expresion();
         match("parCierra");
-        sentencia();
-        nt_if_else();
+        NodoSentencia cuerpo_then = sentencia();
+        toReturn = nt_if_else(condicion,cuerpo_then);
+
+        return toReturn;
     }
 
-    private void nt_if_else() throws ExcepcionSintactica {
+    private NodoIf nt_if_else(NodoExpresion condicion, NodoSentencia cuerpo_then) throws ExcepcionSintactica {
+        NodoIf toReturn;
         if (token_actual.get_id_token().equals("pr_else")){
             match("pr_else");
-            sentencia();
+            NodoSentencia cuerpo_else = sentencia();
+            toReturn = new NodoIf_else(condicion,cuerpo_then,cuerpo_else);
         }
         else {
             //nada -> e
+            toReturn = new NodoIf(condicion,cuerpo_then);
         }
+
+        return toReturn;
     }
 
-    private void nt_for() throws ExcepcionSintactica {
+    private NodoFor nt_for() throws ExcepcionSintactica {
         match("pr_for");
         match("parAbre");
-        varLocal();
+        NodoVarLocal var = varLocal();
         match("pun;");
-        expresion();
+        NodoExpresion condicion = expresion();
         match("pun;");
-        asignacion();
+        NodoAsignacion asignacion = asignacion();
         match("parCierra");
-        sentencia();
+        NodoSentencia cuerpo_for = sentencia();
+
+        return new NodoFor(var,condicion,asignacion,cuerpo_for);
     }
 
-    private void asignacion() throws ExcepcionSintactica {
-        acceso();
-        tipoDeAsignacion();
+    private NodoAsignacion asignacion() throws ExcepcionSintactica {
+        NodoAcceso nodoAcceso = acceso();
+
+        return tipoDeAsignacion(nodoAcceso);
     }
 
-    private void tipoDeAsignacion() throws ExcepcionSintactica {
+    private NodoAsignacion tipoDeAsignacion(NodoAcceso nodo_acceso) throws ExcepcionSintactica {
+        NodoAsignacion toReturn;
         if (token_actual.get_id_token().equals("asig=")) {
+            Token tipo_asignacion = token_actual;
             match("asig=");
-            expresion();
+            toReturn = new NodoAsignacion_Standar(nodo_acceso,tipo_asignacion,expresion());
         }
         else
-        if(token_actual.get_id_token().equals("asig++"))
+        if(token_actual.get_id_token().equals("asig++")) {
+            Token tipo_asignacion = token_actual;
             match("asig++");
+            toReturn = new NodoAsignacion_Inc(nodo_acceso,tipo_asignacion);
+        }
         else
-        if(token_actual.get_id_token().equals("asig--"))
+        if(token_actual.get_id_token().equals("asig--")) {
+            Token tipo_asignacion = token_actual;
             match("asig--");
+            toReturn = new NodoAsignacion_Dec(nodo_acceso,tipo_asignacion);
+        }
         else {
             throw new ExcepcionSintactica(token_actual,"++, -- o =");
         }
+
+        return toReturn;
     }
 
 

@@ -1,3 +1,8 @@
+import AST.NodoBloque;
+import AST.Sentencia.NodoSentencia;
+import AnalizadorSemantico.EntradaClase;
+import AnalizadorSemantico.EntradaMetodo;
+import AnalizadorSemantico.EntradaUnidad;
 import AnalizadorSemantico.TablaSimbolos;
 import kotlin.test.AssertionsKt;
 import org.hamcrest.CoreMatchers;
@@ -7,6 +12,8 @@ import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.Enumeration;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -50,6 +57,34 @@ public class ModuloPrincipalTest {
         String [] args = {directorio_archivos+"acceso_estatico.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+    //-----------------------------------------ETAPA4------------------------------------------------------------------//
+
+    void pruebas_etapa_4(){
+        mostrarAST();
+    }
+
+    void mostrarAST(){
+        EntradaClase entradaClase;
+        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
+
+        while (enum_clases.hasMoreElements()) {
+            entradaClase = enum_clases.nextElement();
+
+            Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
+            for(EntradaMetodo metodo : enum_metodos.nextElement()){
+                NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
+
+            }
+
+        }
+
+    }
+
+    void mostrarBloque(NodoBloque bloque){
+        for (NodoSentencia sentencia : bloque.get_lista_sentencias()){
+
+        }
     }
 
     //------------------------------------------ETAPA 3-----------------------------------------------------------------------------//

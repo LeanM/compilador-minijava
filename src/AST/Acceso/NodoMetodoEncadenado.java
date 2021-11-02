@@ -9,9 +9,9 @@ public class NodoMetodoEncadenado extends NodoEncadenado{
 
     private LinkedList<NodoExpresion> argumentos;
 
-    public NodoMetodoEncadenado(Token nombre){
+    public NodoMetodoEncadenado(Token nombre,LinkedList<NodoExpresion> args){
         super(nombre);
-        argumentos = new LinkedList<NodoExpresion>();
+        argumentos = args;
     }
 
     public void setArgumentos(LinkedList<NodoExpresion> args){

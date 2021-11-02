@@ -12,8 +12,12 @@ public class NodoLlamada extends NodoSentencia{
         this.nodo_acceso = nodo;
     }
 
+    public NodoAcceso get_nodo_acceso(){
+        return nodo_acceso;
+    }
+
     @Override
     public void esta_bien_definido() {
-
+        nodo_acceso.esta_bien_definido();
     }
 }

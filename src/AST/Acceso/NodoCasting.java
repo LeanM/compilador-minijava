@@ -2,7 +2,7 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 
-public class NodoCasting {
+public class NodoCasting extends NodoAcceso{
 
     private NodoPrimario primario;
     private Token token_clase_casteo;

@@ -37,6 +37,9 @@ public abstract class EntradaUnidad {
         public void set_bloque_sentencias(NodoBloque bloque) {
             this.bloque_sentencias = bloque;
         }
+        public NodoBloque get_bloque_sentencias(){
+            return bloque_sentencias;
+        }
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
         public abstract void esta_bien_declarado() throws ExcepcionSemantica;

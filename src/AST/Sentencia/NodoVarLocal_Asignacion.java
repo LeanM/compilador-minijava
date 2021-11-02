@@ -11,6 +11,10 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
     public NodoVarLocal_Asignacion(Tipo tipo, Token variable) {
         super(tipo, variable);
     }
+    public NodoVarLocal_Asignacion(Tipo tipo, Token variable,NodoExpresion exp) {
+        super(tipo, variable);
+        this.expresion_de_asignacion = exp;
+    }
 
     public void set_expresion(NodoExpresion exp) {
         this.expresion_de_asignacion = exp;
