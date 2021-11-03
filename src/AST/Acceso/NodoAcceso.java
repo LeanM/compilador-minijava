@@ -1,11 +1,17 @@
 package AST.Acceso;
 
-import AST.Expresion.NodoOperando;
+import AnalizadorLexico.Token;
 
-public abstract class NodoAcceso extends NodoOperando {
+public abstract class NodoAcceso {
 
-    public NodoAcceso(){
+    protected Token token_acceso;
 
+    public NodoAcceso(Token token){
+        this.token_acceso = token;
     }
+
+    public Token getToken() { return token_acceso; }
+    public abstract void esta_bien_definido();
+    public abstract void mostrar_acceso();
 
 }

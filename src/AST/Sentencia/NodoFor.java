@@ -21,4 +21,15 @@ public class NodoFor extends NodoSentencia {
     public void esta_bien_definido() {
 
     }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Nodo for");
+        varLocal.mostar_sentencia();
+        condicion.mostrar_expresion();
+        asignacion.mostar_sentencia();
+        cuerpo_for.mostar_sentencia();
+        System.out.println("-----------------------------------------------------------");
+    }
 }

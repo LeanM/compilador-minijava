@@ -17,4 +17,14 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
     public void esta_bien_definido() {
 
     }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Nodo asignacion normal : ");
+        lado_izq.mostrar_acceso();
+        System.out.println(tipo_asignacion.get_lexema());
+        lado_der.mostrar_expresion();
+        System.out.println("-----------------------------------------------------------");
+    }
 }

@@ -20,4 +20,12 @@ public class NodoLlamada extends NodoSentencia{
     public void esta_bien_definido() {
         nodo_acceso.esta_bien_definido();
     }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Nodo llamada : ");
+        nodo_acceso.mostrar_acceso();
+        System.out.println("-----------------------------------------------------------");
+    }
 }

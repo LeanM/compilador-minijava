@@ -775,7 +775,7 @@ public class Analizador_Sintactico {
         else
             //Primeros Acceso
             if (Arrays.asList("parAbre","idMetVar","pr_this","pr_new","idClase").contains(token_actual.get_id_token()))
-                toReturn = acceso();
+                toReturn = new NodoOperando_Acceso(acceso());
             else {
                 throw new ExcepcionSintactica(token_actual,"Entero, Char, String, (, idMetVar, idClase o Palabras reservadas : null, true , false, this, new");
             }

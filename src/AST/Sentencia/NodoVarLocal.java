@@ -5,8 +5,8 @@ import AnalizadorSemantico.Tipo;
 
 public class NodoVarLocal extends NodoSentencia{
 
-    private Token variable;
-    private Tipo tipo;
+    protected Token variable;
+    protected Tipo tipo;
 
     public NodoVarLocal(Tipo tipo, Token variable){
         super();
@@ -17,5 +17,10 @@ public class NodoVarLocal extends NodoSentencia{
     @Override
     public void esta_bien_definido() {
 
+    }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("varLocal : "+variable.get_lexema());
     }
 }

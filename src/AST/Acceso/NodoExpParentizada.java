@@ -7,7 +7,7 @@ public class NodoExpParentizada extends NodoPrimario {
     private NodoExpresion expresion_parentizada;
 
     public NodoExpParentizada(NodoExpresion exp){
-        super();
+        super(exp.getToken());
         this.expresion_parentizada = exp;
     }
 

@@ -4,8 +4,8 @@ import AST.Expresion.NodoExpresion;
 
 public class NodoIf extends NodoSentencia {
 
-    private NodoExpresion condicion;
-    private NodoSentencia cuerpo_then;
+    protected NodoExpresion condicion;
+    protected NodoSentencia cuerpo_then;
 
     public NodoIf(NodoExpresion condicion, NodoSentencia then){
         super();
@@ -16,5 +16,14 @@ public class NodoIf extends NodoSentencia {
     @Override
     public void esta_bien_definido() {
 
+    }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("-----------------------------------------------------------");
+        System.out.println("Nodo If ");
+        condicion.mostrar_expresion();
+        cuerpo_then.mostar_sentencia();
+        System.out.println("-----------------------------------------------------------");
     }
 }

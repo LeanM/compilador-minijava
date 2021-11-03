@@ -9,7 +9,6 @@ public class EntradaMetodo extends EntradaUnidad {
     private Token token_metodo;
     private String alcance_metodo;
     private Tipo tipo_metodo;
-    //private HashMap<String,EntradaVariable> tabla_variables;
 
     public EntradaMetodo(Token token_metodo, String alcance_metodo, Tipo tipo_metodo) {
         super();

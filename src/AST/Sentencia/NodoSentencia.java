@@ -9,4 +9,5 @@ public abstract class NodoSentencia {
     }
 
     public abstract void esta_bien_definido();
+    public abstract void mostar_sentencia();
 }

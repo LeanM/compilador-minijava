@@ -22,4 +22,9 @@ public class NodoReturn extends NodoSentencia {
     public void esta_bien_definido() {
         //expresion puede ser null
     }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("Nodo return : "+expresion.toString());
+    }
 }

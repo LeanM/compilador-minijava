@@ -1,3 +1,5 @@
+import AST.NodoBloque;
+import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Analizador_Lexico;
 import AnalizadorLexico.GestorArchivo;
 import AnalizadorLexico.Token;
@@ -17,9 +19,9 @@ public class ModuloPrincipal {
 
     public static void main (String [] args){
         TablaSimbolos.getInstance();
-        String programa = "";
+        String programa = "prueba.txt";
         try {
-            programa = args[0];
+            //programa = args[0];
         }
         catch (ArrayIndexOutOfBoundsException e){ e.printStackTrace();}
 
@@ -31,7 +33,8 @@ public class ModuloPrincipal {
             analizador_sintactico = new Analizador_Sintactico(analizador_lexico);
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
-            mostrarClases(); //fines de prueba
+            //mostrarClases(); //fines de prueba
+            mostrarAST();
             if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores()) {
                 System.out.println("Compilacion Exitosa");
                 System.out.println();
@@ -79,4 +82,20 @@ public class ModuloPrincipal {
         }
     }
 
+    private static void mostrarAST() {
+        EntradaClase entradaClase;
+        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
+
+        while (enum_clases.hasMoreElements()) {
+            entradaClase = enum_clases.nextElement();
+            System.out.println("CLASE ::::: "+entradaClase.getNombre());
+            Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
+            for (EntradaMetodo metodo : enum_metodos.nextElement()) {
+                System.out.println("METODO :::::: "+metodo.getNombre());
+                NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
+                bloque_metodo.mostar_sentencia();
+            }
+
+        }
+    }
 }

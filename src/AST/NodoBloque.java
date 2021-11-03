@@ -20,4 +20,11 @@ public class NodoBloque extends NodoSentencia {
     public void esta_bien_definido(){
         //Verificar toda la lista de sentencias
     }
+
+    @Override
+    public void mostar_sentencia() {
+        System.out.println("NodoBloque : ");
+        for(NodoSentencia ns : lista_sentencias)
+            ns.mostar_sentencia();
+    }
 }

@@ -1,6 +1,7 @@
 package AnalizadorSemantico;
 
 import AST.NodoBloque;
+import AST.Sentencia.NodoSentencia;
 
 import java.util.Hashtable;
 import java.util.LinkedList;
@@ -14,6 +15,7 @@ public abstract class EntradaUnidad {
         public EntradaUnidad(){
             tabla_argumentos = new Hashtable<String,EntradaParametro>();
             lista_argumentos = new LinkedList<EntradaParametro>();
+            bloque_sentencias = new NodoBloque(new LinkedList<NodoSentencia>()); //Inicializo con bloque vacio para evitar null
         }
 
         public abstract void setArgumento(String nombre, EntradaParametro argumento) throws ExcepcionSemantica;
