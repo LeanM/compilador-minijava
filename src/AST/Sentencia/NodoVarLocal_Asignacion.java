@@ -27,7 +27,7 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
 
     @Override
     public void mostar_sentencia() {
-        System.out.println("varLocal : "+variable.get_lexema());
+        System.out.println("varLocal asignacion : "+variable.get_lexema());
         expresion_de_asignacion.mostrar_expresion();
     }
 }

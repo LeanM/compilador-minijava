@@ -641,8 +641,9 @@ public class Analizador_Sintactico {
     private NodoAccesoConstructor accesoConstructor() throws ExcepcionSintactica {
         NodoAccesoConstructor toReturn;
         match("pr_new");
-        toReturn = new NodoAccesoConstructor(token_actual,argsActuales());
+        Token token_constructor = token_actual;
         match("idClase");
+        toReturn = new NodoAccesoConstructor(token_constructor,argsActuales());
         //genericidad_Vacio();
 
         return toReturn;

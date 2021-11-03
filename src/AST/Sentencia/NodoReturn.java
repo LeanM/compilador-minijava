@@ -25,6 +25,8 @@ public class NodoReturn extends NodoSentencia {
 
     @Override
     public void mostar_sentencia() {
-        System.out.println("Nodo return : "+expresion.toString());
+        System.out.println("Nodo return : ");
+        if(expresion != null)
+            expresion.mostrar_expresion();
     }
 }

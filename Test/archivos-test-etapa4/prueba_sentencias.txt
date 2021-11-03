@@ -1,0 +1,16 @@
+class A {
+
+private int g;
+
+dynamic int m1(){
+    int a = met();
+    met1();
+    a = met2();
+    a++;
+    a--;
+    ;
+    return a;
+    return ;
+}
+static void main(){}
+}

@@ -60,29 +60,39 @@ public class ModuloPrincipalTest {
     //-----------------------------------------ETAPA4------------------------------------------------------------------//
 
     void pruebas_etapa_4() {
-        errorCode = "[SinErroreos]";
+        //expresiones();
+        //sentencias();
+        accesos();
+    }
+
+    void prueba_random(){
+        errorCode = "[SinErrores]";
         String [] args = {directorio_archivos_etapa4+"prueba.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
-        //mostrarAST();
     }
 
-    private static void mostrarAST() {
-        EntradaClase entradaClase;
-        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
-
-        while (enum_clases.hasMoreElements()) {
-            entradaClase = enum_clases.nextElement();
-
-            Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
-            for (EntradaMetodo metodo : enum_metodos.nextElement()) {
-                NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
-                bloque_metodo.mostar_sentencia();
-            }
-
-        }
-
+    void expresiones(){
+        errorCode = "[SinErroares]";
+        String [] args = {directorio_archivos_etapa4+"prueba_expresiones.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
+
+    void sentencias() {
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_sentencias.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void accesos() {
+        errorCode = "[SinErroares]";
+        String [] args = {directorio_archivos_etapa4+"prueba_accesos.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
     //------------------------------------------ETAPA 3-----------------------------------------------------------------------------//
     void pruebas_etapa_3(int tipo_prueba){
         switch (tipo_prueba) {

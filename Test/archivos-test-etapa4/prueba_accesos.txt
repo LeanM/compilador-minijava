@@ -1,0 +1,14 @@
+class A {
+
+private int g;
+
+dynamic int m1(){
+    int a = met();
+    C.met();
+    C.a = 2;
+    C.a.met2();
+    C b = new C();
+    b.c.d.met();
+}
+static void main(){}
+}

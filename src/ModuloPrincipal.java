@@ -19,9 +19,9 @@ public class ModuloPrincipal {
 
     public static void main (String [] args){
         TablaSimbolos.getInstance();
-        String programa = "prueba.txt";
+        String programa = "";
         try {
-            //programa = args[0];
+            programa = args[0];
         }
         catch (ArrayIndexOutOfBoundsException e){ e.printStackTrace();}
 
@@ -90,10 +90,12 @@ public class ModuloPrincipal {
             entradaClase = enum_clases.nextElement();
             System.out.println("CLASE ::::: "+entradaClase.getNombre());
             Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
-            for (EntradaMetodo metodo : enum_metodos.nextElement()) {
-                System.out.println("METODO :::::: "+metodo.getNombre());
-                NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
-                bloque_metodo.mostar_sentencia();
+            while (enum_metodos.hasMoreElements()) {
+                for (EntradaMetodo metodo : enum_metodos.nextElement()) {
+                    System.out.println("METODO :::::: " + metodo.getNombre());
+                    NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
+                    bloque_metodo.mostar_sentencia();
+                }
             }
 
         }
