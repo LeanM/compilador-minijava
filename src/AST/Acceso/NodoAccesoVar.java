@@ -13,6 +13,6 @@ public class NodoAccesoVar extends NodoPrimario{
 
     @Override
     public void esta_bien_definido() {
-
+        //Verificar semantica de acceso variables
     }
 }

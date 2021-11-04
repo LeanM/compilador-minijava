@@ -22,7 +22,8 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
 
     @Override
     public void esta_bien_definido() {
-
+        super.esta_bien_definido();
+        expresion_de_asignacion.esta_bien_definido();
     }
 
     @Override

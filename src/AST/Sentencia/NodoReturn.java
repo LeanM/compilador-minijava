@@ -9,7 +9,8 @@ public class NodoReturn extends NodoSentencia {
     private Token token_return;
 
     public NodoReturn(Token token_return){
-        super();this.token_return = token_return;
+        super();
+        this.token_return = token_return;
     }
 
     public NodoReturn(Token token_return, NodoExpresion expresion){
@@ -21,6 +22,8 @@ public class NodoReturn extends NodoSentencia {
     @Override
     public void esta_bien_definido() {
         //expresion puede ser null
+        if(expresion != null)
+            expresion.esta_bien_definido();
     }
 
     @Override

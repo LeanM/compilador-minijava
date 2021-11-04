@@ -19,7 +19,10 @@ public class NodoFor extends NodoSentencia {
 
     @Override
     public void esta_bien_definido() {
-
+        varLocal.esta_bien_definido();
+        condicion.esta_bien_definido();
+        asignacion.esta_bien_definido();
+        cuerpo_for.esta_bien_definido();
     }
 
     @Override

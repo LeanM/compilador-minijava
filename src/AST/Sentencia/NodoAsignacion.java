@@ -14,4 +14,8 @@ public abstract class NodoAsignacion extends NodoSentencia {
         this.tipo_asignacion = tipo_asignacion;
     }
 
+    public void esta_bien_definido() {
+        lado_izq.esta_bien_definido();
+    }
+
 }

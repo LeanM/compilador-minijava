@@ -13,6 +13,6 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
 
     @Override
     public void esta_bien_definido() {
-
+        //Verificar semanticas de acceso constructor
     }
 }

@@ -10,11 +10,6 @@ public class NodoAsignacion_Inc extends NodoAsignacion{
     }
 
     @Override
-    public void esta_bien_definido() {
-
-    }
-
-    @Override
     public void mostar_sentencia() {
         System.out.println("-----------------------------------------------------------");
         System.out.println("NodoAsignacion_Inc : ");

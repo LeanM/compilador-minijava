@@ -19,6 +19,8 @@ public class NodoBloque extends NodoSentencia {
 
     public void esta_bien_definido(){
         //Verificar toda la lista de sentencias
+        for(NodoSentencia ns : lista_sentencias)
+            ns.esta_bien_definido();
     }
 
     @Override

@@ -13,7 +13,7 @@ public class NodoAccesoEstatico extends NodoPrimario{
 
     @Override
     public void esta_bien_definido() {
-
+        //Verificar semanticas de acceso estatico
     }
 
 

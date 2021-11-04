@@ -17,7 +17,8 @@ public class NodoExpresionBinaria extends NodoExpresion {
 
     @Override
     public void esta_bien_definido() {
-
+        expresion_izq.esta_bien_definido();
+        expresion_der.esta_bien_definido();
     }
 
     @Override

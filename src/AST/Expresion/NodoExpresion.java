@@ -11,7 +11,7 @@ public abstract class NodoExpresion {
     }
 
     public Token getToken(){ return token_expresion; }
-    public abstract void esta_bien_definido();
 
+    public abstract void esta_bien_definido();
     public abstract void mostrar_expresion();
 }

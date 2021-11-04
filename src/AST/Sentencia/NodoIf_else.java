@@ -13,7 +13,8 @@ public class NodoIf_else extends NodoIf {
 
     @Override
     public void esta_bien_definido() {
-
+        super.esta_bien_definido();
+        cuerpo_else.esta_bien_definido();
     }
 
     @Override

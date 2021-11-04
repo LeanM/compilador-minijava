@@ -15,7 +15,8 @@ public class NodoIf extends NodoSentencia {
 
     @Override
     public void esta_bien_definido() {
-
+        condicion.esta_bien_definido();
+        cuerpo_then.esta_bien_definido();
     }
 
     @Override

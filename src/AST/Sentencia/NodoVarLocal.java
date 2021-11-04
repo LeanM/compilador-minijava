@@ -16,7 +16,7 @@ public class NodoVarLocal extends NodoSentencia{
 
     @Override
     public void esta_bien_definido() {
-
+        //Controles semanticos
     }
 
     @Override

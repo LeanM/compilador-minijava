@@ -15,7 +15,8 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
 
     @Override
     public void esta_bien_definido() {
-
+        super.esta_bien_definido();
+        lado_der.esta_bien_definido();
     }
 
     @Override
