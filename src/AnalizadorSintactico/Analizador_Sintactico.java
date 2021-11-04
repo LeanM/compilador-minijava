@@ -287,7 +287,7 @@ public class Analizador_Sintactico {
     }
 
     private void constructor() throws ExcepcionSintactica, ExcepcionSemantica {
-        EntradaConstructor cons = new EntradaConstructor(token_actual);
+        EntradaConstructor cons = new EntradaConstructor(token_actual,new TipoReferencia(new Token("idClase",TS.getClaseActual().getNombre(),token_actual.get_nro_linea())));
         TS.setUnidadActual(cons);
         match("idClase");
         argsFormales();
@@ -410,7 +410,7 @@ public class Analizador_Sintactico {
         NodoSentencia toReturn;
         //Primero accesoEstatico_Continuacion
         if (token_actual.get_id_token().equals("pun.")) {
-            NodoAccesoEstatico nodoAccesoEstatico = new NodoAccesoEstatico(tipo.get_token_tipo());
+            NodoAccesoEstatico nodoAccesoEstatico = new NodoAccesoEstatico(tipo.get_token_tipo(),TS.getClaseActual().getNombre());
             accesoEstatico_Continuacion(nodoAccesoEstatico);
             toReturn = asignacion_llamada(nodoAccesoEstatico);
         }
@@ -536,11 +536,11 @@ public class Analizador_Sintactico {
             match("parCierra");
             NodoPrimario nodoPrimario = primario();
             encadenado(nodoPrimario);
-            NodoCasting nodoCasting = new NodoCasting(nodoPrimario,clase);
+            NodoCasting nodoCasting = new NodoCasting(nodoPrimario,clase,TS.getClaseActual().getNombre());
             toReturn = nodoCasting;
         }
         else {
-            NodoExpParentizada nodoExpParentizada = new NodoExpParentizada(expresion());
+            NodoExpParentizada nodoExpParentizada = new NodoExpParentizada(expresion(),TS.getClaseActual().getNombre());
             match("parCierra");
             encadenado(nodoExpParentizada);
             toReturn = nodoExpParentizada;
@@ -606,7 +606,7 @@ public class Analizador_Sintactico {
     }
 
     private NodoAccesoEstatico accesoEstatico() throws ExcepcionSintactica {
-        NodoAccesoEstatico toReturn = new NodoAccesoEstatico(token_actual);
+        NodoAccesoEstatico toReturn = new NodoAccesoEstatico(token_actual,TS.getClaseActual().getNombre());
         match("idClase");
         match("pun.");
         Token nombre_met_var = token_actual;
@@ -622,9 +622,9 @@ public class Analizador_Sintactico {
         NodoPrimario toReturn;
         //Primeros argsActuales
         if (token_actual.get_id_token().equals("parAbre"))
-            toReturn = new NodoAccesoMetodo(nombre_met_var,argsActuales());
+            toReturn = new NodoAccesoMetodo(nombre_met_var,argsActuales(),TS.getClaseActual().getNombre());
         else {
-            toReturn = new NodoAccesoVar(nombre_met_var);
+            toReturn = new NodoAccesoVar(nombre_met_var,TS.getClaseActual().getNombre());
             //nada por que accesoIdMetVar -> e
         }
 
@@ -632,7 +632,7 @@ public class Analizador_Sintactico {
     }
 
     private NodoAccesoThis accesoThis() throws ExcepcionSintactica {
-        NodoAccesoThis toReturn = new NodoAccesoThis(token_actual);
+        NodoAccesoThis toReturn = new NodoAccesoThis(token_actual,TS.getClaseActual().getNombre());
         match("pr_this");
 
         return toReturn;
@@ -643,7 +643,7 @@ public class Analizador_Sintactico {
         match("pr_new");
         Token token_constructor = token_actual;
         match("idClase");
-        toReturn = new NodoAccesoConstructor(token_constructor,argsActuales());
+        toReturn = new NodoAccesoConstructor(token_constructor,argsActuales(),TS.getClaseActual().getNombre());
         //genericidad_Vacio();
 
         return toReturn;
@@ -820,7 +820,7 @@ public class Analizador_Sintactico {
         NodoExpParentizada toReturn;
         match("parAbre");
         NodoExpresion expresion = expresion();
-        toReturn = new NodoExpParentizada(expresion);
+        toReturn = new NodoExpParentizada(expresion,TS.getClaseActual().getNombre());
         match("parCierra");
 
         return toReturn;

@@ -1,6 +1,10 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Resolucion_Tipos;
+import AnalizadorSemantico.Tipo;
 
 public class NodoExpresionUnaria extends NodoExpresion {
 
@@ -13,8 +17,14 @@ public class NodoExpresionUnaria extends NodoExpresion {
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo {
         operando.esta_bien_definido();
+        Resolucion_Tipos.getInstance().resolver_tipo_unario(token_expresion,operando.get_tipo_expresion());
+    }
+
+    @Override
+    public Tipo get_tipo_expresion() throws ExcepcionTipo {
+        return Resolucion_Tipos.getInstance().resolver_tipo_unario(token_expresion,operando.get_tipo_expresion());
     }
 
     @Override

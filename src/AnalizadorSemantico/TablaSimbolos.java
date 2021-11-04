@@ -1,4 +1,5 @@
 package AnalizadorSemantico;
+import AST.Acceso.NodoAccesoMetodo;
 import AnalizadorLexico.Token;
 
 import java.util.*;

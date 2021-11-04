@@ -1,6 +1,9 @@
 package AST.Expresion;
 
 import AST.Acceso.NodoAcceso;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Tipo;
 
 public class NodoOperando_Acceso extends NodoOperando {
 
@@ -12,8 +15,13 @@ public class NodoOperando_Acceso extends NodoOperando {
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         nodo_acceso.esta_bien_definido();
+    }
+
+    @Override
+    public Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica {
+        return nodo_acceso.get_tipo_acceso();
     }
 
     @Override

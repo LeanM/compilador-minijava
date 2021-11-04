@@ -1,6 +1,9 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Resolucion_Tipos;
+import AnalizadorSemantico.Tipo;
 
 public class NodoExpresionBinaria extends NodoExpresion {
 
@@ -16,9 +19,18 @@ public class NodoExpresionBinaria extends NodoExpresion {
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo {
         expresion_izq.esta_bien_definido();
         expresion_der.esta_bien_definido();
+        get_tipo_expresion();
+    }
+
+    @Override
+    public Tipo get_tipo_expresion() throws ExcepcionTipo {
+        Tipo tipo_izq = expresion_izq.get_tipo_expresion();
+        Tipo tipo_der = expresion_der.get_tipo_expresion();
+
+        return Resolucion_Tipos.getInstance().resolver_tipo_binario(tipo_izq,token_expresion,tipo_der);
     }
 
     @Override

@@ -6,8 +6,8 @@ public abstract class NodoPrimario extends NodoAcceso{
 
     private NodoEncadenado encadenado;
 
-    public NodoPrimario(Token token_primario){
-        super(token_primario);
+    public NodoPrimario(Token token_primario, String key_clase){
+        super(token_primario,key_clase);
     }
 
     public void setEncadenado(NodoEncadenado encadenado){

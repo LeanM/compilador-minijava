@@ -8,8 +8,8 @@ public class EntradaConstructor extends EntradaUnidad {
     private Token token_constructor;
     //private Hashtable<String,EntradaVariable> tabla_variables;
 
-    public EntradaConstructor(Token token_constructor) {
-        super();
+    public EntradaConstructor(Token token_constructor,Tipo tipo_constructor) {
+        super(tipo_constructor);
         this.token_constructor = token_constructor;
         //tabla_variables = new Hashtable<String,EntradaVariable>();
     }

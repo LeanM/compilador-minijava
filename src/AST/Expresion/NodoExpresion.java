@@ -1,6 +1,9 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Tipo;
 
 public abstract class NodoExpresion {
 
@@ -12,6 +15,8 @@ public abstract class NodoExpresion {
 
     public Token getToken(){ return token_expresion; }
 
-    public abstract void esta_bien_definido();
+    public abstract void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica;
+    public abstract Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica;
+
     public abstract void mostrar_expresion();
 }

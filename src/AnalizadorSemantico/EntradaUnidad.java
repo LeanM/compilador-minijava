@@ -11,11 +11,13 @@ public abstract class EntradaUnidad {
         protected Hashtable<String,EntradaParametro> tabla_argumentos;
         protected LinkedList<EntradaParametro> lista_argumentos;
         protected NodoBloque bloque_sentencias;
+        protected Tipo tipo_unidad;
 
-        public EntradaUnidad(){
+        public EntradaUnidad(Tipo tipo_unidad){
             tabla_argumentos = new Hashtable<String,EntradaParametro>();
             lista_argumentos = new LinkedList<EntradaParametro>();
             bloque_sentencias = new NodoBloque(new LinkedList<NodoSentencia>()); //Inicializo con bloque vacio para evitar null
+            this.tipo_unidad = tipo_unidad;
         }
 
         public abstract void setArgumento(String nombre, EntradaParametro argumento) throws ExcepcionSemantica;
@@ -36,6 +38,7 @@ public abstract class EntradaUnidad {
             return toReturn;
         }
 
+        public Tipo get_tipo(){return tipo_unidad;}
         public void set_bloque_sentencias(NodoBloque bloque) {
             this.bloque_sentencias = bloque;
         }
