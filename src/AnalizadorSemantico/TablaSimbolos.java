@@ -187,7 +187,7 @@ public class TablaSimbolos {
     public EntradaMetodo conforma_metodo(Token token_metodo_accedido, LinkedList<NodoExpresion> argumentos_actuales, String key_clase) throws ExcepcionTipo, ExcepcionSemantica {
         boolean iguales = false;
         if(!tabla_clases.containsKey(key_clase))
-            throw new ExcepcionSemantica(token_metodo_accedido,"El metodo llamado no es visible en el contexto de la clase "+key_clase);
+            throw new ExcepcionSemantica(token_metodo_accedido,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
 
         EntradaClase clase = tabla_clases.get(key_clase);
         LinkedList<EntradaMetodo> lista_metodos = clase.get_tabla_metodos().get(token_metodo_accedido.get_lexema());
@@ -217,7 +217,7 @@ public class TablaSimbolos {
     public EntradaConstructor conforma_constructor(Token token_constructor_accedido, LinkedList<NodoExpresion> argumentos_actuales, String key_clase) throws ExcepcionSemantica, ExcepcionTipo {
         boolean iguales = false;
         if(!tabla_clases.containsKey(key_clase))
-            throw new ExcepcionSemantica(token_constructor_accedido,"El constructor llamado no es visible en el contexto de la clase "+key_clase);
+            throw new ExcepcionSemantica(token_constructor_accedido,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
 
         EntradaClase clase = tabla_clases.get(key_clase);
         LinkedList<EntradaConstructor> lista_constructores = clase.get_lista_constructores();
@@ -241,8 +241,11 @@ public class TablaSimbolos {
         return toReturn;
     }
 
-    public EntradaAtributo conforma_atributo(Token nombre_atributo, String key_clase){
+    public EntradaAtributo conforma_atributo(Token nombre_atributo, String key_clase) throws ExcepcionSemantica {
         EntradaAtributo toReturn = null;
+        if(!tabla_clases.containsKey(key_clase))
+            throw new ExcepcionSemantica(nombre_atributo,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
+
         EntradaClase entradaClase = tabla_clases.get(key_clase);
         if (entradaClase.get_tabla_atributos().containsKey(nombre_atributo.get_lexema()) && entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema()).get_visibilidad().equals("public"))
             toReturn = entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema());

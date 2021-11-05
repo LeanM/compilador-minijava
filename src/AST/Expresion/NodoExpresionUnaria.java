@@ -17,13 +17,13 @@ public class NodoExpresionUnaria extends NodoExpresion {
     }
 
     @Override
-    public void esta_bien_definido() throws ExcepcionTipo {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         operando.esta_bien_definido();
         Resolucion_Tipos.getInstance().resolver_tipo_unario(token_expresion,operando.get_tipo_expresion());
     }
 
     @Override
-    public Tipo get_tipo_expresion() throws ExcepcionTipo {
+    public Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica {
         return Resolucion_Tipos.getInstance().resolver_tipo_unario(token_expresion,operando.get_tipo_expresion());
     }
 

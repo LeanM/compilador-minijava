@@ -536,7 +536,7 @@ public class Analizador_Sintactico {
             match("parCierra");
             NodoPrimario nodoPrimario = primario();
             encadenado(nodoPrimario);
-            NodoCasting nodoCasting = new NodoCasting(nodoPrimario,clase,TS.getClaseActual().getNombre());
+            NodoCasting nodoCasting = new NodoCasting(nodoPrimario,clase,clase.get_lexema());
             toReturn = nodoCasting;
         }
         else {
@@ -902,8 +902,8 @@ public class Analizador_Sintactico {
         match("pr_return");
         NodoExpresion nodoExpresion = expresion_Vacio();
         if (nodoExpresion != null)
-            toReturn = new NodoReturn_Expresion(token_return,nodoExpresion);
-        else toReturn = new NodoReturn(token_return);
+            toReturn = new NodoReturn_Expresion(token_return,nodoExpresion,TS.getUnidadActual().get_tipo());
+        else toReturn = new NodoReturn(token_return,TS.getUnidadActual().get_tipo());
 
         return toReturn;
     }

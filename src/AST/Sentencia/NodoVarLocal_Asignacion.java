@@ -15,14 +15,11 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
         this.expresion_de_asignacion = exp;
     }
 
-    public void set_expresion(NodoExpresion exp) {
-        this.expresion_de_asignacion = exp;
-    }
-
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         super.esta_bien_definido();
         expresion_de_asignacion.esta_bien_definido();
+        expresion_de_asignacion.get_tipo_expresion().es_de_tipo(tipo);
     }
 
     @Override

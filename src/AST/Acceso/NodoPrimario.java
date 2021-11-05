@@ -10,6 +10,7 @@ public abstract class NodoPrimario extends NodoAcceso{
 
     public NodoPrimario(Token token_primario, String key_clase){
         super(token_primario,key_clase);
+        lista_encadenados = new LinkedList<NodoEncadenado>();
     }
 
     public void setEncadenado(NodoEncadenado encadenado){
@@ -42,6 +43,14 @@ public abstract class NodoPrimario extends NodoAcceso{
             toReturn = lista_encadenados.get(0);
 
         return toReturn;
+    }
+
+    public boolean tiene_encadenados(){
+        return !lista_encadenados.isEmpty();
+    }
+
+    public NodoEncadenado get_ultimo_encadenado(){
+        return lista_encadenados.getLast();
     }
 
     @Override

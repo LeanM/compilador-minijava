@@ -23,6 +23,7 @@ public class NodoFor extends NodoSentencia {
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         varLocal.esta_bien_definido();
         condicion.esta_bien_definido();
+        condicion.get_tipo_expresion().getNombre().equals("boolean");
         asignacion.esta_bien_definido();
         cuerpo_for.esta_bien_definido();
     }
