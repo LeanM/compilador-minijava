@@ -1,10 +1,7 @@
 package AST.Acceso;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Tipo;
-import AnalizadorSemantico.TipoReferencia;
+import AnalizadorSemantico.*;
 
 public class NodoCasting extends NodoAcceso{
 
@@ -17,7 +14,11 @@ public class NodoCasting extends NodoAcceso{
         //this.token_clase_casteo = clase;
     }
 
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
+        if(TablaSimbolos.getInstance().get_tabla_clases().containsKey(key_clase)){
+            primario.esta_bien_definido();
+            this.get_tipo_acceso().es_de_tipo(primario.get_tipo_acceso());
+        }
 
     }
 

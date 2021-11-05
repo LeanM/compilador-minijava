@@ -2,6 +2,8 @@ package AST.Sentencia;
 
 import AST.Acceso.NodoAcceso;
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 
 public class NodoAsignacion_Inc extends NodoAsignacion{
 
@@ -16,5 +18,10 @@ public class NodoAsignacion_Inc extends NodoAsignacion{
         lado_izq.mostrar_acceso();
         System.out.println(tipo_asignacion.get_lexema());
         System.out.println("-----------------------------------------------------------");
+    }
+
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
+        super.esta_bien_definido();
+        lado_izq.get_tipo_acceso().getNombre().equals("int");
     }
 }

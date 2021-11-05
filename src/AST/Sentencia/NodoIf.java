@@ -19,6 +19,7 @@ public class NodoIf extends NodoSentencia {
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         condicion.esta_bien_definido();
+        condicion.get_tipo_expresion().getNombre().equals("boolean");
         cuerpo_then.esta_bien_definido();
     }
 

@@ -44,6 +44,14 @@ public abstract class NodoPrimario extends NodoAcceso{
         return toReturn;
     }
 
+    public boolean tiene_encadenados(){
+        return !lista_encadenados.isEmpty();
+    }
+
+    public NodoEncadenado get_ultimo_encadenado(){
+        return lista_encadenados.getLast();
+    }
+
     @Override
     public void mostrar_acceso() {
         System.out.println("Nodo Acceso Primario :");
