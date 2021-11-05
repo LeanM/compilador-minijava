@@ -10,6 +10,7 @@ public abstract class NodoPrimario extends NodoAcceso{
 
     public NodoPrimario(Token token_primario, String key_clase){
         super(token_primario,key_clase);
+        lista_encadenados = new LinkedList<NodoEncadenado>();
     }
 
     public void setEncadenado(NodoEncadenado encadenado){

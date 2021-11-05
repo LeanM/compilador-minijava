@@ -73,7 +73,7 @@ public class ModuloPrincipalTest {
     }
 
     void expresiones(){
-        errorCode = "[SinErroares]";
+        errorCode = "[SinErrores]";
         String [] args = {directorio_archivos_etapa4+"prueba_expresiones.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
@@ -87,7 +87,7 @@ public class ModuloPrincipalTest {
     }
 
     void accesos() {
-        errorCode = "[SinErroares]";
+        errorCode = "[SinErrores]";
         String [] args = {directorio_archivos_etapa4+"prueba_accesos.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));

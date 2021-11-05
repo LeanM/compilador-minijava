@@ -31,7 +31,8 @@ public class EntradaClase_Standar extends EntradaClase{
 
         if(lista_constructores.isEmpty()) {
             //agregar constructor predeterminado
-            EntradaConstructor constructor_predeterminado = new EntradaConstructor(new Token("idClase",token_clase.get_lexema(),token_clase.get_nro_linea()));
+            Token token_constructor = new Token("idClase",token_clase.get_lexema(),token_clase.get_nro_linea());
+            EntradaConstructor constructor_predeterminado = new EntradaConstructor(token_constructor,new TipoReferencia(token_constructor));
             this.setConstructor(constructor_predeterminado.getNombre(),constructor_predeterminado);
         }
         else {
