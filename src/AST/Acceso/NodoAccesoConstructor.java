@@ -24,6 +24,10 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
-        return TablaSimbolos.getInstance().get_entrada_clase(key_clase).get_lista_constructores().getFirst().get_tipo();
+        EntradaConstructor ec = TablaSimbolos.getInstance().conforma_constructor(token_acceso,argumentos,key_clase);
+        if(ec == null)
+            throw new ExcepcionTipo("No hay conformidad de tipos con ninguno de los constructores definidos en la clase.");
+        else
+            return ec.get_tipo();
     }
 }
