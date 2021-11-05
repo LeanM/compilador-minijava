@@ -1,0 +1,18 @@
+class A {
+
+private int g;
+
+dynamic void m1(){
+    int c; int b; char ch;int a; String texto;
+    c = (a+5)+7/(2*2);
+    c++;
+    c--;
+    b = this.g + 5;
+    b = m1() + 2;
+    b = C.a;
+    ch = 'c';
+    texto = "hola";
+    texto = null;
+}
+static void main(){}
+}

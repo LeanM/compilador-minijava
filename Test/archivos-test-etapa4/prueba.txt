@@ -9,7 +9,7 @@ dynamic void met1(int a, int b){
 	a = 10;
 	if(a<9) { a = 0;}
 	else a=9;
-	
+
 }
 
 }
@@ -26,4 +26,3 @@ dynamic int met1(int a){}
 class C extends B {
 static void main(){}
 }
-

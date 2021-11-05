@@ -21,7 +21,7 @@ public class EntradaParametro {
     /*  Verifica que ambos parametros, tanto el que recibio el mensaje como
      *  el parametro parametrizado sean de el mismo tipo exacto.
      */
-    public boolean son_iguales(EntradaParametro param_a_comparar) throws ExcepcionSemantica {
+    public boolean son_iguales(EntradaParametro param_a_comparar) {
         return this.tipo_parametro.mismo_tipo_exacto(param_a_comparar.get_tipo());
     }
 
