@@ -12,37 +12,19 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         super(nombre,args,key_clase);
     }
 
-    public void m1(NodoAccesoUnidad au){}
-    /*
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         boolean iguales = false;
+        if(!TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_metodos().containsKey(token_acceso.get_lexema()))
+            throw new ExcepcionSemantica(token_acceso,"El metodo llamado no es visible en el contexto de la clase "+key_clase);
+
+        EntradaMetodo metodo_en_clase = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,key_clase);
+        if (metodo_en_clase == null)
+            throw new ExcepcionTipo("La llamada a metodo no conforma con ningun metodos de la clase.");
+
+        /*
         EntradaClase clase = TablaSimbolos.getInstance().get_entrada_clase(key_clase);
         LinkedList<EntradaMetodo> lista_metodos = clase.get_tabla_metodos().get(token_acceso.get_lexema());
-
-        for (EntradaMetodo em : lista_metodos){
-            LinkedList<EntradaParametro> args_metodo = em.get_lista_argumentos();
-            if(argumentos.size() == args_metodo.size()) {
-                iguales = true;
-                for (int i = 0; i < argumentos.size(); i++) {
-                    if(!this.argumentos.get(i).get_tipo_expresion().es_de_tipo(args_metodo.get(i).get_tipo()))
-                        iguales = false;
-                }
-                if(iguales)
-                    break;
-            }
-        }
-
-        if(!iguales)
-            throw new ExcepcionTipo("La llamda a metodo no es correctamente tipada para ninguno de los metodos de la clase.");
-    }
-    */
-    @Override
-    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
-        boolean iguales = false;
-        EntradaClase clase = TablaSimbolos.getInstance().get_entrada_clase(key_clase);
-        LinkedList<EntradaMetodo> lista_metodos = clase.get_tabla_metodos().get(token_acceso.get_lexema());
-
         for (EntradaMetodo em : lista_metodos){
             LinkedList<EntradaParametro> args_metodo = em.get_lista_argumentos();
             iguales = this.conforma_argumentos(args_metodo);
@@ -52,10 +34,19 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
 
         if(!iguales)
             throw new ExcepcionTipo("La llamada a metodo no es correctamente tipada para ninguno de los metodos de la clase.");
+
+         */
     }
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
+
+        EntradaMetodo metodo_en_clase = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,key_clase);
+        if (metodo_en_clase == null)
+            throw new ExcepcionTipo("La llamada a metodo no conforma con ningun metodos de la clase.");
+        else return metodo_en_clase.get_tipo();
+
+        /*
         LinkedList<EntradaMetodo> metodos = TablaSimbolos.getInstance().get_entrada_clase(key_clase).get_tabla_metodos().get(token_acceso.get_lexema());
         LinkedList<EntradaParametro> args_metodo;
         Tipo toReturn = new TipoReferencia(null);
@@ -73,5 +64,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             throw new ExcepcionTipo("No hay ningun metodo en la clase que conforme con el metodo llamado.");
 
         return toReturn;
+
+         */
     }
 }

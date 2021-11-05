@@ -19,6 +19,6 @@ public class NodoAccesoThis extends NodoPrimario {
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
-        return new TipoReferencia(token_acceso);
+        return new TipoReferencia(new Token("idClase",key_clase,0));
     }
 }

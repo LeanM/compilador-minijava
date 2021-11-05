@@ -2,6 +2,8 @@ package AST.Sentencia;
 
 import AST.Acceso.NodoAcceso;
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 
 public abstract class NodoAsignacion extends NodoSentencia {
 
@@ -14,7 +16,7 @@ public abstract class NodoAsignacion extends NodoSentencia {
         this.tipo_asignacion = tipo_asignacion;
     }
 
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         lado_izq.esta_bien_definido();
     }
 

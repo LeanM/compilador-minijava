@@ -1,6 +1,8 @@
 package AST.Sentencia;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
 public class NodoVarLocal extends NodoSentencia{
@@ -15,8 +17,16 @@ public class NodoVarLocal extends NodoSentencia{
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         //Controles semanticos
+    }
+
+    public Token get_token(){
+        return variable;
+    }
+
+    public Tipo getTipo(){
+        return tipo;
     }
 
     @Override

@@ -1,6 +1,8 @@
 package AST.Sentencia;
 
 import AST.Expresion.NodoExpresion;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 
 public class NodoFor extends NodoSentencia {
 
@@ -18,7 +20,7 @@ public class NodoFor extends NodoSentencia {
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         varLocal.esta_bien_definido();
         condicion.esta_bien_definido();
         asignacion.esta_bien_definido();

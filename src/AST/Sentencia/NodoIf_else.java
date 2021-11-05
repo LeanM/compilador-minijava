@@ -1,6 +1,9 @@
 package AST.Sentencia;
 
 import AST.Expresion.NodoExpresion;
+import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 
 public class NodoIf_else extends NodoIf {
 
@@ -12,7 +15,7 @@ public class NodoIf_else extends NodoIf {
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         super.esta_bien_definido();
         cuerpo_else.esta_bien_definido();
     }

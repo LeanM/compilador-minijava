@@ -5,22 +5,22 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 
-public class NodoReturn extends NodoSentencia {
+public class NodoReturn_Expresion extends NodoReturn{
 
-    protected Token token_return;
+    private NodoExpresion expresion;
 
-    public NodoReturn(Token token_return){
-        super();
-        this.token_return = token_return;
+    public NodoReturn_Expresion(Token token_return, NodoExpresion expresion) {
+        super(token_return);
     }
 
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
-        //nada
+        expresion.esta_bien_definido();
     }
 
     @Override
     public void mostar_sentencia() {
         System.out.println("Nodo return : ");
+        expresion.mostrar_expresion();
     }
 }

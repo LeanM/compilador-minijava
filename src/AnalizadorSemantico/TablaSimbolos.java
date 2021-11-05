@@ -1,5 +1,6 @@
 package AnalizadorSemantico;
 import AST.Acceso.NodoAccesoMetodo;
+import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 
 import java.util.*;
@@ -181,6 +182,72 @@ public class TablaSimbolos {
         }
         //else throw new ExcepcionSemantica(clase.get_tabla_atributos().get(atr.getNombre()).get_token_atributo(),"Error Semantico en linea "+clase.get_tabla_atributos().get(atr.getNombre()).get_token_atributo().get_nro_linea() +": El atributo "+atr.getNombre()+" tiene el mismo nombre que uno en la clase super.");
         //no hago nada (logro atributos tapados)
+    }
+
+    public EntradaMetodo conforma_metodo(Token token_metodo_accedido, LinkedList<NodoExpresion> argumentos_actuales, String key_clase) throws ExcepcionTipo, ExcepcionSemantica {
+        boolean iguales = false;
+        if(!tabla_clases.containsKey(key_clase))
+            throw new ExcepcionSemantica(token_metodo_accedido,"El metodo llamado no es visible en el contexto de la clase "+key_clase);
+
+        EntradaClase clase = tabla_clases.get(key_clase);
+        LinkedList<EntradaMetodo> lista_metodos = clase.get_tabla_metodos().get(token_metodo_accedido.get_lexema());
+        LinkedList<EntradaParametro> argumentos_formales;
+        EntradaMetodo toReturn = null;
+
+        for (EntradaMetodo em : lista_metodos){
+            argumentos_formales = em.get_lista_argumentos();
+            if(argumentos_actuales.size() == argumentos_formales.size()) {
+                iguales = true;
+                //Se verifica que conformen los argumentos
+                for (int i = 0; i < argumentos_actuales.size() && iguales; i++) {
+                    if(!argumentos_actuales.get(i).get_tipo_expresion().es_de_tipo(argumentos_formales.get(i).get_tipo()))
+                        iguales = false;
+                }
+            }
+            if(iguales) {
+                toReturn = em;
+                break;
+            }
+        }
+
+
+        return toReturn;
+    }
+
+    public EntradaConstructor conforma_constructor(Token token_constructor_accedido, LinkedList<NodoExpresion> argumentos_actuales, String key_clase) throws ExcepcionSemantica, ExcepcionTipo {
+        boolean iguales = false;
+        if(!tabla_clases.containsKey(key_clase))
+            throw new ExcepcionSemantica(token_constructor_accedido,"El constructor llamado no es visible en el contexto de la clase "+key_clase);
+
+        EntradaClase clase = tabla_clases.get(key_clase);
+        LinkedList<EntradaConstructor> lista_constructores = clase.get_lista_constructores();
+        LinkedList<EntradaParametro> argumentos_formales;
+        EntradaConstructor toReturn = null;
+        for (EntradaConstructor ec : lista_constructores){
+            argumentos_formales = ec.get_lista_argumentos();
+            if(argumentos_actuales.size() == argumentos_formales.size()) {
+                iguales = true;
+                //Se verifica que conformen los argumentos
+                for (int i = 0; i < argumentos_actuales.size() && iguales; i++) {
+                    if(!argumentos_actuales.get(i).get_tipo_expresion().es_de_tipo(argumentos_formales.get(i).get_tipo()))
+                        iguales = false;
+                }
+            }
+            if(iguales) {
+                toReturn = ec;
+                break;
+            }
+        }
+        return toReturn;
+    }
+
+    public EntradaAtributo conforma_atributo(Token nombre_atributo, String key_clase){
+        EntradaAtributo toReturn = null;
+        EntradaClase entradaClase = tabla_clases.get(key_clase);
+        if (entradaClase.get_tabla_atributos().containsKey(nombre_atributo.get_lexema()) && entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema()).get_visibilidad().equals("public"))
+            toReturn = entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema());
+
+        return toReturn;
     }
 
     private void inicializar_clase_Object() {

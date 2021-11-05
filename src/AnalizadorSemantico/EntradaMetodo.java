@@ -18,13 +18,6 @@ public class EntradaMetodo extends EntradaUnidad {
         //tabla_variables = new HashMap<String,EntradaVariable>();
     }
 
-    public void setArgumento(String nombre_argumento, EntradaParametro argumento) throws ExcepcionSemantica {
-        if(!tabla_argumentos.containsKey(nombre_argumento)) {
-            tabla_argumentos.put(nombre_argumento, argumento);
-            lista_argumentos.add(argumento);
-        }
-        else throw new ExcepcionSemantica(argumento.get_token_parametro(),"Error Semantico en linea "+argumento.get_token_parametro().get_nro_linea() +": Ya hay un parametro declarado con el nombre "+nombre_argumento);
-    }
     /*  No de esta etapa (variables locales)
     public void setVariable(String nombre_variable, EntradaVariable variable) {
         tabla_variables.put(nombre_variable,variable);
