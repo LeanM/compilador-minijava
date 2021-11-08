@@ -69,11 +69,43 @@ public class ModuloPrincipalTest {
         //prueba_var_encadenada();
         //prueba_invoca_constructor();
         //prueba_var_local_y_acceso();
+        //chequeo_expresion_unaria();
+        //chequeo_expresion_binaria();
+        //chequeo_casting();
+        chequeo_unidades();
     }
 
     void prueba_var_local_y_acceso(){
         errorCode = "[SinErrores]";
         String [] args = {directorio_archivos_etapa4+"prueba_var_locales_y_acceso.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void chequeo_unidades(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"chequeo_unidades.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void chequeo_casting(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"chequeo_casting.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void chequeo_expresion_unaria(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"chequeo_expresiones_unarias.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void chequeo_expresion_binaria(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"chequeo_expresiones_binarias.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }

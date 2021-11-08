@@ -14,7 +14,7 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
         primario_decorator.esta_bien_definido();
         Tipo tipo_izq = primario_decorator.get_tipo_acceso();
         EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(token_acceso,tipo_izq.getNombre());
-        if(atributo_conforma == null)
+        if(atributo_conforma == null || atributo_conforma.get_visibilidad().equals("private"))
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
     }
 

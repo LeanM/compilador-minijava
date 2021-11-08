@@ -1,0 +1,32 @@
+class A {
+
+    public B b;
+    public C c;
+    private int a;
+    public boolean var_bool;
+
+    dynamic void m1(int f){
+        a = (a-a)*5 + ((a*a)-((a+a)/a));
+        //b = b + 5;
+        if(!var_bool || false);
+        //boolean asd = ((!var_bool) && (5));
+        //boolean asd = 5 || 3;
+        boolean asd = 5<3;
+        //asd = true > 4;
+        asd = 5 == 3;
+        asd = b != c;
+        //asd = this == c;
+        asd = (true) && (((1)));
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {}
+
+class C extends B {}

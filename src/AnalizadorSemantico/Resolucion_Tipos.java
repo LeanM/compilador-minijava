@@ -43,13 +43,10 @@ public class Resolucion_Tipos {
                 }
                 else
                     if(Arrays.asList("==","!=").contains(operador_binario.get_lexema())){
-                        if(tipoA.es_de_tipo(tipoB))
-                            toReturn = tipoA;
+                        if(tipoA.es_de_tipo(tipoB) || tipoB.es_de_tipo(tipoA))
+                            toReturn = new TipoPrimitivo(new Token("pr_boolean","boolean",0));
                         else
-                            if(tipoB.es_de_tipo(tipoB))
-                                toReturn = tipoB;
-                            else
-                                throw new ExcepcionTipo(operador_binario,"Los operadores == y != solo trabajan con tipos conformantes");
+                            throw new ExcepcionTipo(operador_binario,"Los operadores == y != solo trabajan con tipos conformantes");
                     }
         return toReturn;
     }
@@ -57,12 +54,12 @@ public class Resolucion_Tipos {
     public Tipo resolver_tipo_unario(Token operador_unario,Tipo tipo) throws ExcepcionTipo {
         if(operador_unario.get_lexema().equals("!")){
             if(!tipo.getNombre().equals("boolean"))
-                throw new ExcepcionTipo(operador_unario,"El tipo deberia ser boolean");
+                throw new ExcepcionTipo(operador_unario,"El operador unario "+operador_unario.get_lexema()+" solo puede recibir tipo boolean");
         }
         else {
             //Caso + o -
             if(!tipo.getNombre().equals("int"))
-                throw new ExcepcionTipo(operador_unario,"El tipo deberia ser int");
+                throw new ExcepcionTipo(operador_unario,"El operador unario "+operador_unario.get_lexema()+" solo puede recibir tipo int");
         }
 
         return tipo;

@@ -1,0 +1,23 @@
+class A {
+
+    public B b;
+    private int a;
+    public boolean var_bool;
+
+    dynamic void m1(int f){
+        a = -a;
+        //b = -b;
+        int c = -a;
+        if(!var_bool);
+        boolean asd = ((!var_bool) && (-var_bool));
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {}

@@ -1,0 +1,25 @@
+class A {
+
+    public B b;
+    public C c;
+    //private int a;
+    public boolean var_bool;
+    public A a;
+
+    dynamic void m1(int f){
+        (B) c = null;
+        //(C) b = null;
+        a = (A) b;
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {}
+
+class C extends B {}

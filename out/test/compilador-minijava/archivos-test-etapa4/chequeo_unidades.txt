@@ -1,0 +1,31 @@
+class A {
+
+    public B b;
+
+
+    dynamic void m1(){
+        boolean asd = true;
+        m2();
+        //m2(1);
+        m2(asd);
+        b.metodo(1);
+        //b.metodo(asd);
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    dynamic void m2(boolean a){}
+    static void main() {}
+
+
+}
+
+class B {
+    public int entero;
+    public A a;
+    dynamic void metodo(int a){
+
+    }
+
+}

@@ -1,10 +1,10 @@
 class A {
 
-    public B b;
-
+    private B b;
+    public int k;
 
     dynamic void m1(int f){
-        local = 0;
+        //local = 0;
         int local = 0;
         local = 1;
         f = 1;
@@ -28,7 +28,9 @@ class B {
     private int c;
     public int d;
     dynamic void metodo(){
-
+        //a.b = null;
+        a.k = 0;
+        c = 0;
     }
 
 }

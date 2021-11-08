@@ -16,7 +16,8 @@ public class NodoCasting extends NodoAcceso{
         if(TablaSimbolos.getInstance().get_tabla_clases().containsKey(token_acceso.get_lexema())){
             primario.esta_bien_definido();
             Tipo tipo_primario = primario.get_tipo_acceso();
-            if(!this.get_tipo_acceso().es_de_tipo(tipo_primario))
+            Tipo tipo_acceso = this.get_tipo_acceso();
+            if(!tipo_acceso.es_de_tipo(tipo_primario) && !tipo_primario.es_de_tipo(tipo_acceso))
                 throw new ExcepcionTipo(token_acceso,"No es posible hacer casting de "+tipo_primario.getNombre()+" a el tipo "+token_acceso.get_lexema()+" ya que no son subtipos.");
 
         }
