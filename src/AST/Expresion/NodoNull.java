@@ -14,6 +14,6 @@ public class NodoNull extends NodoOperando_Literal {
 
     @Override
     public Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica {
-        return new TipoReferencia(new Token("pr_null","null",0));
+        return new TipoReferencia(token_expresion);
     }
 }

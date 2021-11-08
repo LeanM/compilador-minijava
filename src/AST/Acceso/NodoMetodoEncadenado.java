@@ -5,7 +5,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
 import java.util.LinkedList;
-
+/*
 public class NodoMetodoEncadenado extends NodoEncadenado{
 
     private LinkedList<NodoExpresion> argumentos;
@@ -16,7 +16,7 @@ public class NodoMetodoEncadenado extends NodoEncadenado{
     }
 
     @Override
-    public Tipo obtener_tipo() throws ExcepcionTipo, ExcepcionSemantica {
+    public Tipo obtener_tipo_encadenado() throws ExcepcionTipo, ExcepcionSemantica {
         Tipo toReturn;
         EntradaMetodo em;
         if(nodo_primario.get_pos_en_encadenados(this) == 0){
@@ -28,7 +28,7 @@ public class NodoMetodoEncadenado extends NodoEncadenado{
         }
         else {
             NodoEncadenado encadenado_izq = nodo_primario.get_encadenado_izq(this);
-            em = TablaSimbolos.getInstance().conforma_metodo(token_nombre,argumentos, encadenado_izq.obtener_tipo().getNombre());
+            em = TablaSimbolos.getInstance().conforma_metodo(token_nombre,argumentos, encadenado_izq.obtener_tipo_encadenado().getNombre());
             if(em == null)
                 throw new ExcepcionTipo("La llamada a metodo no conforma con ningun metodos de la clase.");
             else
@@ -47,7 +47,7 @@ public class NodoMetodoEncadenado extends NodoEncadenado{
 
         if(pos_en_encadenados > 0){
             encadenado_izq = nodo_primario.get_encadenado_izq(this);
-            tipo_metodo_var_izq = encadenado_izq.obtener_tipo();
+            tipo_metodo_var_izq = encadenado_izq.obtener_tipo_encadenado();
             metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(token_nombre,argumentos,tipo_metodo_var_izq.getNombre());
             if(metodo_conforma == null)
                 throw new ExcepcionTipo("La llamada a metodo no conforma con ningun metodos de la clase.");
@@ -61,3 +61,4 @@ public class NodoMetodoEncadenado extends NodoEncadenado{
         }
     }
 }
+*/

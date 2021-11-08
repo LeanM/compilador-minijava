@@ -18,7 +18,7 @@ public class NodoReturn_Expresion extends NodoReturn{
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         expresion.esta_bien_definido();
         if(!expresion.get_tipo_expresion().es_de_tipo(tipo_metodo))
-            throw new ExcepcionTipo("El tipo de la expresion de retorno no conforma el tipo que retorna el metodo");
+            throw new ExcepcionTipo(token_return,"El tipo de la expresion de retorno no conforma el tipo que retorna el metodo");
     }
 
     @Override

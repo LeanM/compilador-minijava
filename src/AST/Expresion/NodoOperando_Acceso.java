@@ -25,6 +25,11 @@ public class NodoOperando_Acceso extends NodoOperando {
     }
 
     @Override
+    public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
+        nodo_acceso.obtener_primario_concreto().chequeo_acceso_estatico();
+    }
+
+    @Override
     public void mostrar_expresion() {
         nodo_acceso.mostrar_acceso();
     }

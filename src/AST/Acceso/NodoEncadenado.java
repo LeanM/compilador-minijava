@@ -4,7 +4,7 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
-
+/*
 public abstract class NodoEncadenado {
 
     protected Token token_nombre;
@@ -15,6 +15,7 @@ public abstract class NodoEncadenado {
         this.nodo_primario = nodoPrimario;
     }
 
-    public abstract Tipo obtener_tipo() throws ExcepcionTipo, ExcepcionSemantica;
+    public abstract Tipo obtener_tipo_encadenado() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica;
 }
+*/

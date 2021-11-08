@@ -173,6 +173,32 @@ public class TablaSimbolos {
         clase.atributos_consolidados();
     }
 
+    public void chequeo_sentencias(){
+        Enumeration<EntradaClase> enum_clases = tabla_clases.elements();
+        Enumeration<LinkedList<EntradaMetodo>> enum_lista_metodos;
+        LinkedList<EntradaMetodo> lista_metodos;
+        LinkedList<EntradaConstructor> lista_constructores;
+        EntradaClase entradaClase;
+        try {
+            while (enum_clases.hasMoreElements()) {
+                entradaClase = enum_clases.nextElement();
+                lista_constructores = entradaClase.get_lista_constructores();
+                for (EntradaConstructor constructor : lista_constructores)
+                    constructor.get_bloque_sentencias().esta_bien_definido();
+
+                enum_lista_metodos = entradaClase.get_tabla_metodos().elements();
+                while(enum_lista_metodos.hasMoreElements()){
+                    lista_metodos = enum_lista_metodos.nextElement();
+                    for(EntradaMetodo metodo : lista_metodos)
+                        metodo.get_bloque_sentencias().esta_bien_definido();
+                }
+            }
+        }
+        catch (ExcepcionSemantica | ExcepcionTipo e) {
+            e.printStackTrace();
+        }
+    }
+
     private void consolidar_atributo_a_clase(EntradaAtributo atr, EntradaClase clase) throws ExcepcionSemantica {
         if(!clase.get_tabla_atributos().containsKey(atr.getNombre()))
             clase.setAtributo(atr.getNombre(),atr);

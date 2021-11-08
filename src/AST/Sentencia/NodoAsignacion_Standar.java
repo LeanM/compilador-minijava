@@ -1,8 +1,6 @@
 package AST.Sentencia;
 
 import AST.Acceso.NodoAcceso;
-import AST.Acceso.NodoPrimario;
-import AST.Acceso.NodoVarEncadenada;
 import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
@@ -22,15 +20,11 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
         super.esta_bien_definido();
         lado_der.esta_bien_definido();
 
-        /*  Terminar control despues
-        if(lado_izq instanceof NodoPrimario){
-            if(((NodoPrimario) lado_izq).tiene_encadenados())
-                if(!(((NodoPrimario) lado_izq).get_ultimo_encadenado() instanceof NodoVarEncadenada))
-                    throw new ExcepcionTipo("El lado izquierdo de la asignacion debe ser una variable");
-        }
-        */
+        if(!lado_izq.puede_ser_asignado())
+            throw new ExcepcionTipo(tipo_asignacion,"El lado izquierdo de la asignacion debe ser una variable local, un parametro del metodo o un atributo visible de la clase.");
 
-        lado_der.get_tipo_expresion().es_de_tipo(lado_izq.get_tipo_acceso());
+        if(!lado_der.get_tipo_expresion().es_de_tipo(lado_izq.get_tipo_acceso()))
+            throw new ExcepcionTipo(tipo_asignacion,"El lado derecho de la asignacion no conforma al tipo del lado izquierdo");
     }
 
     @Override

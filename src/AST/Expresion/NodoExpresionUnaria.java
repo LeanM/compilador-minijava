@@ -28,6 +28,11 @@ public class NodoExpresionUnaria extends NodoExpresion {
     }
 
     @Override
+    public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
+        operando.chequeo_acceso_estatico();
+    }
+
+    @Override
     public void mostrar_expresion() {
         System.out.println("Expresion Unaria : ");
         System.out.println(token_expresion.get_lexema());

@@ -1,27 +1,31 @@
 package AST.Acceso;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
 
-public class NodoAccesoEstatico extends NodoPrimario{
+public class NodoAccesoEstatico extends NodoPrimario_Concreto{
 
-    //private Token token_clase;
-
-    public NodoAccesoEstatico(Token clase, String key_clase){
-        super(clase,key_clase);
-        //this.token_clase = clase;
+    protected Tipo tipo_estatico;
+    public NodoAccesoEstatico(Tipo tipo_estatico, String key_clase){
+        super(tipo_estatico.get_token_tipo(),key_clase);
+        this.tipo_estatico = tipo_estatico;
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionSemantica {
         //Verificar semanticas de acceso estatico
+        if(!TablaSimbolos.getInstance().clase_esta_declarada(token_acceso.get_lexema()))
+            throw new ExcepcionSemantica(token_acceso,"La clase "+token_acceso.get_lexema()+" no esta declarada.");
     }
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
-        return null;
+        return tipo_estatico;
+    }
+
+    @Override
+    public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
+        //nada
     }
 
 

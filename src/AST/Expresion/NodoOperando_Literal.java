@@ -15,4 +15,8 @@ public abstract class NodoOperando_Literal extends NodoOperando {
         System.out.println("Operando : ");
         System.out.println(token_expresion.get_lexema());
     }
+
+    public void chequeo_acceso_estatico() {
+        //nada
+    }
 }

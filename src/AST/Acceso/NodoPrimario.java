@@ -1,9 +1,12 @@
 package AST.Acceso;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Tipo;
 
 import java.util.LinkedList;
-
+/*
 public abstract class NodoPrimario extends NodoAcceso{
 
     protected LinkedList<NodoEncadenado> lista_encadenados;
@@ -48,9 +51,30 @@ public abstract class NodoPrimario extends NodoAcceso{
     public boolean tiene_encadenados(){
         return !lista_encadenados.isEmpty();
     }
-
     public NodoEncadenado get_ultimo_encadenado(){
         return lista_encadenados.getLast();
+    }
+    public NodoPrimario get_primario() { return this; }
+
+    /**
+     * Metodo que retorna el tipo del NodoPrimario concreto sin
+     * encadenados
+     * @return
+     * @throws ExcepcionTipo
+     * @throws ExcepcionSemantica
+     */
+
+/*
+    public abstract Tipo obtener_tipo() throws ExcepcionTipo, ExcepcionSemantica;
+
+    public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
+        Tipo toReturn;
+        if(!lista_encadenados.isEmpty())
+            //Si tiene encadenados
+            toReturn = get_ultimo_encadenado().obtener_tipo_encadenado();
+        else toReturn = this.obtener_tipo();
+
+        return toReturn;
     }
 
     @Override
@@ -59,3 +83,4 @@ public abstract class NodoPrimario extends NodoAcceso{
         System.out.println(token_acceso.get_lexema());
     }
 }
+*/

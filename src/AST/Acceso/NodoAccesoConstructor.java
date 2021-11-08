@@ -15,10 +15,9 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         //Verificar semanticas de acceso constructor
-
         EntradaConstructor entradaConstructor = TablaSimbolos.getInstance().conforma_constructor(token_acceso,argumentos,key_clase);
         if(entradaConstructor == null)
-            throw new ExcepcionTipo("No hay conformidad de tipos con ninguno de los constructores definidos en la clase.");
+            throw new ExcepcionTipo(token_acceso,"No hay conformidad de tipos con ninguno de los constructores definidos en la clase.");
         
     }
 
@@ -26,8 +25,13 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
         EntradaConstructor ec = TablaSimbolos.getInstance().conforma_constructor(token_acceso,argumentos,key_clase);
         if(ec == null)
-            throw new ExcepcionTipo("No hay conformidad de tipos con ninguno de los constructores definidos en la clase.");
+            throw new ExcepcionTipo(token_acceso,"No hay conformidad de tipos con ninguno de los constructores definidos en la clase.");
         else
             return ec.get_tipo();
+    }
+
+    @Override
+    public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
+        //nada
     }
 }

@@ -1,5 +1,6 @@
 package AnalizadorSemantico;
 
+import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Token;
 import java.util.HashMap;
 
@@ -8,27 +9,22 @@ public class EntradaMetodo extends EntradaUnidad {
 
     private Token token_metodo;
     private String alcance_metodo;
-    //private Tipo tipo_metodo;
 
     public EntradaMetodo(Token token_metodo, String alcance_metodo, Tipo tipo_metodo) {
         super(tipo_metodo);
         this.token_metodo = token_metodo;
         this.alcance_metodo = alcance_metodo;
-        //this.tipo_metodo = tipo_metodo;
-        //tabla_variables = new HashMap<String,EntradaVariable>();
     }
 
-    /*  No de esta etapa (variables locales)
-    public void setVariable(String nombre_variable, EntradaVariable variable) {
-        tabla_variables.put(nombre_variable,variable);
-    }
-    */
     public String getNombre(){
         return token_metodo.get_lexema();
     }
     public Token get_token_metodo(){ return token_metodo;}
     public String get_alcance() {return alcance_metodo;}
-
+    public void set_sentencias_static(){
+        for(NodoSentencia ns : bloque_sentencias.get_lista_sentencias())
+            ns.en_metodo_static();
+    }
 
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_unidad.esPrimitivo())
@@ -38,6 +34,10 @@ public class EntradaMetodo extends EntradaUnidad {
         for (EntradaParametro ea : lista_argumentos)
             ea.esta_bien_declarado();
 
+    }
+
+    public boolean es_estatico(){
+        return alcance_metodo.equals("static");
     }
 
     /* *--En la comparacion entre metodos para verificar redefinicion debe recibir el mensaje el metodo de la clase hija--*

@@ -5,7 +5,7 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
-public class NodoExpParentizada extends NodoPrimario {
+public class NodoExpParentizada extends NodoPrimario_Concreto {
 
     private NodoExpresion expresion_parentizada;
 
@@ -18,6 +18,12 @@ public class NodoExpParentizada extends NodoPrimario {
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         expresion_parentizada.esta_bien_definido();
     }
+
+    @Override
+    public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
+        expresion_parentizada.chequeo_acceso_estatico();
+    }
+
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {

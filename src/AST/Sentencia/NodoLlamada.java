@@ -21,6 +21,8 @@ public class NodoLlamada extends NodoSentencia{
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         nodo_acceso.esta_bien_definido();
+        if(nodo_acceso.puede_ser_asignado())
+            throw new ExcepcionTipo(nodo_acceso.getToken(),"No es una sentencia correcta, la llamada debe ser a un metodo.");
     }
 
     @Override

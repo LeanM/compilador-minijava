@@ -9,7 +9,6 @@ import AnalizadorSemantico.Tipo;
 public class NodoExpresionBinaria extends NodoExpresion {
 
     private NodoExpresion expresion_izq;
-    //private Token operador_binario;
     private NodoExpresion expresion_der;
 
     public NodoExpresionBinaria(NodoExpresion exp_izq, Token op_binario, NodoExpresion exp_der){
@@ -32,6 +31,12 @@ public class NodoExpresionBinaria extends NodoExpresion {
         Tipo tipo_der = expresion_der.get_tipo_expresion();
 
         return Resolucion_Tipos.getInstance().resolver_tipo_binario(tipo_izq,token_expresion,tipo_der);
+    }
+
+    @Override
+    public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
+        expresion_izq.chequeo_acceso_estatico();
+        expresion_der.chequeo_acceso_estatico();
     }
 
     @Override

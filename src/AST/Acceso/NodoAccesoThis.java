@@ -3,22 +3,22 @@ package AST.Acceso;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
-public class NodoAccesoThis extends NodoPrimario {
+public class NodoAccesoThis extends NodoPrimario_Concreto {
 
-    //private Token token_this;
+    protected Tipo tipo_this;
 
-    public NodoAccesoThis(Token token_this, String key_clase){
-        super(token_this,key_clase);
-        //this.token_this = token_this;
+    public NodoAccesoThis(Token token_this, Tipo tipo_clase_actual){
+        super(token_this,tipo_clase_actual.getNombre());
+        this.tipo_this = tipo_clase_actual;
     }
 
     @Override
-    public void esta_bien_definido() {
-
+    public Tipo get_tipo_acceso() {
+        return tipo_this;
     }
 
     @Override
-    public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
-        return new TipoReferencia(new Token("idClase",key_clase,0));
+    public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
+        throw new ExcepcionSemantica(token_acceso,"No se puede referenciar a this desde un contexto estatico");
     }
 }

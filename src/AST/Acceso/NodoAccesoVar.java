@@ -7,21 +7,31 @@ import AnalizadorSemantico.*;
 
 import java.util.LinkedList;
 
-public class NodoAccesoVar extends NodoPrimario{
+public class NodoAccesoVar extends NodoPrimario_Concreto{
 
-    //private Token token_variable;
     private EntradaUnidad metodo_origen;
 
     public NodoAccesoVar(Token token_variable, String key_clase, EntradaUnidad metodo_origen){
         super(token_variable,key_clase);
         this.metodo_origen = metodo_origen;
-        //this.token_variable = token_variable;
     }
 
     @Override
-    public void esta_bien_definido() {
+    public void esta_bien_definido() throws ExcepcionTipo {
         //Verificar semantica de acceso variables
+        if(!metodo_origen.get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && !metodo_origen.get_tabla_argumentos().containsKey(token_acceso.get_lexema())) {
+            //No esta en los parametros del metodo ni definida como variable local en el metodo
+            if(TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().containsKey(token_acceso.get_lexema())){
+                EntradaAtributo entradaAtributo = TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().get(token_acceso.get_lexema());
+                if (entradaAtributo.get_visibilidad().equals("private")){
+                    //No es una var local ni parametro del metodo al que pertenece, y tampoco es un atributo visible en la clase donde esta declarado el metodo
+                    throw new ExcepcionTipo(token_acceso,"La variable a la que se quiere acceder no es ni variable local, ni argumento de la unidad, ni atributo visible de la clase.");
+                }
 
+            }
+            else    //No esta en los atributos
+                throw new ExcepcionTipo(token_acceso,"La variable a la que se quiere acceder no es ni variable local, ni argumento de la unidad, ni atributo de la clase.");
+        }
     }
 
     @Override
@@ -44,11 +54,25 @@ public class NodoAccesoVar extends NodoPrimario{
                     if (entradaAtributo.get_visibilidad().equals("public"))
                         toReturn = entradaAtributo.getTipo();
                     else
-                        throw new ExcepcionTipo("La variable a la que se quiere acceder es un atributo pero no al alcance de la llamada, y no es variable local, ni argumento de la unidad.");
+                        throw new ExcepcionTipo(token_acceso,"La variable a la que se quiere acceder es un atributo pero no al alcance de la llamada, y no es variable local, ni argumento de la unidad.");
                 }
                 else
-                    throw new ExcepcionTipo("La variable a la que se quiere acceder no es ni variable local, ni argumento de la unidad, ni atributo visible de la clase.");
+                    throw new ExcepcionTipo(token_acceso,"La variable a la que se quiere acceder no es ni variable local, ni argumento de la unidad, ni atributo visible de la clase.");
             }
         return toReturn;
+    }
+
+
+    public void chequeo_acceso_estatico() throws ExcepcionSemantica {
+        EntradaAtributo entradaAtributo = TablaSimbolos.getInstance().conforma_atributo(token_acceso,key_clase);
+        if(entradaAtributo != null)
+            if(!entradaAtributo.es_estatico()){
+                if(!metodo_origen.get_tabla_argumentos().containsKey(token_acceso.get_lexema()) && !metodo_origen.get_tabla_var_locales().containsKey(token_acceso.get_lexema()))
+                    throw new ExcepcionSemantica(token_acceso,"No se puede acceder al atributo dinamico "+entradaAtributo.getNombre()+" desde un contexto estatico");
+            }
+    }
+
+    public boolean puede_ser_asignado(){
+        return true;
     }
 }

@@ -17,6 +17,6 @@ public abstract class NodoExpresion {
 
     public abstract void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica;
-
+    public abstract void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract void mostrar_expresion();
 }

@@ -20,7 +20,7 @@ public class NodoReturn extends NodoSentencia {
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         if(!tipo_metodo.getNombre().equals("void"))
-            throw new ExcepcionTipo("El metodo no es de tipo void");
+            throw new ExcepcionTipo(token_return,"El metodo no es de tipo void");
     }
 
     @Override
