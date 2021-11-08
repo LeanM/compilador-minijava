@@ -184,18 +184,18 @@ public class TablaSimbolos {
                 entradaClase = enum_clases.nextElement();
                 lista_constructores = entradaClase.get_lista_constructores();
                 for (EntradaConstructor constructor : lista_constructores)
-                    constructor.get_bloque_sentencias().esta_bien_definido();
+                    constructor.get_bloque_principal().esta_bien_definido();
 
                 enum_lista_metodos = entradaClase.get_tabla_metodos().elements();
                 while(enum_lista_metodos.hasMoreElements()){
                     lista_metodos = enum_lista_metodos.nextElement();
                     for(EntradaMetodo metodo : lista_metodos)
-                        metodo.get_bloque_sentencias().esta_bien_definido();
+                        metodo.get_bloque_principal().esta_bien_definido();
                 }
             }
         }
         catch (ExcepcionSemantica | ExcepcionTipo e) {
-            e.printStackTrace();
+            e.printStackTrace(); huboErrores = true;
         }
     }
 
@@ -216,9 +216,11 @@ public class TablaSimbolos {
             throw new ExcepcionSemantica(token_metodo_accedido,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
 
         EntradaClase clase = tabla_clases.get(key_clase);
-        LinkedList<EntradaMetodo> lista_metodos = clase.get_tabla_metodos().get(token_metodo_accedido.get_lexema());
         LinkedList<EntradaParametro> argumentos_formales;
         EntradaMetodo toReturn = null;
+        LinkedList<EntradaMetodo> lista_metodos = new LinkedList<EntradaMetodo>();
+        if(clase.get_tabla_metodos().containsKey(token_metodo_accedido.get_lexema()))
+            lista_metodos = clase.get_tabla_metodos().get(token_metodo_accedido.get_lexema());
 
         for (EntradaMetodo em : lista_metodos){
             argumentos_formales = em.get_lista_argumentos();
@@ -243,7 +245,7 @@ public class TablaSimbolos {
     public EntradaConstructor conforma_constructor(Token token_constructor_accedido, LinkedList<NodoExpresion> argumentos_actuales, String key_clase) throws ExcepcionSemantica, ExcepcionTipo {
         boolean iguales = false;
         if(!tabla_clases.containsKey(key_clase))
-            throw new ExcepcionSemantica(token_constructor_accedido,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
+            throw new ExcepcionSemantica(token_constructor_accedido,"La clase a la que se quiere ejecutar el constructor no esta definida");
 
         EntradaClase clase = tabla_clases.get(key_clase);
         LinkedList<EntradaConstructor> lista_constructores = clase.get_lista_constructores();
@@ -264,6 +266,7 @@ public class TablaSimbolos {
                 break;
             }
         }
+
         return toReturn;
     }
 

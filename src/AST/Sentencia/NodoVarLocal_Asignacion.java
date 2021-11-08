@@ -1,17 +1,16 @@
 package AST.Sentencia;
 
 import AST.Expresion.NodoExpresion;
+import AST.NodoBloque;
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
 
 public class NodoVarLocal_Asignacion extends NodoVarLocal{
 
     private NodoExpresion expresion_de_asignacion;
 
-    public NodoVarLocal_Asignacion(Tipo tipo, Token variable,NodoExpresion exp) {
-        super(tipo, variable);
+    public NodoVarLocal_Asignacion(Tipo tipo, Token variable, EntradaUnidad unidad, NodoBloque bloque, NodoExpresion exp) {
+        super(tipo, variable, unidad, bloque);
         this.expresion_de_asignacion = exp;
     }
 
@@ -26,7 +25,7 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
 
     @Override
     public void mostar_sentencia() {
-        System.out.println("varLocal asignacion : "+variable.get_lexema());
+        System.out.println("varLocal asignacion : "+var_local.get_lexema());
         expresion_de_asignacion.mostrar_expresion();
     }
 }

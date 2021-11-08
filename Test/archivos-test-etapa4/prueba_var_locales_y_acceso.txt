@@ -1,0 +1,37 @@
+class A {
+
+    public B b;
+
+
+    dynamic void m1(int f){
+        b = null;
+        int c;
+        {
+
+            {
+                c = 0;
+                f = 1;
+                String f;
+                b = null;
+            }
+        }
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {
+    public int entero;
+    public A a;
+    private int c;
+    public int d;
+    dynamic void metodo(){
+
+    }
+
+}

@@ -12,6 +12,7 @@ public class NodoReturn_Expresion extends NodoReturn{
 
     public NodoReturn_Expresion(Token token_return, NodoExpresion expresion, Tipo tipo_metodo) {
         super(token_return,tipo_metodo);
+        this.expresion = expresion;
     }
 
     @Override

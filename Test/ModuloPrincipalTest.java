@@ -62,7 +62,59 @@ public class ModuloPrincipalTest {
     void pruebas_etapa_4() {
         //expresiones();
         //sentencias();
-        accesos();
+        //accesos();
+        //prueba_llamada_metodo();
+        //prueba_metodo_encadenado();
+        //prueba_acceso_variable();
+        //prueba_var_encadenada();
+        //prueba_invoca_constructor();
+        //prueba_var_local_y_acceso();
+    }
+
+    void prueba_var_local_y_acceso(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_var_locales_y_acceso.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void prueba_llamada_metodo(){
+        //Llamada a metodo a la izquierda de expresion punto o sin expresion punto
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_llamada_metodo.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void prueba_metodo_encadenado(){
+        //Llamada a metodo encadenado
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_metodo_encadenado.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void prueba_var_encadenada() {
+        //Llamada a metodo encadenado
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_var_encadenada.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void prueba_acceso_variable(){
+        //La variable debe ser un atributo visible de la clase, o un parametro del metodo, o una variable local
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_acceso_variable.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void prueba_invoca_constructor(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"prueba_invoca_constructor.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }
 
     void prueba_random(){

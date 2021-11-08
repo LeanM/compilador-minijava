@@ -1,0 +1,29 @@
+class A {
+
+    public B b;
+    private int f;
+
+    dynamic void m1(){
+        main();
+        m2().b.entero = 0;
+        //m2().b.c;
+        //b.a.f = 0;
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {
+    public int entero;
+    public A a;
+    dynamic void metodo(){
+        //a.m1().b;
+        a.f = 0;
+    }
+
+}

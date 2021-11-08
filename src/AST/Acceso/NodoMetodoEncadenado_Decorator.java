@@ -16,10 +16,11 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
 
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
+        primario_decorator.esta_bien_definido();
         Tipo tipo_izq = primario_decorator.get_tipo_acceso();
         EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,tipo_izq.getNombre());
         if(metodo_conforma == null)
-            throw new ExcepcionTipo(token_acceso,"La llamada a metodo no conforma con ningun metodos de la clase.");
+            throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+token_acceso.get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_izq.getNombre()+" )");
     }
 
     @Override
@@ -28,7 +29,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
         Tipo tipo_izq = primario_decorator.get_tipo_acceso();
         EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,tipo_izq.getNombre());
         if(metodo_conforma == null)
-            throw new ExcepcionTipo(token_acceso,"La llamada a metodo no conforma con ningun metodos de la clase.");
+            throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+token_acceso.get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_izq.getNombre()+" )");
         else
             toReturn = metodo_conforma.get_tipo();
 

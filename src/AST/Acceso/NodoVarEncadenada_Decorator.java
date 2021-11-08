@@ -11,6 +11,7 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
+        primario_decorator.esta_bien_definido();
         Tipo tipo_izq = primario_decorator.get_tipo_acceso();
         EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(token_acceso,tipo_izq.getNombre());
         if(atributo_conforma == null)

@@ -239,13 +239,18 @@ public class Analizador_Sintactico {
     }
 
     private void metodo() throws ExcepcionSintactica, ExcepcionSemantica {
+        NodoBloque bloque_metodo;
         String forma = formaMetodo();
         Tipo tipo_metodo = tipoMetodo();
         EntradaMetodo metodo = new EntradaMetodo(token_actual,forma,tipo_metodo);
         TS.setUnidadActual(metodo);
         match("idMetVar");
         argsFormales();
-        TS.getUnidadActual().set_bloque_sentencias(bloque()); //Preguntar
+
+        bloque_metodo = new NodoBloque(TS.getUnidadActual());
+        TS.getUnidadActual().set_bloque_principal(bloque_metodo); //Preguntar
+        TS.getUnidadActual().set_bloque_actual(bloque_metodo);
+        bloque(bloque_metodo);
 
         //Si el metodo es static (dudoso)
         if(forma.equals("static"))
@@ -290,12 +295,16 @@ public class Analizador_Sintactico {
     }
 
     private void constructor() throws ExcepcionSintactica, ExcepcionSemantica {
+        NodoBloque bloque_constructor;
         EntradaConstructor cons = new EntradaConstructor(token_actual,new TipoReferencia(new Token("idClase",TS.getClaseActual().getNombre(),token_actual.get_nro_linea())));
         TS.setUnidadActual(cons);
         match("idClase");
         argsFormales();
 
-        TS.getUnidadActual().set_bloque_sentencias(bloque()); //PREGUNTAR
+        bloque_constructor = new NodoBloque(TS.getUnidadActual());
+        TS.getUnidadActual().set_bloque_principal(bloque_constructor); //Preguntar
+        TS.getUnidadActual().set_bloque_actual(bloque_constructor);
+        bloque(bloque_constructor);
 
         TS.getClaseActual().setConstructor(cons.getNombre(),cons);
     }
@@ -339,22 +348,28 @@ public class Analizador_Sintactico {
 
     }
 
-    private NodoBloque bloque() throws ExcepcionSintactica, ExcepcionSemantica {
-        NodoBloque toReturn;
+    private NodoBloque bloque(NodoBloque bloque_a_completar) throws ExcepcionSintactica, ExcepcionSemantica {
+        NodoBloque bloque_backup;
         match("llaveAbre");
-        LinkedList<NodoSentencia> lista = new LinkedList<NodoSentencia>();
-        listaSentencias(lista);
-        toReturn = new NodoBloque(lista);
+
+        //Seteo bloque padre a bloque a completar (si es el bloque principal del metodo o constructor se le asigna a si mismo como nodo padre)
+        bloque_a_completar.set_bloque_padre(TS.getUnidadActual().get_bloque_actual());
+
+        bloque_backup = TS.getUnidadActual().get_bloque_actual();
+        TS.getUnidadActual().set_bloque_actual(bloque_a_completar);
+        listaSentencias(bloque_a_completar);
+        TS.getUnidadActual().set_bloque_actual(bloque_backup);
+
         match("llaveCierra");
 
-        return toReturn;
+        return bloque_a_completar;
     }
 
-    private void listaSentencias(LinkedList<NodoSentencia> lista_sentencias) throws ExcepcionSintactica, ExcepcionSemantica {
+    private void listaSentencias(NodoBloque bloque_a_completar) throws ExcepcionSintactica, ExcepcionSemantica {
         //Primeros sentencia
         if (Arrays.asList("idClase","pr_boolean","pr_char","pr_int","pr_String","pr_this","idMetVar","pr_new","parAbre","pun;","pr_if","pr_for","pr_return","llaveAbre").contains(token_actual.get_id_token())){
-            lista_sentencias.add(sentencia());
-            listaSentencias(lista_sentencias);
+            bloque_a_completar.setSentencia(sentencia());
+            listaSentencias(bloque_a_completar);
         }
         else {
             //nada por que listaSentencias -> e
@@ -401,7 +416,7 @@ public class Analizador_Sintactico {
                             else
                                 //Primeros bloque
                                 if (token_actual.get_id_token().equals("llaveAbre"))
-                                    toReturn = bloque();
+                                    toReturn = bloque(new NodoBloque(TS.getUnidadActual()));
                                 else {
                                     throw new ExcepcionSintactica(token_actual,"; , { , pr_for , pr_if , pr_return , pr_boolean , pr_int , pr_char , pr_String , idClase , parAbre , idMetVar , pr_this o pr_new");
                                 }
@@ -626,7 +641,7 @@ public class Analizador_Sintactico {
         if (token_actual.get_id_token().equals("parAbre"))
             toReturn = new NodoAccesoMetodo(nombre_met_var,argsActuales(),TS.getClaseActual().getNombre());
         else {
-            toReturn = new NodoAccesoVar(nombre_met_var,TS.getClaseActual().getNombre(),TS.getUnidadActual());
+            toReturn = new NodoAccesoVar(nombre_met_var,TS.getClaseActual().getNombre(),TS.getUnidadActual(),TS.getUnidadActual().get_bloque_actual());
         }
         return toReturn;
     }
@@ -840,13 +855,13 @@ public class Analizador_Sintactico {
         NodoVarLocal toReturn;
         if (token_actual.get_id_token().equals("asig=")) {
             match("asig=");
-            toReturn = new NodoVarLocal_Asignacion(tipo,nombre,expresion());
+            toReturn = new NodoVarLocal_Asignacion(tipo,nombre,TS.getUnidadActual(),TS.getUnidadActual().get_bloque_actual(), expresion());
         }
         else {
             //nada por que varLocal_Expresion -> e
-            toReturn = new NodoVarLocal(tipo,nombre);
+            toReturn = new NodoVarLocal(tipo,nombre,TS.getUnidadActual(),TS.getUnidadActual().get_bloque_actual());
         }
-        TS.getUnidadActual().set_var_local(nombre.get_lexema(),toReturn);
+        TS.getUnidadActual().get_bloque_actual().set_var_local(nombre.get_lexema(),toReturn);
 
         return toReturn;
     }

@@ -1,0 +1,30 @@
+class A {
+
+    public B b;
+
+
+    dynamic void m1(){
+        main();
+        b.metodo();
+        m2().main();
+        //b.m1().metodo();
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {
+    public int entero;
+    public A a;
+    dynamic void metodo(){
+        a.m2().m1();
+        //a.metodo();
+        a.main().m1();
+    }
+
+}

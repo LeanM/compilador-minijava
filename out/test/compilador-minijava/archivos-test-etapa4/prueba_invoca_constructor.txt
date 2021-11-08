@@ -1,0 +1,41 @@
+class A {
+
+    public B b;
+
+    A(int c){
+        b = new B();
+        //b = new B(1);
+        //b = new C(1);
+    }
+
+    dynamic void m1(){
+        main();
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+    static void main() {}
+
+
+}
+
+class B {
+    public int entero;
+    public A a;
+
+    B(){
+        //a = new A();
+        a = new A(1);
+    }
+
+    dynamic void metodo(){
+
+
+
+    }
+
+}
+
+class C extends B {
+}

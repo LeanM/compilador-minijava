@@ -94,7 +94,7 @@ public class ModuloPrincipal {
             while (enum_metodos.hasMoreElements()) {
                 for (EntradaMetodo metodo : enum_metodos.nextElement()) {
                     System.out.println("METODO :::::: " + metodo.getNombre());
-                    NodoBloque bloque_metodo = metodo.get_bloque_sentencias();
+                    NodoBloque bloque_metodo = metodo.get_bloque_principal();
                     bloque_metodo.mostar_sentencia();
                 }
             }

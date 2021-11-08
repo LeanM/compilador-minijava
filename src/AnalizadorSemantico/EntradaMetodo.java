@@ -22,7 +22,7 @@ public class EntradaMetodo extends EntradaUnidad {
     public Token get_token_metodo(){ return token_metodo;}
     public String get_alcance() {return alcance_metodo;}
     public void set_sentencias_static(){
-        for(NodoSentencia ns : bloque_sentencias.get_lista_sentencias())
+        for(NodoSentencia ns : bloque_principal.get_lista_sentencias())
             ns.en_metodo_static();
     }
 
