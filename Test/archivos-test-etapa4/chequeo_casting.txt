@@ -9,7 +9,7 @@ class A {
     dynamic void m1(int f){
         (B) c = null;
         //(C) b = null;
-        a = (A) b;
+        //a = (A) b;
     }
 
     dynamic A m2(){

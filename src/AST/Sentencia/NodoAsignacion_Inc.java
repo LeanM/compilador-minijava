@@ -22,6 +22,7 @@ public class NodoAsignacion_Inc extends NodoAsignacion{
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         super.esta_bien_definido();
-        lado_izq.get_tipo_acceso().getNombre().equals("int");
+        if(!lado_izq.get_tipo_acceso().getNombre().equals("int"))
+            throw new ExcepcionTipo(tipo_asignacion,"Error de tipo : La asignacion ++ solo puede aplicarse a tipos int");
     }
 }

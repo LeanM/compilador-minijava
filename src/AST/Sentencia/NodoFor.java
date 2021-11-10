@@ -23,7 +23,10 @@ public class NodoFor extends NodoSentencia {
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         varLocal.esta_bien_definido();
         condicion.esta_bien_definido();
-        condicion.get_tipo_expresion().getNombre().equals("boolean");
+
+        if(!condicion.get_tipo_expresion().getNombre().equals("boolean"))
+            throw new ExcepcionTipo(condicion.getToken(),"Error de tipo : La expresion condicion en un for debe ser de tipo boolean");
+
         asignacion.esta_bien_definido();
         cuerpo_for.esta_bien_definido();
     }

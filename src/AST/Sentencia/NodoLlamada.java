@@ -22,7 +22,10 @@ public class NodoLlamada extends NodoSentencia{
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         nodo_acceso.esta_bien_definido();
         if(nodo_acceso.puede_ser_asignado())
-            throw new ExcepcionTipo(nodo_acceso.getToken(),"No es una sentencia correcta, la llamada debe ser a un metodo.");
+            throw new ExcepcionTipo(nodo_acceso.getToken(),"No es una sentencia correcta, un acceso sin asignacion no puede ser una variable.");
+
+        if(en_metodo_static)
+            nodo_acceso.chequeo_acceso_estatico();
     }
 
     @Override

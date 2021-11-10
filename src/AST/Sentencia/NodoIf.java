@@ -19,7 +19,10 @@ public class NodoIf extends NodoSentencia {
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         condicion.esta_bien_definido();
-        condicion.get_tipo_expresion().getNombre().equals("boolean");
+
+        if(!condicion.get_tipo_expresion().getNombre().equals("boolean"))
+            throw new ExcepcionTipo(condicion.getToken(),"Error de tipo : La expresion condicion en un if debe ser de tipo boolean");
+
         cuerpo_then.esta_bien_definido();
     }
 

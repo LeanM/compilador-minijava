@@ -72,12 +72,20 @@ public class ModuloPrincipalTest {
         //chequeo_expresion_unaria();
         //chequeo_expresion_binaria();
         //chequeo_casting();
-        chequeo_unidades();
+        //chequeo_unidades();
+        chequeo_exp_encadenada();
     }
 
     void prueba_var_local_y_acceso(){
         errorCode = "[SinErrores]";
         String [] args = {directorio_archivos_etapa4+"prueba_var_locales_y_acceso.txt"};
+        ModuloPrincipal.main(args);
+        assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
+    }
+
+    void chequeo_exp_encadenada(){
+        errorCode = "[SinErrores]";
+        String [] args = {directorio_archivos_etapa4+"chequeo_exp_encadenada.txt"};
         ModuloPrincipal.main(args);
         assertThat("No se encontro el codigo: " + errorCode,  outContent.toString(), CoreMatchers.containsString(errorCode));
     }

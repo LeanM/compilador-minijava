@@ -26,17 +26,20 @@ public class TipoReferencia extends Tipo{
     public boolean es_de_tipo(Tipo tipo) throws ExcepcionSemantica {
         boolean toReturn = false;
 
-        if(this.getNombre().equals("null") || tipo.getNombre().equals("null"))
-            toReturn = true;
+        if(tipo.esPrimitivo())
+            toReturn = false;
         else {
-            if (!tipo.getNombre().equals(this.getNombre())) {
-                LinkedList<String> lista_ancestros = new LinkedList<String>();
-                TablaSimbolos.getInstance().get_entrada_clase(token_tipo.get_lexema()).get_lista_ancestros(lista_ancestros); //Puede andar mal por q no se si se puede ejecutar antes de haber verificado que la clase estaba declarada
-                if (lista_ancestros.contains(tipo.getNombre())) {
-                    toReturn = true;
-                }
+            if ((this.getNombre().equals("null") && !tipo.esPrimitivo()) || tipo.getNombre().equals("null"))
+                toReturn = true;
+            else {
+                if (!tipo.getNombre().equals(this.getNombre())) {
+                    LinkedList<String> lista_ancestros = new LinkedList<String>();
+                    TablaSimbolos.getInstance().get_entrada_clase(token_tipo.get_lexema()).get_lista_ancestros(lista_ancestros); //Puede andar mal por q no se si se puede ejecutar antes de haber verificado que la clase estaba declarada
+                    if (lista_ancestros.contains(tipo.getNombre())) {
+                        toReturn = true;
+                    }
+                } else toReturn = true;
             }
-            else toReturn = true;
         }
 
         return toReturn;

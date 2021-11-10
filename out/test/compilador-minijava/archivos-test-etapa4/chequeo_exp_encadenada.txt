@@ -1,0 +1,60 @@
+class A {
+
+    public B b;
+    public C c;
+    public int a;
+    public boolean var_bool;
+
+    dynamic void m1(int f){
+        //(this.m2()).main();
+        //b.metB().a;
+        //(5+(10/2)).a;
+        f++;
+        //b++;
+        f--;
+        //c--;
+        b = null;
+        //this.m2().b = null;
+        //this.m2().a = 0;
+        //this.m2().a = null;
+        //this.main() = null;
+        //main() = null;
+        //this.main().f() = 0;
+        String a = "asd";
+
+    }
+
+    dynamic A m2(){
+        return this;
+    }
+
+
+
+}
+
+class B extends A{
+
+    dynamic int metB(){
+        return 1;
+    }
+
+}
+
+class C extends B {
+    public static C c;
+
+static C mc() {
+    return this;
+}
+static A mc2() {
+    return new A();
+}
+
+static void main() {
+    //C.mc3();
+    C.c = null;
+    mc2().m1(1);
+}
+
+
+}

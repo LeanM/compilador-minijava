@@ -49,7 +49,7 @@ public class NodoBloque extends NodoSentencia {
     }
 
     public NodoBloque get_bloque_padre() { return bloque_padre; }
-    public EntradaUnidad get_unidad_bloque() { return unidad_de_bloque; }
+
     @Override
     public void mostar_sentencia() {
         System.out.println("NodoBloque : ");

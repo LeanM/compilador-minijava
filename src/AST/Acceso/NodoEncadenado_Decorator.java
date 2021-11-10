@@ -3,6 +3,7 @@ package AST.Acceso;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Tipo;
 
 public abstract class NodoEncadenado_Decorator extends NodoPrimario_Component {
 

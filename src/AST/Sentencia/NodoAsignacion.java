@@ -18,9 +18,9 @@ public abstract class NodoAsignacion extends NodoSentencia {
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
-        if(en_metodo_static){
-            lado_izq.obtener_primario_concreto().chequeo_acceso_estatico();
-        }
+        if(en_metodo_static)
+            lado_izq.chequeo_acceso_estatico();
+
         lado_izq.esta_bien_definido();
     }
 }
