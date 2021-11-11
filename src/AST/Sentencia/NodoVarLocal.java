@@ -39,13 +39,16 @@ public class NodoVarLocal extends NodoSentencia{
             throw new ExcepcionSemantica(var_local, "No se pueden definir variables locales con el mismo nombre en el mismo alcance");
 
         if(bloque_var_local != unidad_var_local.get_bloque_principal()) {
-            if(unidad_var_local.get_bloque_principal().get_tabla_var_locales().containsKey(var_local.get_lexema()))
-                throw new ExcepcionSemantica(var_local, "No se pueden definir variables locales con el mismo nombre en el mismo alcance");
-
+            if(unidad_var_local.get_bloque_principal().get_tabla_var_locales().containsKey(var_local.get_lexema())) {
+                if (unidad_var_local.get_bloque_principal().get_tabla_var_locales().get(var_local.get_lexema()).get_token().get_nro_linea() < var_local.get_nro_linea())
+                    throw new ExcepcionSemantica(var_local, "No se pueden definir variables locales con el mismo nombre en el mismo alcance");
+            }
             do {
                 if (padre.get_tabla_var_locales().containsKey(var_local.get_lexema())) {
-                    //La var local tambien esta definida en un bloque padre [error]
-                    throw new ExcepcionSemantica(var_local, "No se pueden definir variables locales con el mismo nombre en el mismo alcance");
+                    //La var local tambien esta definida en un bloque padre [si esta definida antes que la var local this --> error]
+                    if (padre.get_tabla_var_locales().get(var_local.get_lexema()).get_token().get_nro_linea() < var_local.get_nro_linea())
+                        throw new ExcepcionSemantica(var_local, "No se pueden definir variables locales con el mismo nombre en el mismo alcance");
+                    break;
                 } else padre = padre.get_bloque_padre();
             } while (padre != unidad_var_local.get_bloque_principal());
         }

@@ -1,0 +1,19 @@
+class A {
+
+dynamic void asd(){
+
+
+        {
+
+                    int x;
+                    {
+                        int y;
+                    }
+                    int y;
+        }
+        int x;
+}
+
+static void main() {}
+
+}
