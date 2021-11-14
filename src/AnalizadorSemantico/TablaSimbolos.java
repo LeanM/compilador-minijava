@@ -145,14 +145,19 @@ public class TablaSimbolos {
                 }
 
             }
-            if (!hayRedefinicion) //No hay error de metodos en la clase hija con mismos argumentos pero distinto tipo de retorno
+            if (!hayRedefinicion) { //No hay error de metodos en la clase hija con mismos argumentos pero distinto tipo de retorno
                 //Si no hubo redefinicion, al no haber errores con metodos en la clase hija se debe agregar
-                clase.setMetodo(metodo.getNombre(),metodo);
+                clase.setMetodo(metodo.getNombre(), metodo);
+                //  Traduccion
+                //clase.set_metodo_heredado(metodo);
+            }
         }
         else {
             //En la clase hija no hay metodos con el nombre del metodo a agregar, por lo tanto
             //no hay conflicto y debe ser agregado.
             clase.setMetodo(metodo.getNombre(),metodo);
+            //  Traduccion
+            //clase.set_metodo_heredado(metodo);
         }
     }
 

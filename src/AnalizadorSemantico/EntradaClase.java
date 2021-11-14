@@ -17,6 +17,10 @@ public abstract class EntradaClase {
     protected Hashtable<String,LinkedList<EntradaMetodo>> tabla_metodos;
     protected boolean consolido_metodos, consolido_atributos;
 
+    //  Listas de metodos y atributos heredados para no generar el codigo dos veces en el traductor
+    //protected Hashtable<String,LinkedList<EntradaMetodo>> metodos_heredados;
+    //protected Hashtable<String,EntradaAtributo> atributos_heredados;
+
     public EntradaClase (Token clase) {
         token_clase = clase;
         lista_constructores = new LinkedList<EntradaConstructor>();
@@ -89,9 +93,11 @@ public abstract class EntradaClase {
         tabla_metodos.put(nombre,lista);
     }
 
+
     public Hashtable<String,LinkedList<EntradaMetodo>> get_tabla_metodos(){
         return tabla_metodos;
     }
+
     public Hashtable<String,EntradaAtributo> get_tabla_atributos() { return tabla_atributos; }
     public LinkedList<EntradaConstructor> get_lista_constructores() { return lista_constructores; }
     public void metodos_consolidados(){
@@ -100,8 +106,11 @@ public abstract class EntradaClase {
     public void atributos_consolidados(){
         consolido_atributos = true;
     }
+
+
     public boolean get_consolido_metodos() { return consolido_metodos;}
     public boolean get_consolido_atributos(){return consolido_atributos;}
+
 
     public abstract void herenciaCircular() throws ExcepcionSemantica;
     public abstract void setClaseSuper(Token claseSuper);

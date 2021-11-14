@@ -9,7 +9,7 @@ dynamic void asd(){
                     {
                         int y;
                     }
-                    int y;
+
         }
         int x;
 }
