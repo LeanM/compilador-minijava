@@ -34,7 +34,6 @@ public class ModuloPrincipal {
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
             TablaSimbolos.getInstance().chequeo_sentencias();
-            Traductor.getInstance().consolidar_offsets_clases();
             Traductor.getInstance().traducir();
 
             mostrarClases(); //fines de prueba

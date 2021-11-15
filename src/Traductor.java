@@ -43,7 +43,7 @@ public class Traductor {
         EntradaClase object = TablaSimbolos.getInstance().get_entrada_clase("Object");
         //Pongo offset al metodo debugPrint de Object (el unico metodo de la clase)
         object.get_tabla_metodos().get("debugPrint").getFirst().set_offset(next_offset++);
-        System.out.println("OFFSET DEBUGPRINT : "+object.get_tabla_metodos().get("debugPrint").getFirst().get_offset());
+
         Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
         EntradaClase clase;
         LinkedList<EntradaClase> hijos_object = new LinkedList<EntradaClase>();
@@ -138,7 +138,6 @@ public class Traductor {
         Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
         LinkedList<EntradaMetodo> etiquetas_metodos;
         EntradaClase clase;
-        String nombre_clase;
         while (enum_clases.hasMoreElements()){
             clase = enum_clases.nextElement();
             etiquetas_metodos = clase.get_metodos_ordenados_offset();
@@ -151,16 +150,17 @@ public class Traductor {
         String etiquetas_string = "";
 
         if (!etiquetas_metodos.isEmpty())
-            etiquetas_string = etiquetas_metodos.get(0).getNombre() + etiquetas_metodos.get(0).get_clase_base();
+            //etiquetas_string = etiquetas_metodos.get(0).getNombre() + "_" + etiquetas_metodos.get(0).get_offset() + "_" + etiquetas_metodos.get(0).get_clase_base();
+            etiquetas_string = etiquetas_metodos.get(0).get_etiqueta();
 
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
-            etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).getNombre() + etiquetas_metodos.get(i).get_clase_base();
+            //etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).getNombre() + "_" + etiquetas_metodos.get(i).get_offset() + "_" + etiquetas_metodos.get(i).get_clase_base();
+            etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
 
         gen("VT "+clase.getNombre()+" DW "+etiquetas_string);
 
         this.set_modo_actual(".CODE");
-
         //A partir de aca van los metodos y el codigo de los mismos
 
         Enumeration<LinkedList<EntradaMetodo>> enum_metodos = clase.get_tabla_metodos().elements();
@@ -169,7 +169,9 @@ public class Traductor {
             lista_metodos = enum_metodos.nextElement();
             for(EntradaMetodo em : lista_metodos){
                 if(!em.fue_traducido()){
-                    //generar code
+                    //Generar code de cada metodo
+                    //em.generar();
+
                     em.set_traducido();
                 }
             }

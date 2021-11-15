@@ -87,5 +87,7 @@ public class EntradaMetodo extends EntradaUnidad {
         return clase_base;
     }
 
-
+    public String get_etiqueta() {
+        return this.getNombre()+"_"+offset+"_"+clase_base;
+    }
 }

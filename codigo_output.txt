@@ -1,15 +1,15 @@
 .DATA
-VT A DW debugPrintObject,met1A
+VT A DW debugPrint_1_Object,met1_2_A
 .CODE
 .DATA
-VT Object DW debugPrintObject
+VT Object DW debugPrint_1_Object
 .CODE
 .DATA
-VT System DW debugPrintObject,readSystem,printBlnSystem,printClnSystem,printISystem,printIlnSystem,printCSystem,printlnSystem,printBSystem,printSlnSystem,printSSystem
+VT System DW debugPrint_1_Object,read_2_System,printBln_3_System,printCln_4_System,printI_5_System,printIln_6_System,printC_7_System,println_8_System,printB_9_System,printSln_10_System,printS_11_System
 .CODE
 .DATA
-VT C DW debugPrintObject,met1A,met1B,met1B,mainC
+VT C DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B,main_5_C
 .CODE
 .DATA
-VT B DW debugPrintObject,met1A,met1B,met1B
+VT B DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B
 .CODE
