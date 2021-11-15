@@ -15,10 +15,10 @@ public class ModuloPrincipal {
     private static GestorArchivo gestorArchivo;
     private static Analizador_Lexico analizador_lexico;
     private static Analizador_Sintactico analizador_sintactico;
-    private static Token tokenActual;
 
     public static void main (String [] args){
-        TablaSimbolos.getInstance();
+        TablaSimbolos.getInstance().inicializar_tabla_simbolos();
+
         String programa = "pruebaTRADUCTOR.txt";
         try {
             //programa = args[0];
@@ -35,6 +35,8 @@ public class ModuloPrincipal {
             TablaSimbolos.getInstance().chequeo_semantico();
             TablaSimbolos.getInstance().chequeo_sentencias();
             Traductor.getInstance().consolidar_offsets_clases();
+            Traductor.getInstance().traducir();
+
             mostrarClases(); //fines de prueba
             //mostrarAST();
             if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores() && !Traductor.getInstance().hubo_errores()) {

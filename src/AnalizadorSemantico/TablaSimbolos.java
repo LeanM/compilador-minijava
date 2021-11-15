@@ -21,11 +21,14 @@ public class TablaSimbolos {
         }
         else return instance;
     }
-    private TablaSimbolos(){
-        tabla_clases = new Hashtable<String,EntradaClase>();
+    private TablaSimbolos() {
+        tabla_clases = new Hashtable<String, EntradaClase>();
+        huboErrores = false;
+    }
+
+    public void inicializar_tabla_simbolos() {
         inicializar_clase_Object();
         inicializar_clase_System();
-        huboErrores = false;
     }
 
     public void agregarClase(String nombreClase,EntradaClase clase) throws ExcepcionSemantica {
@@ -147,7 +150,7 @@ public class TablaSimbolos {
             }
             if (!hayRedefinicion) { //No hay error de metodos en la clase hija con mismos argumentos pero distinto tipo de retorno
                 //Si no hubo redefinicion, al no haber errores con metodos en la clase hija se debe agregar
-                clase.setMetodo(metodo.getNombre(), metodo);
+                clase.set_metodo_heredado(metodo.getNombre(), metodo);
                 //  Traduccion
                 //clase.set_metodo_heredado(metodo);
             }
@@ -155,7 +158,7 @@ public class TablaSimbolos {
         else {
             //En la clase hija no hay metodos con el nombre del metodo a agregar, por lo tanto
             //no hay conflicto y debe ser agregado.
-            clase.setMetodo(metodo.getNombre(),metodo);
+            clase.set_metodo_heredado(metodo.getNombre(),metodo);
             //  Traduccion
             //clase.set_metodo_heredado(metodo);
         }
@@ -289,6 +292,7 @@ public class TablaSimbolos {
 
     private void inicializar_clase_Object() {
         EntradaClase entrada_object = new EntradaClase_Object(new Token("idClase","Object",0));
+        this.setClaseActual(entrada_object);
         EntradaMetodo debugPrint = new EntradaMetodo(new Token("idMetVar","debugPrint",0),"static",new TipoPrimitivo(new Token("pr_void","void",0)));
         EntradaParametro i = new EntradaParametro(new Token("idMetVar","i",0),new TipoPrimitivo(new Token("pr_int","int",0)));
         try {
@@ -301,6 +305,7 @@ public class TablaSimbolos {
     private void inicializar_clase_System(){
         EntradaClase entrada_System = new EntradaClase_Standar(new Token("idClase","System",0));
         entrada_System.setClaseSuper(tabla_clases.get("Object").token_clase);
+        this.setClaseActual(entrada_System);
         try {
             //Metodo int read()
             EntradaMetodo read = new EntradaMetodo(new Token("idMetVar", "read", 0), "static", new TipoPrimitivo(new Token("pr_int", "int", 0)));

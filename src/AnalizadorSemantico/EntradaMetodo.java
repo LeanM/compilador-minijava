@@ -9,6 +9,7 @@ public class EntradaMetodo extends EntradaUnidad {
 
     private Token token_metodo;
     private String alcance_metodo;
+    private String clase_base;
     private boolean fue_traducido;
     private int offset;
 
@@ -16,9 +17,9 @@ public class EntradaMetodo extends EntradaUnidad {
         super(tipo_metodo);
         this.token_metodo = token_metodo;
         this.alcance_metodo = alcance_metodo;
+        this.clase_base = "";
         this.fue_traducido = false;
         this.offset = 0;
-
     }
 
     public String getNombre(){
@@ -77,4 +78,14 @@ public class EntradaMetodo extends EntradaUnidad {
     public int get_offset() {
         return offset;
     }
+
+    public void set_clase_base(String nombre_clase){
+        this.clase_base = nombre_clase;
+    }
+
+    public String get_clase_base() {
+        return clase_base;
+    }
+
+
 }

@@ -1,23 +1,41 @@
 import AnalizadorSemantico.*;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
 
 public class Traductor {
 
     private boolean hubo_errores;
+    private File codigo_output;
+    private BufferedWriter bw;
+    private String modo_actual;
 
     private static Traductor instance = null;
 
-    private Traductor(){
+    private Traductor() throws IOException {
         hubo_errores = false;
+        codigo_output = new File("codigo_output.txt");
+        FileWriter fw = new FileWriter(codigo_output);
+        bw = new BufferedWriter(fw);
+        modo_actual = "";
     }
 
-    public static Traductor getInstance() {
+    public static Traductor getInstance() throws IOException {
         if(instance == null)
             instance = new Traductor();
 
         return  instance;
+    }
+
+    public void traducir() throws IOException {
+        consolidar_offsets_clases();
+        generar_clases_general();
+        finalizar_output();
     }
 
     public void consolidar_offsets_clases() {
@@ -116,7 +134,67 @@ public class Traductor {
 
     }
 
-    public void gen(String instruccion) {}
+    public void generar_clases_general() throws IOException {
+        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
+        LinkedList<EntradaMetodo> etiquetas_metodos;
+        EntradaClase clase;
+        String nombre_clase;
+        while (enum_clases.hasMoreElements()){
+            clase = enum_clases.nextElement();
+            etiquetas_metodos = clase.get_metodos_ordenados_offset();
+            generar_clase_especifico(clase,etiquetas_metodos);
+        }
+    }
+
+    public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException {
+        this.set_modo_actual(".DATA");
+        String etiquetas_string = "";
+
+        if (!etiquetas_metodos.isEmpty())
+            etiquetas_string = etiquetas_metodos.get(0).getNombre() + etiquetas_metodos.get(0).get_clase_base();
+
+        for (int i = 1; i < etiquetas_metodos.size(); i++) {
+            etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).getNombre() + etiquetas_metodos.get(i).get_clase_base();
+        }
+
+        gen("VT "+clase.getNombre()+" DW "+etiquetas_string);
+
+        this.set_modo_actual(".CODE");
+
+        //A partir de aca van los metodos y el codigo de los mismos
+
+        Enumeration<LinkedList<EntradaMetodo>> enum_metodos = clase.get_tabla_metodos().elements();
+        LinkedList<EntradaMetodo> lista_metodos;
+        while(enum_metodos.hasMoreElements()){
+            lista_metodos = enum_metodos.nextElement();
+            for(EntradaMetodo em : lista_metodos){
+                if(!em.fue_traducido()){
+                    //generar code
+                    em.set_traducido();
+                }
+            }
+        }
+    }
+
+    public void set_modo_actual(String modo) throws IOException {
+        if(!modo.equals(modo_actual)) {
+            if(Arrays.asList(".DATA",".STACK",".CODE").contains(modo)) {
+                bw.write(modo);
+                this.modo_actual = modo;
+                bw.newLine();
+            }
+        }
+    }
+
+    public void gen(String instruccion) throws IOException {
+        bw.write(instruccion);
+        bw.newLine();
+    }
+
+    public File finalizar_output() throws IOException {
+        bw.close();
+        return codigo_output;
+    }
 
     public boolean hubo_errores() {
         return hubo_errores;

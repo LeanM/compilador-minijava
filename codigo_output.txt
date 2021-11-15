@@ -1,0 +1,15 @@
+.DATA
+VT A DW debugPrintObject,met1A
+.CODE
+.DATA
+VT Object DW debugPrintObject
+.CODE
+.DATA
+VT System DW debugPrintObject,readSystem,printBlnSystem,printClnSystem,printISystem,printIlnSystem,printCSystem,printlnSystem,printBSystem,printSlnSystem,printSSystem
+.CODE
+.DATA
+VT C DW debugPrintObject,met1A,met1B,met1B,mainC
+.CODE
+.DATA
+VT B DW debugPrintObject,met1A,met1B,met1B
+.CODE
