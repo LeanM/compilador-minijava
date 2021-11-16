@@ -25,7 +25,7 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
         if(encadenado_estatico instanceof NodoMetodoEncadenado_Decorator){
             EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(encadenado_estatico.token_acceso, ((NodoMetodoEncadenado_Decorator) encadenado_estatico).argumentos,tipo_estatico.getNombre());
             if(metodo_conforma == null)
-                throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+encadenado_estatico.getToken().get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_estatico.getNombre()+" )");
+                throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+encadenado_estatico.getToken().get_lexema()+" no conforma con ningun metodo de la clase del encadenado de la izquierda ( "+tipo_estatico.getNombre()+" )");
             if(!metodo_conforma.es_estatico())
                 throw new ExcepcionSemantica(token_acceso,"No existe un metodo estatico "+encadenado_estatico.getToken().get_lexema()+" definido en "+tipo_estatico.getNombre());
         }

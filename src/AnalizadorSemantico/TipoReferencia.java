@@ -31,6 +31,7 @@ public class TipoReferencia extends Tipo{
         else {
             if (this.getNombre().equals("null") || tipo.getNombre().equals("null"))
                 toReturn = true;
+            }
             else {
                 if (!tipo.getNombre().equals(this.getNombre())) {
                     LinkedList<String> lista_ancestros = new LinkedList<String>();

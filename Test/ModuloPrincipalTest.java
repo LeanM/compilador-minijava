@@ -75,9 +75,7 @@ public class ModuloPrincipalTest {
         //chequeo_unidades();
         //chequeo_exp_encadenada();
         //prueba_bloques();
-        prueba_var_local_y_acceso();
     }
-
 
     void prueba_var_local_y_acceso(){
         errorCode = "[SinErrores]";
