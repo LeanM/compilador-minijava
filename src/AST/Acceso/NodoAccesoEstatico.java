@@ -23,7 +23,7 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
             throw new ExcepcionSemantica(token_acceso,"La clase "+token_acceso.get_lexema()+" no esta declarada.");
 
         if(encadenado_estatico instanceof NodoMetodoEncadenado_Decorator){
-            EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(encadenado_estatico.token_acceso, ((NodoMetodoEncadenado_Decorator) encadenado_estatico).argumentos,key_clase);
+            EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(encadenado_estatico.token_acceso, ((NodoMetodoEncadenado_Decorator) encadenado_estatico).argumentos,tipo_estatico.getNombre());
             if(metodo_conforma == null)
                 throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+encadenado_estatico.getToken().get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_estatico.getNombre()+" )");
             if(!metodo_conforma.es_estatico())
@@ -31,7 +31,7 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
         }
         else {
             if (encadenado_estatico instanceof NodoVarEncadenada_Decorator) {
-                EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(encadenado_estatico.token_acceso, key_clase);
+                EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(encadenado_estatico.token_acceso, tipo_estatico.getNombre());
                 if (atributo_conforma == null)
                     throw new ExcepcionTipo(token_acceso, "La llamada a atributo " + encadenado_estatico.getToken().get_lexema() + " no conforma con ningun metodos de la clase del encadenado de la izquierda ( " + tipo_estatico.getNombre() + " )");
                 if (!atributo_conforma.es_estatico())
@@ -48,6 +48,11 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
     @Override
     public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
         //nada
+    }
+
+    @Override
+    public void generar_codigo() {
+        
     }
 
 
