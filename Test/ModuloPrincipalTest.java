@@ -68,24 +68,13 @@ public class ModuloPrincipalTest {
         //prueba_acceso_variable();
         //prueba_var_encadenada();
         //prueba_invoca_constructor();
-        prueba_var_local_y_acceso();
+        //prueba_var_local_y_acceso();
         //chequeo_expresion_unaria();
         //chequeo_expresion_binaria();
         //chequeo_casting();
         //chequeo_unidades();
         //chequeo_exp_encadenada();
         //prueba_bloques();
-    }
-
-    void asd(){
-        int y;
-        {
-            int x;
-            {
-                //int y;
-            }
-        }
-        int x;
     }
 
     void prueba_var_local_y_acceso(){

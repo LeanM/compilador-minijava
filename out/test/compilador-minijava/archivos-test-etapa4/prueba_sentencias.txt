@@ -9,8 +9,7 @@ dynamic int m1(){
     a++;
     a--;
     ;
-    return a;
-    return ;
+    return "hola";
 }
 static void main(){}
 }

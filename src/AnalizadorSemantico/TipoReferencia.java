@@ -26,11 +26,12 @@ public class TipoReferencia extends Tipo{
     public boolean es_de_tipo(Tipo tipo) throws ExcepcionSemantica {
         boolean toReturn = false;
 
-        if(tipo.esPrimitivo())
+        if(tipo.esPrimitivo() && !tipo.getNombre().equals("String"))
             toReturn = false;
         else {
-            if ((this.getNombre().equals("null") && !tipo.esPrimitivo()) || tipo.getNombre().equals("null"))
+            if ((this.getNombre().equals("null") || tipo.getNombre().equals("null"))) {
                 toReturn = true;
+            }
             else {
                 if (!tipo.getNombre().equals(this.getNombre())) {
                     LinkedList<String> lista_ancestros = new LinkedList<String>();

@@ -24,7 +24,7 @@ class B {
     dynamic void metodo(){
         a.m2().m1();
         //a.metodo();
-        a.main().m1();
+        //a.main().m1();
     }
 
 }

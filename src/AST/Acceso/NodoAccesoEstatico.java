@@ -23,18 +23,18 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
             throw new ExcepcionSemantica(token_acceso,"La clase "+token_acceso.get_lexema()+" no esta declarada.");
 
         if(encadenado_estatico instanceof NodoMetodoEncadenado_Decorator){
-            EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(encadenado_estatico.token_acceso, ((NodoMetodoEncadenado_Decorator) encadenado_estatico).argumentos,key_clase);
+            EntradaMetodo metodo_conforma = TablaSimbolos.getInstance().conforma_metodo(encadenado_estatico.token_acceso, ((NodoMetodoEncadenado_Decorator) encadenado_estatico).argumentos,tipo_estatico.getNombre());
             if(metodo_conforma == null)
-                throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+encadenado_estatico.getToken().get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_estatico.getNombre()+" )");
+                throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+encadenado_estatico.getToken().get_lexema()+" no conforma con ningun metodo de la clase del encadenado de la izquierda ( "+tipo_estatico.getNombre()+" )");
             if(!metodo_conforma.es_estatico())
                 throw new ExcepcionSemantica(token_acceso,"No existe un metodo estatico "+encadenado_estatico.getToken().get_lexema()+" definido en "+tipo_estatico.getNombre());
         }
         else {
             if (encadenado_estatico instanceof NodoVarEncadenada_Decorator) {
-                EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(encadenado_estatico.token_acceso, key_clase);
+                EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(encadenado_estatico.token_acceso, tipo_estatico.getNombre());
                 if (atributo_conforma == null)
-                    throw new ExcepcionTipo(token_acceso, "La llamada a atributo " + encadenado_estatico.getToken().get_lexema() + " no conforma con ningun metodos de la clase del encadenado de la izquierda ( " + tipo_estatico.getNombre() + " )");
-                if (!atributo_conforma.es_estatico())
+                    throw new ExcepcionTipo(token_acceso, "La llamada a atributo " + encadenado_estatico.getToken().get_lexema() + " no conforma con ningun atributo de la clase del encadenado de la izquierda ( " + tipo_estatico.getNombre() + " )");
+                if (!atributo_conforma.es_estatico() || atributo_conforma.get_visibilidad().equals("private"))
                     throw new ExcepcionSemantica(token_acceso, "No existe un atributo estatico " + encadenado_estatico.getToken().get_lexema() + " definido en " + tipo_estatico.getNombre());
             }
         }

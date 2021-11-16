@@ -8,11 +8,15 @@ dynamic void m1(){
     c++;
     c--;
     b = this.g + 5;
-    b = m1() + 2;
+    //b = m1() + 2;
     b = C.a;
     ch = 'c';
     texto = "hola";
     texto = null;
 }
 static void main(){}
+}
+
+class C {
+    public static int a;
 }

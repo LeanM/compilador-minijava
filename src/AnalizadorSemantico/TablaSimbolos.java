@@ -276,7 +276,7 @@ public class TablaSimbolos {
             throw new ExcepcionSemantica(nombre_atributo,"El tipo del encadenado de la izquierda es un tipo primitivo : "+key_clase);
 
         EntradaClase entradaClase = tabla_clases.get(key_clase);
-        if (entradaClase.get_tabla_atributos().containsKey(nombre_atributo.get_lexema()) && entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema()).get_visibilidad().equals("public"))
+        if (entradaClase.get_tabla_atributos().containsKey(nombre_atributo.get_lexema()))
             toReturn = entradaClase.get_tabla_atributos().get(nombre_atributo.get_lexema());
 
         return toReturn;
