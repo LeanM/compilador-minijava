@@ -49,4 +49,9 @@ public class NodoCasting extends NodoAcceso{
         primario.mostrar_acceso();
     }
 
+    @Override
+    public void generar_codigo() {
+
+    }
+
 }

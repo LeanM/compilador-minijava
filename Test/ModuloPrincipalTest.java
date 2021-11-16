@@ -74,19 +74,10 @@ public class ModuloPrincipalTest {
         //chequeo_casting();
         //chequeo_unidades();
         //chequeo_exp_encadenada();
-        prueba_bloques();
+        //prueba_bloques();
+        prueba_var_local_y_acceso();
     }
 
-    void asd(){
-        int y;
-        {
-            int x;
-            {
-                //int y;
-            }
-        }
-        int x;
-    }
 
     void prueba_var_local_y_acceso(){
         errorCode = "[SinErrores]";

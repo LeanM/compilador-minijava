@@ -34,4 +34,9 @@ public class NodoIf extends NodoSentencia {
         cuerpo_then.mostar_sentencia();
         System.out.println("-----------------------------------------------------------");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

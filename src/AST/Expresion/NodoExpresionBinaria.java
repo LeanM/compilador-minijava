@@ -46,4 +46,9 @@ public class NodoExpresionBinaria extends NodoExpresion {
         System.out.println(token_expresion.get_lexema());
         expresion_der.mostrar_expresion();
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

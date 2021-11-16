@@ -35,4 +35,9 @@ public class NodoLlamada extends NodoSentencia{
         nodo_acceso.mostrar_acceso();
         System.out.println("-----------------------------------------------------------");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

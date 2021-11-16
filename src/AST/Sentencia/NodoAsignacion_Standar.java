@@ -36,4 +36,10 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
         lado_der.mostrar_expresion();
         System.out.println("-----------------------------------------------------------");
     }
+
+    @Override
+    public void generar_codigo() {
+        lado_izq.generar_codigo();
+
+    }
 }

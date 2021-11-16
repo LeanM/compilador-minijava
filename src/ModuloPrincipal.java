@@ -1,5 +1,4 @@
 import AST.NodoBloque;
-import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Analizador_Lexico;
 import AnalizadorLexico.GestorArchivo;
 import AnalizadorLexico.Token;

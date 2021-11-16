@@ -16,4 +16,9 @@ public class NodoSentenciaVacia extends NodoSentencia{
     public void mostar_sentencia() {
         //nada
     }
+
+    @Override
+    public void generar_codigo() {
+        //Nada
+    }
 }

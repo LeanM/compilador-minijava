@@ -6,15 +6,18 @@ class A {
     dynamic void m1(int f){
         b = null;
         int c;
-        {
+        int x;
+                {
 
-            {
-                c = 0;
-                f = 1;
-                String f;
-                b = null;
-            }
-        }
+                    {
+
+                        {
+                            y = 0;
+                        }
+                        int y;
+                    }
+                    int y;
+                }
     }
 
     dynamic A m2(){

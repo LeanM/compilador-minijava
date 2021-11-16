@@ -1,10 +1,9 @@
-import AnalizadorSemantico.*;
+package AnalizadorSemantico;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.LinkedList;
 
@@ -146,7 +145,7 @@ public class Traductor {
     }
 
     public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException {
-        this.set_modo_actual(".DATA");
+        this.set_modo_data();
         String etiquetas_string = "";
 
         if (!etiquetas_metodos.isEmpty())
@@ -158,9 +157,10 @@ public class Traductor {
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
 
-        gen("VT "+clase.getNombre()+" DW "+etiquetas_string);
+        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
+        bw.newLine();
 
-        this.set_modo_actual(".CODE");
+        this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
 
         Enumeration<LinkedList<EntradaMetodo>> enum_metodos = clase.get_tabla_metodos().elements();
@@ -170,25 +170,41 @@ public class Traductor {
             for(EntradaMetodo em : lista_metodos){
                 if(!em.fue_traducido()){
                     //Generar code de cada metodo
-                    //em.generar();
+                    em.generar_codigo();
 
                     em.set_traducido();
                 }
             }
         }
+
+        for (EntradaConstructor ec : clase.get_lista_constructores()) {
+            //Generar code constructor
+            ec.generar_codigo();
+
+        }
+
     }
 
-    public void set_modo_actual(String modo) throws IOException {
-        if(!modo.equals(modo_actual)) {
-            if(Arrays.asList(".DATA",".STACK",".CODE").contains(modo)) {
-                bw.write(modo);
-                this.modo_actual = modo;
-                bw.newLine();
-            }
+    public void set_modo_data() throws IOException {
+        if(!modo_actual.equals(".DATA")) {
+            bw.write((char) 9);
+            bw.write(".DATA");
+            this.modo_actual = ".DATA";
+            bw.newLine();
+        }
+    }
+
+    public void set_modo_code() throws IOException {
+        if(!modo_actual.equals(".CODE")) {
+            bw.write((char) 9);
+            bw.write(".CODE");
+            this.modo_actual = ".CODE";
+            bw.newLine();
         }
     }
 
     public void gen(String instruccion) throws IOException {
+        bw.write((char) 9);
         bw.write(instruccion);
         bw.newLine();
     }
