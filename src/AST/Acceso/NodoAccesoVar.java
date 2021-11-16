@@ -76,7 +76,7 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                 } else {
                     bloque_padre = bloque_acceso_var.get_bloque_padre();
                     while (bloque_padre != metodo_origen.get_bloque_principal() && !esta_declarada) {
-                        if (bloque_padre.get_tabla_var_locales().containsKey(token_acceso.get_lexema())) {
+                        if (bloque_padre.get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea()) {
                             //La var local esta definida en un bloque padre [correcto]
                             esta_declarada = true;
                         } else bloque_padre = bloque_padre.get_bloque_padre();
