@@ -19,10 +19,9 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
         EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(token_acceso,tipo_izq.getNombre());
         if(atributo_conforma == null)
-            throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
-
-         if (!(primario_decorator instanceof NodoAccesoThis) && atributo_conforma.get_visibilidad().equals("private"))
-             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
+            throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda");
+        if (!(primario_decorator instanceof NodoAccesoThis) && atributo_conforma.get_visibilidad().equals("private"))
+            throw new ExcepcionTipo(token_acceso,"El atributo encadenado no esta al alcance, es privado en la clase encadenada a izquierda");
     }
 
     @Override
@@ -38,5 +37,20 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
     public boolean puede_ser_asignado(){
         return true;
+    }
+
+    public EntradaAtributo es_variable_instancia() throws ExcepcionTipo, ExcepcionSemantica {
+        Tipo tipo_izq;
+        tipo_izq = primario_decorator.get_tipo_acceso();
+        EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(token_acceso,tipo_izq.getNombre());
+        if(atributo_conforma == null)
+            throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
+        else
+            return atributo_conforma;
+    }
+
+    @Override
+    public void generar_codigo() {
+
     }
 }

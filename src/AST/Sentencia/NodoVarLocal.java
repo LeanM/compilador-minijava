@@ -66,4 +66,9 @@ public class NodoVarLocal extends NodoSentencia{
     public void mostar_sentencia() {
         System.out.println("varLocal : "+var_local.get_lexema());
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

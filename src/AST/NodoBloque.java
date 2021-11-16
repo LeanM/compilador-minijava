@@ -52,8 +52,12 @@ public class NodoBloque extends NodoSentencia {
 
     @Override
     public void mostar_sentencia() {
-        System.out.println("NodoBloque : ");
         for(NodoSentencia ns : lista_sentencias)
             ns.mostar_sentencia();
+    }
+
+    public void generar_codigo() {
+        for(NodoSentencia ns : lista_sentencias)
+            ns.generar_codigo();
     }
 }

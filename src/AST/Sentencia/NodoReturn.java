@@ -27,4 +27,9 @@ public class NodoReturn extends NodoSentencia {
     public void mostar_sentencia() {
         System.out.println("Nodo return : ");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

@@ -50,5 +50,10 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
         //nada
     }
 
+    @Override
+    public void generar_codigo() {
+        
+    }
+
 
 }

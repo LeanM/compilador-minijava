@@ -41,4 +41,9 @@ public class NodoFor extends NodoSentencia {
         cuerpo_for.mostar_sentencia();
         System.out.println("-----------------------------------------------------------");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

@@ -29,7 +29,7 @@ public class TipoReferencia extends Tipo{
         if(tipo.esPrimitivo() && !tipo.getNombre().equals("String"))
             toReturn = false;
         else {
-            if ((this.getNombre().equals("null") || tipo.getNombre().equals("null"))) {
+            if (this.getNombre().equals("null") || tipo.getNombre().equals("null"))
                 toReturn = true;
             }
             else {

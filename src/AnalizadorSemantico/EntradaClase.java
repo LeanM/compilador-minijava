@@ -4,6 +4,7 @@ import AnalizadorLexico.Token;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -15,13 +16,21 @@ public abstract class EntradaClase {
     protected LinkedList<EntradaAtributo> lista_atributos_ocultos; //En la primer posicion estan los atributos ocultos del padre, en la segunda del abuelo, y asi sucesivamente
     protected LinkedList<String> nombre_clase_atributos_ocultos;
     protected Hashtable<String,LinkedList<EntradaMetodo>> tabla_metodos;
+    protected Hashtable<String,LinkedList<EntradaMetodo>> metodos_heredados;
     protected boolean consolido_metodos, consolido_atributos;
+
+    //  Listas de metodos y atributos heredados para no generar el codigo dos veces en el traductor
+    //protected Hashtable<String,LinkedList<EntradaMetodo>> metodos_heredados;
+    //protected Hashtable<String,EntradaAtributo> atributos_heredados;
 
     public EntradaClase (Token clase) {
         token_clase = clase;
         lista_constructores = new LinkedList<EntradaConstructor>();
         tabla_atributos = new Hashtable<String,EntradaAtributo>();
         tabla_metodos = new Hashtable<String,LinkedList<EntradaMetodo>>();
+
+        metodos_heredados = new Hashtable<String,LinkedList<EntradaMetodo>>();
+
         lista_atributos_ocultos = new LinkedList<EntradaAtributo> ();
         nombre_clase_atributos_ocultos = new LinkedList<String>();
         consolido_metodos = consolido_atributos = false;
@@ -69,6 +78,30 @@ public abstract class EntradaClase {
     }
 
     public void setMetodo(String nombreMetodo, EntradaMetodo metodo) throws ExcepcionSemantica {
+        if(!tabla_metodos.containsKey(nombreMetodo)) {
+            metodo.set_clase_base(TablaSimbolos.getInstance().getClaseActual().getNombre());
+            insertarMetodoNuevo(nombreMetodo, metodo);
+        }
+        else {
+            //verificar si tiene parametros distintos
+            LinkedList<EntradaMetodo> metodos = tabla_metodos.get(nombreMetodo);
+            for(EntradaMetodo em : metodos){
+                if(em.mismos_argumentos(metodo.get_lista_argumentos()))
+                    throw new ExcepcionSemantica(metodo.get_token_metodo(),"Error Semantico en linea "+metodo.get_token_metodo().get_nro_linea() +": Ya hay un metodo declarado con el nombre "+nombreMetodo+" que posee los mismos argumentos.");
+            }
+            //Si no hay ningun metodo con los mismo argumentos
+            metodo.set_clase_base(TablaSimbolos.getInstance().getClaseActual().getNombre());
+            metodos.add(metodo);
+        }
+    }
+
+    private void insertarMetodoNuevo(String nombre, EntradaMetodo entradaMetodo) {
+        LinkedList<EntradaMetodo> lista = new LinkedList<EntradaMetodo>();
+        lista.add(entradaMetodo);
+        tabla_metodos.put(nombre,lista);
+    }
+
+    public void set_metodo_heredado(String nombreMetodo, EntradaMetodo metodo) throws ExcepcionSemantica {
         if(!tabla_metodos.containsKey(nombreMetodo))
             insertarMetodoNuevo(nombreMetodo,metodo);
         else {
@@ -83,15 +116,10 @@ public abstract class EntradaClase {
         }
     }
 
-    private void insertarMetodoNuevo(String nombre, EntradaMetodo entradaMetodo) {
-        LinkedList<EntradaMetodo> lista = new LinkedList<EntradaMetodo>();
-        lista.add(entradaMetodo);
-        tabla_metodos.put(nombre,lista);
-    }
-
     public Hashtable<String,LinkedList<EntradaMetodo>> get_tabla_metodos(){
         return tabla_metodos;
     }
+
     public Hashtable<String,EntradaAtributo> get_tabla_atributos() { return tabla_atributos; }
     public LinkedList<EntradaConstructor> get_lista_constructores() { return lista_constructores; }
     public void metodos_consolidados(){
@@ -100,12 +128,37 @@ public abstract class EntradaClase {
     public void atributos_consolidados(){
         consolido_atributos = true;
     }
+
+
     public boolean get_consolido_metodos() { return consolido_metodos;}
     public boolean get_consolido_atributos(){return consolido_atributos;}
+
 
     public abstract void herenciaCircular() throws ExcepcionSemantica;
     public abstract void setClaseSuper(Token claseSuper);
     public abstract Token getClaseSuper();
     public abstract void esta_bien_declarada() throws ExcepcionSemantica;
     protected abstract void get_lista_ancestros(LinkedList<String> jerarquia_ancestros) throws ExcepcionSemantica;
+
+    public LinkedList<EntradaMetodo> get_metodos_ordenados_offset(){
+        int offset_max = 0;
+        Hashtable<Integer,EntradaMetodo> tabla_orden_offset = new Hashtable<Integer, EntradaMetodo>();
+        LinkedList<EntradaMetodo> toReturn = new LinkedList<EntradaMetodo>();
+        Enumeration<LinkedList<EntradaMetodo>> enum_metodos = tabla_metodos.elements();
+        LinkedList<EntradaMetodo> lista_metodos;
+        while(enum_metodos.hasMoreElements()){
+            lista_metodos = enum_metodos.nextElement();
+            for(EntradaMetodo metodo : lista_metodos) {
+                tabla_orden_offset.put(metodo.get_offset(), metodo);
+                if(metodo.get_offset() > offset_max)
+                    offset_max = metodo.get_offset();
+            }
+        }
+        for(int i = 1; i <= offset_max; i++){
+            if(tabla_orden_offset.containsKey(i))
+                toReturn.addLast(tabla_orden_offset.get(i));
+
+        }
+        return toReturn;
+    }
 }

@@ -21,4 +21,9 @@ public class NodoAccesoThis extends NodoPrimario_Concreto {
     public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
         throw new ExcepcionSemantica(token_acceso,"No se puede referenciar a this desde un contexto estatico");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

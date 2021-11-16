@@ -4,6 +4,9 @@ import AST.Acceso.NodoAcceso;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
+import AnalizadorSemantico.Traductor;
+
+import java.io.IOException;
 
 public class NodoAsignacion_Inc extends NodoAsignacion{
 
@@ -18,6 +21,13 @@ public class NodoAsignacion_Inc extends NodoAsignacion{
         lado_izq.mostrar_acceso();
         System.out.println(tipo_asignacion.get_lexema());
         System.out.println("-----------------------------------------------------------");
+    }
+
+    @Override
+    public void generar_codigo() throws IOException {
+        lado_izq.generar_codigo();
+        Traductor.getInstance().gen("PUSH 1");
+        Traductor.getInstance().gen("SUB");
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {

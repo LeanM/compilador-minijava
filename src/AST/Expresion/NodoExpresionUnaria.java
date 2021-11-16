@@ -38,4 +38,9 @@ public class NodoExpresionUnaria extends NodoExpresion {
         System.out.println(token_expresion.get_lexema());
         operando.mostrar_expresion();
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

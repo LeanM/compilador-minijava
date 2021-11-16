@@ -104,5 +104,10 @@ public abstract class EntradaUnidad {
         }
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
+
+        public void generar_codigo() {
+            bloque_principal.generar_codigo();
+        }
+
         public abstract void esta_bien_declarado() throws ExcepcionSemantica;
 }

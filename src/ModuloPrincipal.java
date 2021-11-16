@@ -1,5 +1,4 @@
 import AST.NodoBloque;
-import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Analizador_Lexico;
 import AnalizadorLexico.GestorArchivo;
 import AnalizadorLexico.Token;
@@ -15,13 +14,13 @@ public class ModuloPrincipal {
     private static GestorArchivo gestorArchivo;
     private static Analizador_Lexico analizador_lexico;
     private static Analizador_Sintactico analizador_sintactico;
-    private static Token tokenActual;
 
     public static void main (String [] args){
-        TablaSimbolos.getInstance();
-        String programa = "";
+        TablaSimbolos.getInstance().inicializar_tabla_simbolos();
+
+        String programa = "pruebaTRADUCTOR.txt";
         try {
-            programa = args[0];
+            //programa = args[0];
         }
         catch (ArrayIndexOutOfBoundsException e){ e.printStackTrace();}
 
@@ -34,9 +33,11 @@ public class ModuloPrincipal {
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
             TablaSimbolos.getInstance().chequeo_sentencias();
-            //mostrarClases(); //fines de prueba
+            Traductor.getInstance().traducir();
+
+            mostrarClases(); //fines de prueba
             //mostrarAST();
-            if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores()) {
+            if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores() && !Traductor.getInstance().hubo_errores()) {
                 System.out.println("Compilacion Exitosa");
                 System.out.println();
                 System.out.println("[SinErrores]");
@@ -66,6 +67,7 @@ public class ModuloPrincipal {
             while (enum_atributos.hasMoreElements()) {
                 atributo_actual = enum_atributos.nextElement();
                 System.out.println(atributo_actual.getTipo().getNombre()+" "+atributo_actual.get_token_atributo().get_lexema());
+                System.out.println("Offset de atributo : "+atributo_actual.get_offset());
             }
             System.out.println("Constructores : ");
             LinkedList<EntradaConstructor> lista_constructores = entradaClase.get_lista_constructores();
@@ -76,8 +78,10 @@ public class ModuloPrincipal {
             Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
             while (enum_metodos.hasMoreElements()) {
                 lista_metodos_actuales = enum_metodos.nextElement();
-                for(EntradaMetodo em : lista_metodos_actuales)
-                    System.out.println(em.get_token_metodo().get_lexema()+" ("+em.get_lista_argumentos().toString() +")");
+                for(EntradaMetodo em : lista_metodos_actuales) {
+                    System.out.println(em.get_token_metodo().get_lexema() + " (" + em.get_lista_argumentos().toString() + ")");
+                    System.out.println("Offset de metodo : "+em.get_offset());
+                }
             }
             System.out.println("--------------------------");
         }
