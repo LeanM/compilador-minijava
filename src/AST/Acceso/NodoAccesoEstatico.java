@@ -33,8 +33,8 @@ public class NodoAccesoEstatico extends NodoPrimario_Concreto{
             if (encadenado_estatico instanceof NodoVarEncadenada_Decorator) {
                 EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(encadenado_estatico.token_acceso, tipo_estatico.getNombre());
                 if (atributo_conforma == null)
-                    throw new ExcepcionTipo(token_acceso, "La llamada a atributo " + encadenado_estatico.getToken().get_lexema() + " no conforma con ningun metodos de la clase del encadenado de la izquierda ( " + tipo_estatico.getNombre() + " )");
-                if (!atributo_conforma.es_estatico())
+                    throw new ExcepcionTipo(token_acceso, "La llamada a atributo " + encadenado_estatico.getToken().get_lexema() + " no conforma con ningun atributo de la clase del encadenado de la izquierda ( " + tipo_estatico.getNombre() + " )");
+                if (!atributo_conforma.es_estatico() || atributo_conforma.get_visibilidad().equals("private"))
                     throw new ExcepcionSemantica(token_acceso, "No existe un atributo estatico " + encadenado_estatico.getToken().get_lexema() + " definido en " + tipo_estatico.getNombre());
             }
         }
