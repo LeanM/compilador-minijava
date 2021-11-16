@@ -18,7 +18,9 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
             throw new ExcepcionTipo(token_acceso,"El tipo de retorno del encadenado a izquierda no puede ser un tipo primitivo ni void");
 
         EntradaAtributo atributo_conforma = TablaSimbolos.getInstance().conforma_atributo(token_acceso,tipo_izq.getNombre());
-        if(atributo_conforma == null || atributo_conforma.get_visibilidad().equals("private"))
+        if(atributo_conforma == null)
+            throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
+        if (!(primario_decorator instanceof NodoAccesoThis) && atributo_conforma.get_visibilidad().equals("private"))
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda o no esta al alcance");
     }
 
