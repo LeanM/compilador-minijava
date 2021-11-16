@@ -7,12 +7,6 @@ import java.util.LinkedList;
 public class TipoReferencia extends Tipo{
 
     protected EntradaClase clase_tipo;
-    /*
-    public TipoReferencia(Token token_tipo, EntradaClase clase) {
-        super(token_tipo);
-        this.clase_tipo = clase;
-    }
-     */
 
     public TipoReferencia(Token token_tipo){
         super(token_tipo);
@@ -31,7 +25,6 @@ public class TipoReferencia extends Tipo{
         else {
             if (this.getNombre().equals("null") || tipo.getNombre().equals("null"))
                 toReturn = true;
-            }
             else {
                 if (!tipo.getNombre().equals(this.getNombre())) {
                     LinkedList<String> lista_ancestros = new LinkedList<String>();
