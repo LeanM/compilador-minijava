@@ -1,12 +1,17 @@
 package AST.Acceso;
 
+import AST.Sentencia.Var;
+import AST.Sentencia.Var_Instancia;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
 public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
+    private Var_Instancia acceso_tipo_variable;
+
     public NodoVarEncadenada_Decorator(Token token_var_encadenada, NodoPrimario_Component primario) {
         super(token_var_encadenada, primario);
+        acceso_tipo_variable = null;
     }
 
     @Override
@@ -22,6 +27,8 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda");
         if (!(primario_decorator instanceof NodoAccesoThis) && atributo_conforma.get_visibilidad().equals("private"))
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no esta al alcance, es privado en la clase encadenada a izquierda");
+
+        acceso_tipo_variable = new Var_Instancia(atributo_conforma,this);
     }
 
     @Override
@@ -38,7 +45,7 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
     public boolean puede_ser_asignado(){
         return true;
     }
-
+    /*
     public EntradaAtributo es_variable_instancia() throws ExcepcionTipo, ExcepcionSemantica {
         Tipo tipo_izq;
         tipo_izq = primario_decorator.get_tipo_acceso();
@@ -49,8 +56,18 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
             return atributo_conforma;
     }
 
+
+     */
     @Override
     public void generar_codigo() {
+        acceso_tipo_variable.generar_codigo();
+    }
 
+    public void set_es_lado_izq() {
+        acceso_tipo_variable.set_es_lado_izq();
+    }
+
+    public Var get_acceso_tipo_var(){
+        return acceso_tipo_variable;
     }
 }

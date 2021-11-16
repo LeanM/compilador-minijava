@@ -1,6 +1,6 @@
 package AST.Acceso;
 import AST.NodoBloque;
-import AST.Sentencia.NodoVarLocal;
+import AST.Sentencia.*;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
@@ -8,16 +8,13 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
 
     private EntradaUnidad metodo_origen;
     private NodoBloque bloque_acceso_var;
-    private boolean es_var_instancia, es_parametro;
-    private NodoVarLocal es_var_local;
+    private Var acceso_tipo_variable;
 
     public NodoAccesoVar(Token token_variable, String key_clase, EntradaUnidad metodo_origen, NodoBloque bloque_acceso_var){
         super(token_variable,key_clase);
         this.metodo_origen = metodo_origen;
         this.bloque_acceso_var = bloque_acceso_var;
-
-        es_var_instancia = es_parametro = false;
-        es_var_local = null;
+        acceso_tipo_variable = null;
     }
 
     @Override
@@ -29,7 +26,7 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                 //No esta en los atributos
                 throw new ExcepcionTipo(token_acceso, "La variable a la que se quiere acceder no esta declarada como variable local en el alcance, ni es argumento de la unidad, ni atributo visible de la clase.");
             else
-                this.es_var_instancia = true;
+                acceso_tipo_variable = new Var_Instancia(TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().get(token_acceso.get_lexema()),this);
         }
     }
 
@@ -67,7 +64,7 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                         //Si esta declarada la variable local en el bloque despues del acceso [error]
                         toReturn = false;
                         else
-                            es_var_local = bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema());
+                            acceso_tipo_variable = new Var_Local(bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
                 } else
                     toReturn = false;
             } else
@@ -76,14 +73,16 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                     if (bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() > token_acceso.get_nro_linea())
                         toReturn = false;
                     else
-                        es_var_local = bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema());
+                        acceso_tipo_variable = new Var_Local(bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
+                        //es_var_local = bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema());
                 } else {
                     bloque_padre = bloque_acceso_var.get_bloque_padre();
                     while (bloque_padre != metodo_origen.get_bloque_principal() && !esta_declarada) {
                         if (bloque_padre.get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea()) {
                             //La var local esta definida en un bloque padre [correcto]
                             esta_declarada = true;
-                            es_var_local = bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema());
+                            //es_var_local = bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema());
+                            acceso_tipo_variable = new Var_Local(bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
                         } else bloque_padre = bloque_padre.get_bloque_padre();
                     }
                     if(!esta_declarada && metodo_origen.get_bloque_principal().get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && metodo_origen.get_bloque_principal().get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea())
@@ -94,7 +93,8 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                 }
         }
         else
-            es_parametro = true;
+            acceso_tipo_variable = new Var_parametro(metodo_origen.get_tabla_argumentos().get(token_acceso.get_lexema()),this);
+            //es_parametro = true;
 
         return toReturn;
     }
@@ -111,13 +111,22 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
 
     @Override
     public void generar_codigo() {
-
+        if (acceso_tipo_variable != null)
+            acceso_tipo_variable.generar_codigo();
     }
 
     public boolean puede_ser_asignado(){
         return true;
     }
 
+    public void set_es_lado_izq() {
+        this.acceso_tipo_variable.set_es_lado_izq();
+    }
+
+    public Var get_acceso_tipo_var(){
+        return acceso_tipo_variable;
+    }
+    /*
     public EntradaAtributo es_variable_instancia() throws ExcepcionSemantica {
         EntradaAtributo toReturn = null;
         if(es_var_instancia)
@@ -137,4 +146,6 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
     public NodoVarLocal es_var_local() {
         return es_var_local;
     }
+
+     */
 }

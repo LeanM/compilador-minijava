@@ -25,33 +25,28 @@ public class NodoAsignacion_Dec extends NodoAsignacion{
 
     @Override
     public void generar_codigo() throws IOException, ExcepcionSemantica, ExcepcionTipo {
-        lado_izq.generar_codigo();
-        Traductor.getInstance().gen("PUSH 1");
-        Traductor.getInstance().gen("SUB");
-
-        //Almacenar
-        EntradaAtributo ea;
-
         if (lado_izq instanceof NodoAccesoVar){
-            ea = ((NodoAccesoVar) lado_izq).es_variable_instancia();
-            if(ea == null){
-                //No es variable de instancia
+            //Para el momento en el que se necesite el valor
+            lado_izq.generar_codigo();
 
-            }
-            else {
-                //Es variable de instancia
-            }
+            Traductor.getInstance().gen("PUSH 1");
+            Traductor.getInstance().gen("SUB");
+
+            //Para el momento en el que se asigna el nuevo valor decrementado
+            ((NodoAccesoVar) lado_izq).set_es_lado_izq();
+            lado_izq.generar_codigo();
         }
-        else
-            if (lado_izq instanceof NodoVarEncadenada_Decorator){
-                ea = ((NodoVarEncadenada_Decorator) lado_izq).es_variable_instancia();
-                if(ea == null){
-                    //No es variable de instancia
-                }
-                else {
-                    //Es variable de instancia
-                }
-            }
+        else {
+            //Si no es un NodoAccesoVar si o si es una var encadenada, sino no hubiese pasado el chequeo
+            ((NodoVarEncadenada_Decorator) lado_izq).set_es_lado_izq();
+            lado_izq.generar_codigo();
+            Traductor.getInstance().gen("PUSH 1");
+            Traductor.getInstance().gen("SUB");
+            ((NodoAccesoVar) lado_izq).get_acceso_tipo_var();
+        }
+
+
+
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
