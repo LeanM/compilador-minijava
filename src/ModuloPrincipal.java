@@ -72,14 +72,14 @@ public class ModuloPrincipal {
             System.out.println("Constructores : ");
             LinkedList<EntradaConstructor> lista_constructores = entradaClase.get_lista_constructores();
             for(EntradaConstructor ec : lista_constructores) {
-                System.out.println(ec.get_token_constructor().get_lexema()+" ("+ec.get_lista_argumentos().toString() +")");
+                System.out.println(ec.get_token_unidad().get_lexema()+" ("+ec.get_lista_argumentos().toString() +")");
             }
             System.out.println("Metodos : ");
             Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
             while (enum_metodos.hasMoreElements()) {
                 lista_metodos_actuales = enum_metodos.nextElement();
                 for(EntradaMetodo em : lista_metodos_actuales) {
-                    System.out.println(em.get_token_metodo().get_lexema() + " (" + em.get_lista_argumentos().toString() + ")");
+                    System.out.println(em.get_token_unidad().get_lexema() + " (" + em.get_lista_argumentos().toString() + ")");
                     System.out.println("Offset de metodo : "+em.get_offset());
                 }
             }

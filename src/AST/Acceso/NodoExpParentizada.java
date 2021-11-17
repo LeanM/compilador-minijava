@@ -35,4 +35,9 @@ public class NodoExpParentizada extends NodoPrimario_Concreto {
         System.out.println("Nodo ExpParentizada :");
         expresion_parentizada.mostrar_expresion();
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

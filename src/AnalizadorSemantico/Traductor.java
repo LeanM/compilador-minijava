@@ -1,5 +1,7 @@
 package AnalizadorSemantico;
 
+import AST.NodoBloque;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -32,9 +34,14 @@ public class Traductor {
     }
 
     public void traducir() throws IOException {
-        consolidar_offsets_clases();
-        generar_clases_general();
-        finalizar_output();
+        try {
+            consolidar_offsets_clases();
+            generar_clases_general();
+            finalizar_output();
+        }
+        catch (ExcepcionTipo | ExcepcionSemantica e) {
+            e.printStackTrace();
+        }
     }
 
     public void consolidar_offsets_clases() {
@@ -54,6 +61,7 @@ public class Traductor {
 
         try {
             for (EntradaClase hijo_object : hijos_object) {
+                consolidar_offsets_constructores(hijo_object);
                 consolidar_offsets_metodos(object, hijo_object, next_offset);
                 consolidar_offsets_atributos(object,hijo_object,next_offset_atr);
             }
@@ -88,6 +96,7 @@ public class Traductor {
                     //Si el padre no contiene un metodo con el mismo nombre
                     metodo_hijo.set_offset(offset_base++);
                 }
+                consolidar_offsets_varlocales_params(metodo_hijo);
             }
         }
 
@@ -133,7 +142,30 @@ public class Traductor {
 
     }
 
-    public void generar_clases_general() throws IOException {
+    public void consolidar_offsets_varlocales_params(EntradaUnidad unidad){
+        int offset_base = 3 + unidad.get_lista_argumentos().size() - 1;; //Por que en el RA los primeros 3 offset estan reservados
+        //Offset inicializado en caso constructor o metodo statico
+
+        if (unidad instanceof EntradaMetodo) {
+            if(!(((EntradaMetodo) unidad).es_estatico()))
+                //Si el metodo es dinamico
+                offset_base = 4 + unidad.get_lista_argumentos().size() - 1;
+        }
+
+        //Asigno los primeros offset a los parametros de la unidad
+        for(EntradaParametro ep : unidad.get_lista_argumentos()) {
+            System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
+            ep.set_offset(offset_base--);
+        }
+
+    }
+
+    public void consolidar_offsets_constructores(EntradaClase clase){
+        for (EntradaConstructor ec : clase.get_lista_constructores())
+            consolidar_offsets_varlocales_params(ec);
+    }
+
+    public void generar_clases_general() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
         LinkedList<EntradaMetodo> etiquetas_metodos;
         EntradaClase clase;
@@ -144,7 +176,7 @@ public class Traductor {
         }
     }
 
-    public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException {
+    public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException, ExcepcionTipo, ExcepcionSemantica {
         this.set_modo_data();
         String etiquetas_string = "";
 

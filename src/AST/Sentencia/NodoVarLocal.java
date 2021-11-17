@@ -10,6 +10,7 @@ public class NodoVarLocal extends NodoSentencia{
     protected Tipo tipo;
     protected NodoBloque bloque_var_local;
     protected EntradaUnidad unidad_var_local;
+    protected int offset;
 
     public NodoVarLocal(Tipo tipo, Token variable, EntradaUnidad unidad, NodoBloque bloque){
         super();
@@ -17,6 +18,7 @@ public class NodoVarLocal extends NodoSentencia{
         this.var_local = variable;
         this.unidad_var_local = unidad;
         this.bloque_var_local = bloque;
+        this.offset = 0;
     }
 
     @Override
@@ -57,7 +59,6 @@ public class NodoVarLocal extends NodoSentencia{
     public Token get_token(){
         return var_local;
     }
-
     public Tipo getTipo(){
         return tipo;
     }
@@ -71,4 +72,7 @@ public class NodoVarLocal extends NodoSentencia{
     public void generar_codigo() {
 
     }
+
+    public int get_offset() { return offset; }
+    public void set_offset(int offset) { this.offset = offset; }
 }

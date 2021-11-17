@@ -4,6 +4,8 @@ import AST.Sentencia.*;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
+
 public class NodoAccesoVar extends NodoPrimario_Concreto{
 
     private EntradaUnidad metodo_origen;
@@ -110,7 +112,7 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws IOException {
         if (acceso_tipo_variable != null)
             acceso_tipo_variable.generar_codigo();
     }

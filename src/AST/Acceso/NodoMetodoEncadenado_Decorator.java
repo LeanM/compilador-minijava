@@ -3,6 +3,8 @@ package AST.Acceso;
 import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
@@ -38,6 +40,11 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
             toReturn = metodo_conforma.get_tipo();
 
         return toReturn;
+    }
+
+    @Override
+    public void generar_codigo() throws IOException {
+
     }
 
 }

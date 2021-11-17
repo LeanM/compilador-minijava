@@ -33,4 +33,9 @@ public class NodoOperando_Acceso extends NodoOperando {
     public void mostrar_expresion() {
         nodo_acceso.mostrar_acceso();
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

@@ -7,25 +7,19 @@ import java.util.HashMap;
 
 public class EntradaMetodo extends EntradaUnidad {
 
-    private Token token_metodo;
     private String alcance_metodo;
     private String clase_base;
     private boolean fue_traducido;
     private int offset;
 
     public EntradaMetodo(Token token_metodo, String alcance_metodo, Tipo tipo_metodo) {
-        super(tipo_metodo);
-        this.token_metodo = token_metodo;
+        super(tipo_metodo,token_metodo);
         this.alcance_metodo = alcance_metodo;
         this.clase_base = "";
         this.fue_traducido = false;
         this.offset = 0;
     }
 
-    public String getNombre(){
-        return token_metodo.get_lexema();
-    }
-    public Token get_token_metodo(){ return token_metodo;}
     public String get_alcance() {return alcance_metodo;}
     public void set_sentencias_static(){
         for(NodoSentencia ns : bloque_principal.get_lista_sentencias())
@@ -35,7 +29,7 @@ public class EntradaMetodo extends EntradaUnidad {
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_unidad.esPrimitivo())
             if(!TablaSimbolos.getInstance().clase_esta_declarada(tipo_unidad.getNombre()))
-                throw new ExcepcionSemantica(tipo_unidad.get_token_tipo(),"Error Semantico en linea "+token_metodo.get_nro_linea() +": El tipo de retorno del metodo "+token_metodo.get_lexema()+" es la clase "+tipo_unidad.getNombre()+" que no esta declarada.");
+                throw new ExcepcionSemantica(tipo_unidad.get_token_tipo(),"Error Semantico en linea "+token_unidad.get_nro_linea() +": El tipo de retorno del metodo "+token_unidad.get_lexema()+" es la clase "+tipo_unidad.getNombre()+" que no esta declarada.");
 
         for (EntradaParametro ea : lista_argumentos)
             ea.esta_bien_declarado();

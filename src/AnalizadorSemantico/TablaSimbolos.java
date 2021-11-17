@@ -92,7 +92,7 @@ public class TablaSimbolos {
                                 break;
                             }
                             else
-                                throw new ExcepcionSemantica(em.get_token_metodo(),"Error Semantico en linea "+em.get_token_metodo().get_nro_linea()+" : No puede haber mas de un main declarado.");
+                                throw new ExcepcionSemantica(em.get_token_unidad(),"Error Semantico en linea "+em.get_token_unidad().get_nro_linea()+" : No puede haber mas de un main declarado.");
                         }
                     }
                 }
@@ -135,7 +135,7 @@ public class TablaSimbolos {
                     if(em.mismos_argumentos(metodo.get_lista_argumentos()))
                         //Si los metodos no son iguales y tienen mismos argumentos, entonces el alcance y/o los tipos de retorno del metodo de clase hija no son del tipo del tipo de retorno del metodo de la clase padre
                         //Por lo tanto hay error por no cumplir las condiciones de redefinicion
-                        throw new ExcepcionSemantica(em.get_token_metodo(), "Error Semantico en linea " + em.get_token_metodo().get_nro_linea() + ": El metodo " + metodo.getNombre() + " tiene el mismo nombre y parametros que uno en la clase super, pero distintos tipos de retorno. No cumple las condiciones de redefinicion.");
+                        throw new ExcepcionSemantica(em.get_token_unidad(), "Error Semantico en linea " + em.get_token_unidad().get_nro_linea() + ": El metodo " + metodo.getNombre() + " tiene el mismo nombre y parametros que uno en la clase super, pero distintos tipos de retorno. No cumple las condiciones de redefinicion.");
                     else {
                         //Tiene distintos argumentos, por lo tanto lo debo pasar a la clase hija, no es redefinicion
                         //Seguir iterando por si hay errores con otros metodos o redefinicion

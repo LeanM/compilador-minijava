@@ -41,4 +41,9 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             if(!metodo_en_clase.es_estatico())
                 throw new ExcepcionSemantica(token_acceso,"No se puede acceder al metodo dinamico "+metodo_en_clase.getNombre()+" desde un contexto estatico");
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

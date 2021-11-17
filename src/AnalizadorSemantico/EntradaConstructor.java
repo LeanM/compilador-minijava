@@ -5,13 +5,8 @@ import java.util.Hashtable;
 
 public class EntradaConstructor extends EntradaUnidad {
 
-    private Token token_constructor;
-    //private Hashtable<String,EntradaVariable> tabla_variables;
-
     public EntradaConstructor(Token token_constructor,Tipo tipo_constructor) {
-        super(tipo_constructor);
-        this.token_constructor = token_constructor;
-        //tabla_variables = new Hashtable<String,EntradaVariable>();
+        super(tipo_constructor,token_constructor);
     }
 
     /*  No en esta etapa (variables locales)
@@ -19,10 +14,6 @@ public class EntradaConstructor extends EntradaUnidad {
         tabla_variables.put(nombre_variable,variable);
     }
     */
-    public String getNombre(){
-        return token_constructor.get_lexema();
-    }
-    public Token get_token_constructor(){return token_constructor;}
 
     public void esta_bien_declarado() throws ExcepcionSemantica {
         for (EntradaParametro ea : lista_argumentos)

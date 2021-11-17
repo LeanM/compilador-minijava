@@ -5,6 +5,7 @@ import AST.Sentencia.NodoVarLocal;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -20,7 +21,6 @@ public class NodoBloque extends NodoSentencia {
         lista_sentencias = new LinkedList<NodoSentencia>();
         tabla_var_locales = new Hashtable<String,NodoVarLocal>();
         unidad_de_bloque = unidad;
-        //bloque_padre = new NodoBloque(unidad);
     }
 
     public void setSentencia(NodoSentencia sentencia_nueva) {
@@ -38,6 +38,7 @@ public class NodoBloque extends NodoSentencia {
         if(tabla_var_locales.containsKey(nombre_var))
             throw new ExcepcionSemantica(nodo.get_token(),"Ya hay una variable con el mismo nombre definida en el alcance");
         tabla_var_locales.put(nombre_var,nodo);
+        unidad_de_bloque.set_var_local(nombre_var,nodo);
     }
 
     public Hashtable<String, NodoVarLocal> get_tabla_var_locales() {
@@ -56,7 +57,7 @@ public class NodoBloque extends NodoSentencia {
             ns.mostar_sentencia();
     }
 
-    public void generar_codigo() {
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         for(NodoSentencia ns : lista_sentencias)
             ns.generar_codigo();
     }

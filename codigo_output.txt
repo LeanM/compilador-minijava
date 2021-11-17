@@ -8,8 +8,8 @@ VT Object: DW debugPrint_1_Object
 VT System: DW debugPrint_1_Object,read_2_System,printBln_3_System,printCln_4_System,printI_5_System,printIln_6_System,printC_7_System,println_8_System,printB_9_System,printSln_10_System,printS_11_System
 	.CODE
 	.DATA
-VT C: DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B,main_5_C
+VT C: DW debugPrint_1_Object,met1_2_A,metODO_3_B,met1_4_B,main_5_C,main2_6_C
 	.CODE
 	.DATA
-VT B: DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B
+VT B: DW debugPrint_1_Object,met1_2_A,metODO_3_B,met1_4_B
 	.CODE

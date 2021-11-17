@@ -19,4 +19,8 @@ public abstract class NodoOperando_Literal extends NodoOperando {
     public void chequeo_acceso_estatico() {
         //nada
     }
+
+    public void generar_codigo(){
+
+    }
 }

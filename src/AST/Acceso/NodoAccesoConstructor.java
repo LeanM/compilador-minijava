@@ -33,4 +33,9 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
     public void chequeo_acceso_estatico() throws ExcepcionSemantica, ExcepcionTipo {
         //nada
     }
+
+    @Override
+    public void generar_codigo() {
+
+    }
 }

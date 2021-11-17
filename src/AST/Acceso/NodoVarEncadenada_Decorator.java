@@ -5,6 +5,8 @@ import AST.Sentencia.Var_Instancia;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
+
 public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
     private Var_Instancia acceso_tipo_variable;
@@ -59,7 +61,7 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
      */
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws IOException {
         acceso_tipo_variable.generar_codigo();
     }
 

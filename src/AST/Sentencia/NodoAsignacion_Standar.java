@@ -6,6 +6,8 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 
+import java.io.IOException;
+
 public class NodoAsignacion_Standar extends NodoAsignacion{
 
     private NodoExpresion lado_der;
@@ -38,7 +40,7 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws IOException {
         lado_izq.generar_codigo();
 
     }
