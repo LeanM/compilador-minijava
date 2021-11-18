@@ -240,6 +240,10 @@ public class Traductor {
         bw.newLine();
     }
 
+    public void gen_etiqueta(String etiqueta) throws IOException {
+        bw.write(etiqueta+":");
+    }
+
     public File finalizar_output() throws IOException {
         bw.close();
         return codigo_output;

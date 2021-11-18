@@ -5,6 +5,8 @@ import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 
+import java.io.IOException;
+
 public class NodoLlamada extends NodoSentencia{
 
     private NodoAcceso nodo_acceso;
@@ -37,7 +39,7 @@ public class NodoLlamada extends NodoSentencia{
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        nodo_acceso.generar_codigo();
     }
 }
