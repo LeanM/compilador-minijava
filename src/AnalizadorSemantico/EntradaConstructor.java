@@ -19,4 +19,12 @@ public class EntradaConstructor extends EntradaUnidad {
         for (EntradaParametro ea : lista_argumentos)
             ea.esta_bien_declarado();
     }
+
+    public String get_etiqueta() {
+        String toReturn = "lCtor"+this.getNombre();
+        for(EntradaParametro ep : lista_argumentos){
+            toReturn = toReturn + "_" + ep.get_tipo().getNombre();
+        }
+        return toReturn;
+    }
 }

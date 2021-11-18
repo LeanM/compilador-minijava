@@ -202,6 +202,7 @@ public class Traductor {
             for(EntradaMetodo em : lista_metodos){
                 if(!em.fue_traducido()){
                     //Generar code de cada metodo
+                    gen_etiqueta(em.get_etiqueta());
                     em.generar_codigo();
                     em.set_traducido();
                 }
@@ -210,8 +211,8 @@ public class Traductor {
 
         for (EntradaConstructor ec : clase.get_lista_constructores()) {
             //Generar code constructor
+            gen_etiqueta(ec.get_etiqueta());
             ec.generar_codigo();
-
         }
 
     }

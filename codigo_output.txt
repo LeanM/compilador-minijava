@@ -1,80 +1,80 @@
 	.DATA
-VT A: DW debugPrint_1_Object,met1_2_A
+VT A: DW ldebugPrint_1_Object,lmet1_2_A
 	.CODE
-	LOADFP
+lmet1_2_A:	LOADFP
 	LOADSP
 	STOREFP
 	LOAD 3
 	LOADREF 3
 	PUSH 2
-	PUSH main2_6_C
+	PUSH lmain2_6_C
 	CALL
-	LOADFP
+ldebugPrint_1_Object:	LOADFP
 	LOADSP
 	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	.DATA
-VT Object: DW debugPrint_1_Object
-	.CODE
-	.DATA
-VT System: DW debugPrint_1_Object,read_2_System,printBln_3_System,printCln_4_System,printI_5_System,printIln_6_System,printC_7_System,println_8_System,printB_9_System,printSln_10_System,printS_11_System
-	.CODE
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOADFP
+lCtorA_int_String:	LOADFP
 	LOADSP
 	STOREFP
 	.DATA
-VT C: DW debugPrint_1_Object,met1_2_A,metODO_3_B,met1_4_B,main_5_C,main2_6_C
+VT Object: DW ldebugPrint_1_Object
 	.CODE
-	LOADFP
+	.DATA
+VT System: DW ldebugPrint_1_Object,lread_2_System,lprintBln_3_System,lprintCln_4_System,lprintI_5_System,lprintIln_6_System,lprintC_7_System,lprintln_8_System,lprintB_9_System,lprintSln_10_System,lprintS_11_System
+	.CODE
+lread_2_System:	LOADFP
 	LOADSP
 	STOREFP
-	LOADFP
+lprintBln_3_System:	LOADFP
 	LOADSP
 	STOREFP
-	LOADFP
+lprintCln_4_System:	LOADFP
 	LOADSP
 	STOREFP
-	LOADFP
+lprintI_5_System:	LOADFP
 	LOADSP
 	STOREFP
-	LOADFP
+lprintIln_6_System:	LOADFP
+	LOADSP
+	STOREFP
+lprintC_7_System:	LOADFP
+	LOADSP
+	STOREFP
+lprintln_8_System:	LOADFP
+	LOADSP
+	STOREFP
+lprintB_9_System:	LOADFP
+	LOADSP
+	STOREFP
+lprintSln_10_System:	LOADFP
+	LOADSP
+	STOREFP
+lprintS_11_System:	LOADFP
+	LOADSP
+	STOREFP
+lCtorSystem:	LOADFP
 	LOADSP
 	STOREFP
 	.DATA
-VT B: DW debugPrint_1_Object,met1_2_A,metODO_3_B,met1_4_B
+VT C: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B,lmain_5_C,lmain2_6_C
 	.CODE
-	LOADFP
+lmain_5_C:	LOADFP
+	LOADSP
+	STOREFP
+lmet1_4_B:	LOADFP
+	LOADSP
+	STOREFP
+lmetODO_3_B:	LOADFP
+	LOADSP
+	STOREFP
+lmain2_6_C:	LOADFP
+	LOADSP
+	STOREFP
+lCtorC:	LOADFP
+	LOADSP
+	STOREFP
+	.DATA
+VT B: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B
+	.CODE
+lCtorB:	LOADFP
 	LOADSP
 	STOREFP
