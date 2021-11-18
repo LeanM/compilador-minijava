@@ -1,10 +1,9 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Resolucion_Tipos;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
+
+import java.io.IOException;
 
 public class NodoExpresionBinaria extends NodoExpresion {
 
@@ -48,7 +47,24 @@ public class NodoExpresionBinaria extends NodoExpresion {
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
+        expresion_izq.generar_codigo();
+        expresion_der.generar_codigo();
 
+        switch (token_expresion.get_lexema()) {
+            case "+" : Traductor.getInstance().gen("ADD");
+            case "-" : Traductor.getInstance().gen("SUB");
+            case "*" : Traductor.getInstance().gen("MUL");
+            case "==" : Traductor.getInstance().gen("EQ");
+            case "/" : Traductor.getInstance().gen("DIV");
+            case "%" : Traductor.getInstance().gen("MOD");
+            case "&&" : Traductor.getInstance().gen("AND");
+            case "||" : Traductor.getInstance().gen("OR");
+            case "!=" : {Traductor.getInstance().gen("NOT");}  //Hacerlo
+            case "<" : Traductor.getInstance().gen("LT");
+            case ">" : Traductor.getInstance().gen("GT");
+            case "<=" : Traductor.getInstance().gen("LT"); //Hacerlo
+            case ">=" : Traductor.getInstance().gen("GT");    //Hacerlo
+        }
     }
 }

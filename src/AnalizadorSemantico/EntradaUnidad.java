@@ -109,6 +109,9 @@ public abstract class EntradaUnidad {
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
 
         public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+            Traductor.getInstance().gen("LOADFP");
+            Traductor.getInstance().gen("LOADSP");
+            Traductor.getInstance().gen("STOREFP");
             bloque_principal.generar_codigo();
         }
 

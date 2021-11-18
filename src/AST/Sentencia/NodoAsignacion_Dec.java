@@ -25,28 +25,13 @@ public class NodoAsignacion_Dec extends NodoAsignacion{
 
     @Override
     public void generar_codigo() throws IOException, ExcepcionSemantica, ExcepcionTipo {
-        if (lado_izq instanceof NodoAccesoVar){
-            //Para el momento en el que se necesite el valor
-            lado_izq.generar_codigo();
-
-            Traductor.getInstance().gen("PUSH 1");
-            Traductor.getInstance().gen("SUB");
-
-            //Para el momento en el que se asigna el nuevo valor decrementado
-            ((NodoAccesoVar) lado_izq).set_es_lado_izq();
-            lado_izq.generar_codigo();
-        }
-        else {
-            //Si no es un NodoAccesoVar si o si es una var encadenada, sino no hubiese pasado el chequeo
-            ((NodoVarEncadenada_Decorator) lado_izq).set_es_lado_izq();
-            lado_izq.generar_codigo();
-            Traductor.getInstance().gen("PUSH 1");
-            Traductor.getInstance().gen("SUB");
-            ((NodoAccesoVar) lado_izq).get_acceso_tipo_var();
-        }
-
-
-
+        //Primero trabajo el acceso como la parte derecha de la asignacion
+        lado_izq.generar_codigo();
+        Traductor.getInstance().gen("PUSH 1");
+        Traductor.getInstance().gen("SUB");
+        //Luego trabajo el acceso como la parte izquierda de la asignacion
+        lado_izq.set_lado_izq();
+        lado_izq.generar_codigo();
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {

@@ -40,8 +40,10 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
     }
 
     @Override
-    public void generar_codigo() throws IOException {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
+        lado_der.generar_codigo();
+        //Seteo que el lado izq es parte izquierda de asignacion
+        lado_izq.set_lado_izq();
         lado_izq.generar_codigo();
-
     }
 }

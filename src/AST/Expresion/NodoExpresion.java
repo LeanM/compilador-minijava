@@ -5,6 +5,8 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
+import java.io.IOException;
+
 public abstract class NodoExpresion {
 
     protected Token token_expresion;
@@ -19,5 +21,6 @@ public abstract class NodoExpresion {
     public abstract Tipo get_tipo_expresion() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract void mostrar_expresion();
-    public abstract void generar_codigo();
+    public abstract void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica;
+    //public abstract void evaluar_expresion();
 }

@@ -112,17 +112,13 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
     }
 
     @Override
-    public void generar_codigo() throws IOException {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         if (acceso_tipo_variable != null)
             acceso_tipo_variable.generar_codigo();
     }
 
     public boolean puede_ser_asignado(){
         return true;
-    }
-
-    public void set_es_lado_izq() {
-        this.acceso_tipo_variable.set_es_lado_izq();
     }
 
     public Var get_acceso_tipo_var(){

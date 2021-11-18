@@ -1,7 +1,10 @@
 package AST.Sentencia;
 
 import AST.Acceso.NodoPrimario_Component;
+import AST.Acceso.NodoVarEncadenada_Decorator;
 import AnalizadorSemantico.EntradaAtributo;
+import AnalizadorSemantico.ExcepcionSemantica;
+import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Traductor;
 
 import java.io.IOException;
@@ -16,17 +19,14 @@ public class Var_Instancia extends Var{
     }
 
     @Override
-    public void generar_codigo() throws IOException {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         Traductor.getInstance().gen("LOAD 3");
-        if(!es_lado_izq || !encadenado){
-            Traductor.getInstance().gen("LOADREF variable.offset()");
+        if(!acceso_variable.es_lado_izq() || encadenado){
+            Traductor.getInstance().gen("LOADREF "+variable.get_offset());
         }
         else {
             Traductor.getInstance().gen("SWAP");
-            Traductor.getInstance().gen("STOREREF variable.offset()");
+            Traductor.getInstance().gen("STOREREF "+variable.get_offset());
         }
-
-        if(encadenado)
-            acceso_variable.generar_codigo();
     }
 }

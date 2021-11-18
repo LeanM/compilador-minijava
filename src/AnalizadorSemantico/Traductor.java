@@ -203,7 +203,6 @@ public class Traductor {
                 if(!em.fue_traducido()){
                     //Generar code de cada metodo
                     em.generar_codigo();
-
                     em.set_traducido();
                 }
             }

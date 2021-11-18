@@ -4,6 +4,7 @@ import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
 import java.util.LinkedList;
 
 public class NodoAccesoMetodo extends NodoAccesoUnidad{
@@ -17,18 +18,17 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         if(!TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_metodos().containsKey(token_acceso.get_lexema()))
             throw new ExcepcionSemantica(token_acceso,"El metodo llamado no es visible en el contexto de la clase "+key_clase);
 
-        EntradaMetodo metodo_en_clase = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,key_clase);
-        if (metodo_en_clase == null)
+        unidad_conformada = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,key_clase);
+        if (unidad_conformada == null)
             throw new ExcepcionTipo(token_acceso,"La llamada a metodo no conforma con ningun metodos de la clase.");
 
     }
 
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
-        EntradaMetodo metodo_en_clase = TablaSimbolos.getInstance().conforma_metodo(token_acceso,argumentos,key_clase);
-        if (metodo_en_clase == null)
+        if (unidad_conformada == null)
             throw new ExcepcionTipo(token_acceso,"La llamada a metodo no conforma con ningun metodos de la clase.");
-        else return metodo_en_clase.get_tipo();
+        else return unidad_conformada.get_tipo();
 
     }
 
@@ -43,7 +43,16 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        //Generar codigo parametros
+        if(unidad_conformada != null) {
+            LinkedList<EntradaParametro> argumentos_formales = unidad_conformada.get_lista_argumentos();
 
+            for (int i = 0; i < argumentos_formales.size(); i++) {
+                //Esto dejaria el resultado de la expresion en la pila
+                argumentos.get(i).generar_codigo();
+            }
+            unidad_conformada.generar_codigo();
+        }
     }
 }
