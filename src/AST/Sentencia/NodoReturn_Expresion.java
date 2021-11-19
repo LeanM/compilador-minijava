@@ -6,6 +6,8 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
+import java.io.IOException;
+
 public class NodoReturn_Expresion extends NodoReturn{
 
     private NodoExpresion expresion;
@@ -26,5 +28,10 @@ public class NodoReturn_Expresion extends NodoReturn{
     public void mostar_sentencia() {
         System.out.println("Nodo return : ");
         expresion.mostrar_expresion();
+    }
+
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        expresion.generar_codigo();
+        //Dejo el resultado para que el metodo al terminar lo tome y lo retorne
     }
 }

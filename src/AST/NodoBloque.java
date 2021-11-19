@@ -67,7 +67,6 @@ public class NodoBloque extends NodoSentencia {
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         //Debo reservar espacio para las variables locales de este bloque, al salir del bloque
         //debo liberar el espacio
-
         Traductor.getInstance().gen("RMEM "+tabla_var_locales.size());
 
         for(NodoSentencia ns : lista_sentencias)

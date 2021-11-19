@@ -15,8 +15,9 @@ int e;
 	{
 		int d;
 	}
-int f;
+
 }
+int f;
 }
 
 }

@@ -4,6 +4,8 @@ import AST.NodoBloque;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
+
 public class NodoVarLocal extends NodoSentencia{
 
     protected Token var_local;
@@ -69,8 +71,8 @@ public class NodoVarLocal extends NodoSentencia{
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        //Nada ? por que no le debo asignar nada y el offset ya lo tiene
     }
 
     public int get_offset() { return offset; }

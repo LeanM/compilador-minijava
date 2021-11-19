@@ -4,6 +4,8 @@ import AST.Expresion.NodoExpresion;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 
+import java.io.IOException;
+
 public class NodoFor extends NodoSentencia {
 
     private NodoVarLocal varLocal;
@@ -43,7 +45,10 @@ public class NodoFor extends NodoSentencia {
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        varLocal.generar_codigo();
+        condicion.generar_codigo(); //tengo q hacer los saltos
+        asignacion.generar_codigo();
+        cuerpo_for.generar_codigo();
     }
 }

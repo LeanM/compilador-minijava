@@ -1,19 +1,19 @@
 	.DATA
 VT A: DW ldebugPrint_1_Object,lmet1_2_A
 	.CODE
-lmet1_2_A:
+lmet1_2_A:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 1
 	RMEM 2
 	RMEM 1
+	RMEM 1
+	FMEM 1
 	FMEM 1
 	FMEM 2
-	FMEM 1
 	STOREFP
 	RET 3
-ldebugPrint_1_Object:
+ldebugPrint_1_Object:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -21,7 +21,7 @@ ldebugPrint_1_Object:
 	FMEM 0
 	STOREFP
 	RET 2
-lCtorA_int_String:
+lCtorA_int_String:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -38,12 +38,12 @@ lCtorA_int_String:
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 1
 	RMEM 2
 	RMEM 1
+	RMEM 1
+	FMEM 1
 	FMEM 1
 	FMEM 2
-	FMEM 1
 	STOREFP
 	RET 3
 	FMEM 0
@@ -55,7 +55,7 @@ VT Object: DW ldebugPrint_1_Object
 	.DATA
 VT System: DW ldebugPrint_1_Object,lread_2_System,lprintBln_3_System,lprintCln_4_System,lprintI_5_System,lprintIln_6_System,lprintC_7_System,lprintln_8_System,lprintB_9_System,lprintSln_10_System,lprintS_11_System
 	.CODE
-lread_2_System:
+lread_2_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -64,7 +64,7 @@ lread_2_System:
 	STORE 3
 	STOREFP
 	RET 1
-lprintBln_3_System:
+lprintBln_3_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -72,7 +72,7 @@ lprintBln_3_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintCln_4_System:
+lprintCln_4_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -80,7 +80,7 @@ lprintCln_4_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintI_5_System:
+lprintI_5_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -88,7 +88,7 @@ lprintI_5_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintIln_6_System:
+lprintIln_6_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -96,7 +96,7 @@ lprintIln_6_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintC_7_System:
+lprintC_7_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -104,7 +104,7 @@ lprintC_7_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintln_8_System:
+lprintln_8_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -112,7 +112,7 @@ lprintln_8_System:
 	FMEM 0
 	STOREFP
 	RET 1
-lprintB_9_System:
+lprintB_9_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -120,7 +120,7 @@ lprintB_9_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintSln_10_System:
+lprintSln_10_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -128,7 +128,7 @@ lprintSln_10_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lprintS_11_System:
+lprintS_11_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -136,7 +136,7 @@ lprintS_11_System:
 	FMEM 0
 	STOREFP
 	RET 2
-lCtorSystem:
+lCtorSystem:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -147,7 +147,7 @@ lCtorSystem:
 	.DATA
 VT C: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B,lmain_5_C,lmain2_6_C
 	.CODE
-lmain_5_C:
+lmain_5_C:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -155,7 +155,7 @@ lmain_5_C:
 	FMEM 0
 	STOREFP
 	RET 1
-lmet1_4_B:
+lmet1_4_B:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -163,7 +163,7 @@ lmet1_4_B:
 	FMEM 1
 	STOREFP
 	RET 1
-lmetODO_3_B:
+lmetODO_3_B:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -172,7 +172,7 @@ lmetODO_3_B:
 	STORE 4
 	STOREFP
 	RET 2
-lmain2_6_C:
+lmain2_6_C:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -180,7 +180,7 @@ lmain2_6_C:
 	FMEM 0
 	STOREFP
 	RET 2
-lCtorC:
+lCtorC:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -191,7 +191,7 @@ lCtorC:
 	.DATA
 VT B: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B
 	.CODE
-lCtorB:
+lCtorB:	NOP
 	LOADFP
 	LOADSP
 	STOREFP

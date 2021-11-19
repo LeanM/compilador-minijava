@@ -225,7 +225,6 @@ public class Traductor {
             bw.write((char) 9);
             bw.write(".DATA");
             this.modo_actual = ".DATA";
-            //bw.newLine();
         }
     }
 
@@ -235,7 +234,6 @@ public class Traductor {
             bw.write((char) 9);
             bw.write(".CODE");
             this.modo_actual = ".CODE";
-            //bw.newLine();
         }
     }
 
@@ -253,6 +251,8 @@ public class Traductor {
     public void gen_etiqueta(String etiqueta) throws IOException {
         bw.newLine();
         bw.write(etiqueta+":");
+        bw.write((char) 9);
+        bw.write("NOP");
     }
 
     public File finalizar_output() throws IOException {
