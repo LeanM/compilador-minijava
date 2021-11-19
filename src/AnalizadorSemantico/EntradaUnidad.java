@@ -6,6 +6,7 @@ import AST.Sentencia.NodoVarLocal;
 import AnalizadorLexico.Token;
 
 import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -107,9 +108,6 @@ public abstract class EntradaUnidad {
         }
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
-
-
-
         public String getNombre(){
         return token_unidad.get_lexema();
     }

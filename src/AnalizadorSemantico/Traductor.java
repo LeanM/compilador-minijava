@@ -145,21 +145,22 @@ public class Traductor {
     }
 
     public void consolidar_offsets_varlocales_params(EntradaUnidad unidad){
-        int offset_base = 3 + unidad.get_lista_argumentos().size() - 1;; //Por que en el RA los primeros 3 offset estan reservados
+        int offset_base = 4 + unidad.get_lista_argumentos().size() - 1;; //Por que en el RA los primeros 3 offset estan reservados
         //Offset inicializado en caso constructor o metodo statico
 
         if (unidad instanceof EntradaMetodo) {
-            if(!(((EntradaMetodo) unidad).es_estatico()))
-                //Si el metodo es dinamico
-                offset_base = 4 + unidad.get_lista_argumentos().size() - 1;
+            if((((EntradaMetodo) unidad).es_estatico()))
+                //Si el metodo es estatico (no tiene this)
+                offset_base = 3 + unidad.get_lista_argumentos().size() - 1;
         }
 
         //Asigno los primeros offset a los parametros de la unidad
         for(EntradaParametro ep : unidad.get_lista_argumentos()) {
-            System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
+            //System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
             ep.set_offset(offset_base--);
         }
 
+        unidad.get_bloque_principal().set_offset_var_locales(0); //Paso como offset base 0
     }
 
     public void consolidar_offsets_constructores(EntradaClase clase){
