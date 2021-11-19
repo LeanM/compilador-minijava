@@ -108,16 +108,15 @@ public abstract class EntradaUnidad {
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
 
-        public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
-            Traductor.getInstance().gen("LOADFP");
-            Traductor.getInstance().gen("LOADSP");
-            Traductor.getInstance().gen("STOREFP");
-            bloque_principal.generar_codigo();
-        }
+
 
         public String getNombre(){
         return token_unidad.get_lexema();
     }
 
         public abstract void esta_bien_declarado() throws ExcepcionSemantica;
+        public abstract boolean no_retorna();
+        public abstract int get_offset();
+        public abstract String get_etiqueta();
+        public abstract void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException;
 }

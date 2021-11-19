@@ -9,12 +9,10 @@ import java.io.IOException;
 
 public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
 
-    private Var_Instancia acceso_tipo_variable;
     private EntradaAtributo atributo_conformado;
 
     public NodoVarEncadenada_Decorator(Token token_var_encadenada, NodoPrimario_Component primario) {
         super(token_var_encadenada, primario);
-        acceso_tipo_variable = null;
         atributo_conformado = null;
     }
 
@@ -31,8 +29,6 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no es un atributo de la clase del encadenado de la izquierda");
         if (!(primario_decorator instanceof NodoAccesoThis) && atributo_conformado.get_visibilidad().equals("private"))
             throw new ExcepcionTipo(token_acceso,"El atributo encadenado no esta al alcance, es privado en la clase encadenada a izquierda");
-
-        acceso_tipo_variable = new Var_Instancia(atributo_conformado,this);
     }
 
     @Override
@@ -53,18 +49,10 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
     @Override
     public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         primario_decorator.generar_codigo();
-        if(this.es_ultimo_encadenado){
-            if(!es_lado_izq)    //Solo verifico esto, por que en una variable encadenada, siempre va a ser una variable de instancia
-                Traductor.getInstance().gen("LOADREF "+atributo_conformado.get_offset());
-            else {
-                Traductor.getInstance().gen("SWAP");
-                Traductor.getInstance().gen("STOREREF "+atributo_conformado.get_offset());
-            }
+        if(!es_lado_izq || !this.es_ultimo_encadenado)    //Solo verifico esto, por que en una variable encadenada, siempre va a ser una variable de instancia
+            Traductor.getInstance().gen("LOADREF "+atributo_conformado.get_offset());
+        else {
+            Traductor.getInstance().gen("SWAP");Traductor.getInstance().gen("STOREREF "+atributo_conformado.get_offset());
         }
-        //acceso_tipo_variable.generar_codigo();
-    }
-
-    public Var get_acceso_tipo_var(){
-        return acceso_tipo_variable;
     }
 }

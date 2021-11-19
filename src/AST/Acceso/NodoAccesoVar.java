@@ -124,26 +124,4 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
     public Var get_acceso_tipo_var(){
         return acceso_tipo_variable;
     }
-    /*
-    public EntradaAtributo es_variable_instancia() throws ExcepcionSemantica {
-        EntradaAtributo toReturn = null;
-        if(es_var_instancia)
-            toReturn = TablaSimbolos.getInstance().conforma_atributo(token_acceso,key_clase);
-
-        return toReturn;
-    }
-
-    public EntradaParametro es_parametro() {
-        EntradaParametro toReturn = null;
-        if(es_parametro)
-            toReturn = metodo_origen.get_tabla_argumentos().get(token_acceso.get_lexema());
-
-        return toReturn;
-    }
-
-    public NodoVarLocal es_var_local() {
-        return es_var_local;
-    }
-
-     */
 }

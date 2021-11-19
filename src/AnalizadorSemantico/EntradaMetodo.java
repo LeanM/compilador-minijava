@@ -2,6 +2,8 @@ package AnalizadorSemantico;
 
 import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Token;
+
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -83,5 +85,41 @@ public class EntradaMetodo extends EntradaUnidad {
 
     public String get_etiqueta() {
         return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
+    }
+
+    public boolean no_retorna() {
+        return this.get_tipo().getNombre().equals("void");
+    }
+
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        //Guardo el enlace dinamico al RA llamador
+        Traductor.getInstance().gen("LOADFP");
+        //Apilo el lugar donde comienza el RA de la unidad llamada (esta)
+        Traductor.getInstance().gen("LOADSP");
+        //Actualiza el Fp con el valor tope de la pila
+        Traductor.getInstance().gen("STOREFP");
+        //Una vez el RA esta terminado, puedo generar el codigo de los bloques
+        bloque_principal.generar_codigo();
+
+        int n = lista_argumentos.size();
+        if(!no_retorna()) {
+            //RETORNO
+            int offset;
+            if (n == 0)
+                if(this.es_estatico())
+                    offset = 3;
+                else
+                    offset = 4;//4 por que es la pos despues del this
+            else
+                offset = lista_argumentos.get(0).get_offset();
+
+            Traductor.getInstance().gen("STORE "+offset);
+            Traductor.getInstance().gen("STOREFP");
+            Traductor.getInstance().gen("RET "+ (n + 1));
+        }
+        else {
+            Traductor.getInstance().gen("STOREFP");
+            Traductor.getInstance().gen("RET "+ (n + 1));
+        }
     }
 }

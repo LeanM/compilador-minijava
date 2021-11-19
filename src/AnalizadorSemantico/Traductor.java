@@ -23,7 +23,9 @@ public class Traductor {
         codigo_output = new File("codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);
         bw = new BufferedWriter(fw);
-        modo_actual = "";
+        modo_actual = ".DATA";
+        bw.write((char) 9);
+        bw.write(".DATA");
     }
 
     public static Traductor getInstance() throws IOException {
@@ -185,12 +187,11 @@ public class Traductor {
             etiquetas_string = etiquetas_metodos.get(0).get_etiqueta();
 
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
-            //etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).getNombre() + "_" + etiquetas_metodos.get(i).get_offset() + "_" + etiquetas_metodos.get(i).get_clase_base();
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
 
-        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
         bw.newLine();
+        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
@@ -219,29 +220,37 @@ public class Traductor {
 
     public void set_modo_data() throws IOException {
         if(!modo_actual.equals(".DATA")) {
+            bw.newLine();
             bw.write((char) 9);
             bw.write(".DATA");
             this.modo_actual = ".DATA";
-            bw.newLine();
+            //bw.newLine();
         }
     }
 
     public void set_modo_code() throws IOException {
         if(!modo_actual.equals(".CODE")) {
+            bw.newLine();
             bw.write((char) 9);
             bw.write(".CODE");
             this.modo_actual = ".CODE";
-            bw.newLine();
+            //bw.newLine();
         }
     }
 
     public void gen(String instruccion) throws IOException {
+        bw.newLine();
         bw.write((char) 9);
         bw.write(instruccion);
-        bw.newLine();
+    }
+
+    public void gen_comment(String comment) throws IOException {
+        bw.write((char) 9);
+        bw.write(";"+comment);
     }
 
     public void gen_etiqueta(String etiqueta) throws IOException {
+        bw.newLine();
         bw.write(etiqueta+":");
     }
 

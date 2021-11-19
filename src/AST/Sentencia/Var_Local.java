@@ -20,7 +20,7 @@ public class Var_Local extends Var{
     public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         if(!acceso_variable.es_lado_izq() || encadenado){
             //Si no es lado izquierdo o cadena no es nulo
-            Traductor.getInstance().gen("LOAD "+variable.get_offset()); //Implementar get offset en variables
+            Traductor.getInstance().gen("LOAD "+variable.get_offset());
         }
         else {
             Traductor.getInstance().gen("STORE "+variable.get_offset());

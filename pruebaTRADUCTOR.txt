@@ -4,7 +4,9 @@ public String texto;
 public int numero;
 private C asd;
 //constructores
-A (int x, String c) {}
+A (int x, String c) {
+	met1(1,2);
+}
 //metodos
 dynamic void met1(int a, int b){
 asd.main2(2);

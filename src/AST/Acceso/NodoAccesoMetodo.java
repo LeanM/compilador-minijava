@@ -29,7 +29,6 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         if (unidad_conformada == null)
             throw new ExcepcionTipo(token_acceso,"La llamada a metodo no conforma con ningun metodos de la clase.");
         else return unidad_conformada.get_tipo();
-
     }
 
     @Override
@@ -48,10 +47,33 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
         if(unidad_conformada != null) {
             LinkedList<EntradaParametro> argumentos_formales = unidad_conformada.get_lista_argumentos();
 
-            for (int i = 0; i < argumentos_formales.size(); i++) {
+            //Cargo el CIR de el RA actual, por que va a ser el mismo del nuevo RA para el metodo
+            Traductor.getInstance().gen("LOAD 3");
+            if(!unidad_conformada.no_retorna()) {
+                //Si la unidad retorna un valor
+                Traductor.getInstance().gen("RMEM 1");
+                //Hago un swap para ir bajando el this
+                Traductor.getInstance().gen("SWAP");
+            }
+
+            for (int i = 0; i < argumentos.size(); i++) {
                 //Esto dejaria el resultado de la expresion en la pila
                 argumentos.get(i).generar_codigo();
+                //Pongo el comentario del nombre del parametro (No se si no tengo q hacer un .STACK para q aparezca en la pila)
+                Traductor.getInstance().gen_comment(argumentos_formales.get(i).getNombre());
+                //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
+                Traductor.getInstance().gen("SWAP");
             }
+            //Ahora que tenemos los parametros y el this, podemos hacer la llamada al metodo (hay que buscarlo en la VT del this)
+            //Por como funciona el LOADREF hay que hacer DUP para no perder la referencia al CIR (this)
+            Traductor.getInstance().gen("DUP");
+            //Hago el LOADREF para obtener la VT en el CIR (el offset de la VT es siempre 0)
+            Traductor.getInstance().gen("LOADREF 0");
+            //Obtengo de la VT el label del metodo conformado con el offset de ese metodo
+            Traductor.getInstance().gen("LOADREF "+unidad_conformada.get_offset());
+            //Hago la llamada
+            Traductor.getInstance().gen("CALL");
+
             unidad_conformada.generar_codigo();
         }
     }
