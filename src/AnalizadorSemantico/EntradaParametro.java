@@ -6,10 +6,12 @@ public class EntradaParametro {
 
     private Token token_parametro;
     private Tipo tipo_parametro;
+    private int offset;
 
     public EntradaParametro(Token token_parametro, Tipo tipo_parametro){
         this.token_parametro = token_parametro;
         this.tipo_parametro = tipo_parametro;
+        this.offset = 0;
     }
 
     public String getNombre(){
@@ -31,4 +33,7 @@ public class EntradaParametro {
                 throw new ExcepcionSemantica(tipo_parametro.get_token_tipo(),"Error Semantico en linea "+token_parametro.get_nro_linea() +": El tipo del parametro "+token_parametro.get_lexema()+" es la clase "+tipo_parametro.getNombre()+" que no esta declarada.");
         }
     }
+
+    public int get_offset() { return offset; }
+    public void set_offset(int offset) { this.offset = offset; }
 }

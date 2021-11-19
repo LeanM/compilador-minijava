@@ -1,6 +1,9 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
+import AnalizadorSemantico.Traductor;
+
+import java.io.IOException;
 
 public abstract class NodoOperando_Literal extends NodoOperando {
 
@@ -18,5 +21,10 @@ public abstract class NodoOperando_Literal extends NodoOperando {
 
     public void chequeo_acceso_estatico() {
         //nada
+    }
+
+    public void generar_codigo() throws IOException {
+        Traductor.getInstance().gen("PUSH "+token_expresion.get_lexema());
+        //No se si funciona asi con los string
     }
 }

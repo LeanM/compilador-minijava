@@ -1,5 +1,7 @@
 package AnalizadorSemantico;
 
+import AST.NodoBloque;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -21,7 +23,9 @@ public class Traductor {
         codigo_output = new File("codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);
         bw = new BufferedWriter(fw);
-        modo_actual = "";
+        modo_actual = ".DATA";
+        bw.write((char) 9);
+        bw.write(".DATA");
     }
 
     public static Traductor getInstance() throws IOException {
@@ -32,9 +36,14 @@ public class Traductor {
     }
 
     public void traducir() throws IOException {
-        consolidar_offsets_clases();
-        generar_clases_general();
-        finalizar_output();
+        try {
+            consolidar_offsets_clases();
+            generar_clases_general();
+            finalizar_output();
+        }
+        catch (ExcepcionTipo | ExcepcionSemantica e) {
+            e.printStackTrace();
+        }
     }
 
     public void consolidar_offsets_clases() {
@@ -54,6 +63,7 @@ public class Traductor {
 
         try {
             for (EntradaClase hijo_object : hijos_object) {
+                consolidar_offsets_constructores(hijo_object);
                 consolidar_offsets_metodos(object, hijo_object, next_offset);
                 consolidar_offsets_atributos(object,hijo_object,next_offset_atr);
             }
@@ -88,6 +98,7 @@ public class Traductor {
                     //Si el padre no contiene un metodo con el mismo nombre
                     metodo_hijo.set_offset(offset_base++);
                 }
+                consolidar_offsets_varlocales_params(metodo_hijo);
             }
         }
 
@@ -133,7 +144,31 @@ public class Traductor {
 
     }
 
-    public void generar_clases_general() throws IOException {
+    public void consolidar_offsets_varlocales_params(EntradaUnidad unidad){
+        int offset_base = 4 + unidad.get_lista_argumentos().size() - 1;; //Por que en el RA los primeros 3 offset estan reservados
+        //Offset inicializado en caso constructor o metodo statico
+
+        if (unidad instanceof EntradaMetodo) {
+            if((((EntradaMetodo) unidad).es_estatico()))
+                //Si el metodo es estatico (no tiene this)
+                offset_base = 3 + unidad.get_lista_argumentos().size() - 1;
+        }
+
+        //Asigno los primeros offset a los parametros de la unidad
+        for(EntradaParametro ep : unidad.get_lista_argumentos()) {
+            //System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
+            ep.set_offset(offset_base--);
+        }
+
+        unidad.get_bloque_principal().set_offset_var_locales(0); //Paso como offset base 0
+    }
+
+    public void consolidar_offsets_constructores(EntradaClase clase){
+        for (EntradaConstructor ec : clase.get_lista_constructores())
+            consolidar_offsets_varlocales_params(ec);
+    }
+
+    public void generar_clases_general() throws IOException, ExcepcionTipo, ExcepcionSemantica {
         Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
         LinkedList<EntradaMetodo> etiquetas_metodos;
         EntradaClase clase;
@@ -144,7 +179,7 @@ public class Traductor {
         }
     }
 
-    public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException {
+    public void generar_clase_especifico(EntradaClase clase, LinkedList<EntradaMetodo> etiquetas_metodos) throws IOException, ExcepcionTipo, ExcepcionSemantica {
         this.set_modo_data();
         String etiquetas_string = "";
 
@@ -153,12 +188,11 @@ public class Traductor {
             etiquetas_string = etiquetas_metodos.get(0).get_etiqueta();
 
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
-            //etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).getNombre() + "_" + etiquetas_metodos.get(i).get_offset() + "_" + etiquetas_metodos.get(i).get_clase_base();
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
 
-        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
         bw.newLine();
+        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
@@ -170,8 +204,8 @@ public class Traductor {
             for(EntradaMetodo em : lista_metodos){
                 if(!em.fue_traducido()){
                     //Generar code de cada metodo
+                    gen_etiqueta(em.get_etiqueta());
                     em.generar_codigo();
-
                     em.set_traducido();
                 }
             }
@@ -179,34 +213,46 @@ public class Traductor {
 
         for (EntradaConstructor ec : clase.get_lista_constructores()) {
             //Generar code constructor
+            gen_etiqueta(ec.get_etiqueta());
             ec.generar_codigo();
-
         }
 
     }
 
     public void set_modo_data() throws IOException {
         if(!modo_actual.equals(".DATA")) {
+            bw.newLine();
             bw.write((char) 9);
             bw.write(".DATA");
             this.modo_actual = ".DATA";
-            bw.newLine();
         }
     }
 
     public void set_modo_code() throws IOException {
         if(!modo_actual.equals(".CODE")) {
+            bw.newLine();
             bw.write((char) 9);
             bw.write(".CODE");
             this.modo_actual = ".CODE";
-            bw.newLine();
         }
     }
 
     public void gen(String instruccion) throws IOException {
+        bw.newLine();
         bw.write((char) 9);
         bw.write(instruccion);
+    }
+
+    public void gen_comment(String comment) throws IOException {
+        bw.write((char) 9);
+        bw.write(";"+comment);
+    }
+
+    public void gen_etiqueta(String etiqueta) throws IOException {
         bw.newLine();
+        bw.write(etiqueta+":");
+        bw.write((char) 9);
+        bw.write("NOP");
     }
 
     public File finalizar_output() throws IOException {

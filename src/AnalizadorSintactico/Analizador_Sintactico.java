@@ -352,6 +352,10 @@ public class Analizador_Sintactico {
         NodoBloque bloque_backup;
         match("llaveAbre");
 
+        if(bloque_a_completar != TS.getUnidadActual().get_bloque_principal())
+            //El bloque no es el bloque principal (no es caso base) debo asignarle como hijo del bloque actual, el bloque a completar
+            TS.getUnidadActual().get_bloque_actual().set_bloque_hijo(bloque_a_completar);
+
         //Seteo bloque padre a bloque a completar (si es el bloque principal del metodo o constructor se le asigna a si mismo como nodo padre)
         bloque_a_completar.set_bloque_padre(TS.getUnidadActual().get_bloque_actual());
 

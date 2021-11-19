@@ -5,6 +5,8 @@ import AST.NodoBloque;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
+
 public class NodoVarLocal_Asignacion extends NodoVarLocal{
 
     private NodoExpresion expresion_de_asignacion;
@@ -27,5 +29,11 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
     public void mostar_sentencia() {
         System.out.println("varLocal asignacion : "+var_local.get_lexema());
         expresion_de_asignacion.mostrar_expresion();
+    }
+
+    @Override
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        expresion_de_asignacion.generar_codigo();
+        Traductor.getInstance().gen("STORE "+this.get_offset());
     }
 }

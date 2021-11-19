@@ -6,6 +6,8 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
+import java.io.IOException;
+
 public class NodoReturn extends NodoSentencia {
 
     protected Token token_return;
@@ -29,7 +31,7 @@ public class NodoReturn extends NodoSentencia {
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        //Nada? hacer el retorno de la llamada aca?
     }
 }

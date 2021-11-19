@@ -5,6 +5,8 @@ import AST.Sentencia.NodoSentencia;
 import AST.Sentencia.NodoVarLocal;
 import AnalizadorLexico.Token;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.Hashtable;
 import java.util.LinkedList;
 
@@ -16,16 +18,20 @@ public abstract class EntradaUnidad {
         protected NodoBloque bloque_principal;
         protected NodoBloque bloque_actual;
         protected Tipo tipo_unidad;
+        protected Token token_unidad;
 
-        public EntradaUnidad(Tipo tipo_unidad){
+        public EntradaUnidad(Tipo tipo_unidad, Token token_unidad){
             tabla_argumentos = new Hashtable<String,EntradaParametro>();
             lista_argumentos = new LinkedList<EntradaParametro>();
             bloque_principal = new NodoBloque(this); //Inicializo con bloque vacio para evitar null
             bloque_actual = new NodoBloque(this);
             tabla_var_locales = new Hashtable<String,NodoVarLocal>();
             this.tipo_unidad = tipo_unidad;
+            this.token_unidad = token_unidad;
 
         }
+
+        public Token get_token_unidad(){ return token_unidad;}
 
         public void setArgumento(String nombre_argumento, EntradaParametro argumento) throws ExcepcionSemantica{
             if(!tabla_argumentos.containsKey(nombre_argumento)) {
@@ -53,8 +59,6 @@ public abstract class EntradaUnidad {
         public Hashtable<String,EntradaParametro> get_tabla_argumentos() { return tabla_argumentos; }
 
         public void set_var_local(String nombre_var, NodoVarLocal nodo) throws ExcepcionSemantica {
-            if(tabla_var_locales.containsKey(nombre_var))
-                throw new ExcepcionSemantica(nodo.get_token(),"Ya hay una variable con el mismo nombre definida en el alcance");
             tabla_var_locales.put(nombre_var,nodo);
         }
 
@@ -104,10 +108,13 @@ public abstract class EntradaUnidad {
         }
 
         public LinkedList<EntradaParametro> get_lista_argumentos() {  return lista_argumentos;}
-
-        public void generar_codigo() {
-            bloque_principal.generar_codigo();
-        }
+        public String getNombre(){
+        return token_unidad.get_lexema();
+    }
 
         public abstract void esta_bien_declarado() throws ExcepcionSemantica;
+        public abstract boolean no_retorna();
+        public abstract int get_offset();
+        public abstract String get_etiqueta();
+        public abstract void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException;
 }

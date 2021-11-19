@@ -18,7 +18,7 @@ public class ModuloPrincipal {
     public static void main (String [] args){
         TablaSimbolos.getInstance().inicializar_tabla_simbolos();
 
-        String programa = "pruebaTRADUCTOR.txt";
+        String programa = "pruebaTRADUCTOR_vars_locales.txt";
         try {
             //programa = args[0];
         }
@@ -72,15 +72,17 @@ public class ModuloPrincipal {
             System.out.println("Constructores : ");
             LinkedList<EntradaConstructor> lista_constructores = entradaClase.get_lista_constructores();
             for(EntradaConstructor ec : lista_constructores) {
-                System.out.println(ec.get_token_constructor().get_lexema()+" ("+ec.get_lista_argumentos().toString() +")");
+                System.out.println(ec.get_token_unidad().get_lexema()+" ("+ec.get_lista_argumentos().toString() +")");
+                ec.get_bloque_principal().mostrar_offset_var_locales();
             }
             System.out.println("Metodos : ");
             Enumeration<LinkedList<EntradaMetodo>> enum_metodos = entradaClase.get_tabla_metodos().elements();
             while (enum_metodos.hasMoreElements()) {
                 lista_metodos_actuales = enum_metodos.nextElement();
                 for(EntradaMetodo em : lista_metodos_actuales) {
-                    System.out.println(em.get_token_metodo().get_lexema() + " (" + em.get_lista_argumentos().toString() + ")");
+                    System.out.println(em.get_token_unidad().get_lexema() + " (" + em.get_lista_argumentos().toString() + ")");
                     System.out.println("Offset de metodo : "+em.get_offset());
+                    em.get_bloque_principal().mostrar_offset_var_locales();
                 }
             }
             System.out.println("--------------------------");

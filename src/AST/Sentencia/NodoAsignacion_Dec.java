@@ -25,33 +25,13 @@ public class NodoAsignacion_Dec extends NodoAsignacion{
 
     @Override
     public void generar_codigo() throws IOException, ExcepcionSemantica, ExcepcionTipo {
+        //Primero trabajo el acceso como la parte derecha de la asignacion
         lado_izq.generar_codigo();
         Traductor.getInstance().gen("PUSH 1");
         Traductor.getInstance().gen("SUB");
-
-        //Almacenar
-        EntradaAtributo ea;
-
-        if (lado_izq instanceof NodoAccesoVar){
-            ea = ((NodoAccesoVar) lado_izq).es_variable_instancia();
-            if(ea == null){
-                //No es variable de instancia
-
-            }
-            else {
-                //Es variable de instancia
-            }
-        }
-        else
-            if (lado_izq instanceof NodoVarEncadenada_Decorator){
-                ea = ((NodoVarEncadenada_Decorator) lado_izq).es_variable_instancia();
-                if(ea == null){
-                    //No es variable de instancia
-                }
-                else {
-                    //Es variable de instancia
-                }
-            }
+        //Luego trabajo el acceso como la parte izquierda de la asignacion
+        lado_izq.set_lado_izq();
+        lado_izq.generar_codigo();
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {

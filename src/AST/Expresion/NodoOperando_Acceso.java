@@ -5,6 +5,8 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
+import java.io.IOException;
+
 public class NodoOperando_Acceso extends NodoOperando {
 
     private NodoAcceso nodo_acceso;
@@ -32,5 +34,10 @@ public class NodoOperando_Acceso extends NodoOperando {
     @Override
     public void mostrar_expresion() {
         nodo_acceso.mostrar_acceso();
+    }
+
+    @Override
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        nodo_acceso.generar_codigo();
     }
 }

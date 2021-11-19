@@ -1,15 +1,201 @@
 	.DATA
-VT A: DW debugPrint_1_Object,met1_2_A
+VT A: DW ldebugPrint_1_Object,lmet1_2_A
+	.CODE
+lmet1_2_A:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 2
+	RMEM 1
+	RMEM 1
+	FMEM 1
+	FMEM 1
+	FMEM 2
+	STOREFP
+	RET 3
+ldebugPrint_1_Object:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lCtorA_int_String:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	LOAD 3
+	PUSH 1	;a
+	SWAP
+	PUSH 2	;b
+	SWAP
+	DUP
+	LOADREF 0
+	LOADREF 2
+	CALL
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 2
+	RMEM 1
+	RMEM 1
+	FMEM 1
+	FMEM 1
+	FMEM 2
+	STOREFP
+	RET 3
+	FMEM 0
+	STOREFP
+	RET 3
+	.DATA
+VT Object: DW ldebugPrint_1_Object
 	.CODE
 	.DATA
-VT Object: DW debugPrint_1_Object
+VT System: DW ldebugPrint_1_Object,lread_2_System,lprintBln_3_System,lprintCln_4_System,lprintI_5_System,lprintIln_6_System,lprintC_7_System,lprintln_8_System,lprintB_9_System,lprintSln_10_System,lprintS_11_System
 	.CODE
+lread_2_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STORE 3
+	STOREFP
+	RET 1
+lprintBln_3_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintCln_4_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintI_5_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintIln_6_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintC_7_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintln_8_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 1
+lprintB_9_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintSln_10_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lprintS_11_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lCtorSystem:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 1
 	.DATA
-VT System: DW debugPrint_1_Object,read_2_System,printBln_3_System,printCln_4_System,printI_5_System,printIln_6_System,printC_7_System,println_8_System,printB_9_System,printSln_10_System,printS_11_System
+VT C: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B,lmain_5_C,lmain2_6_C
 	.CODE
+lmain_5_C:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 1
+lmet1_4_B:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 1
+	FMEM 1
+	STOREFP
+	RET 1
+lmetODO_3_B:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STORE 4
+	STOREFP
+	RET 2
+lmain2_6_C:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 2
+lCtorC:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 1
 	.DATA
-VT C: DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B,main_5_C
+VT B: DW ldebugPrint_1_Object,lmet1_2_A,lmetODO_3_B,lmet1_4_B
 	.CODE
-	.DATA
-VT B: DW debugPrint_1_Object,met1_2_A,met1_3_B,met1_4_B
-	.CODE
+lCtorB:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 0
+	FMEM 0
+	STOREFP
+	RET 1

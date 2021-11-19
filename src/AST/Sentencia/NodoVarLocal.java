@@ -4,12 +4,15 @@ import AST.NodoBloque;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 
+import java.io.IOException;
+
 public class NodoVarLocal extends NodoSentencia{
 
     protected Token var_local;
     protected Tipo tipo;
     protected NodoBloque bloque_var_local;
     protected EntradaUnidad unidad_var_local;
+    protected int offset;
 
     public NodoVarLocal(Tipo tipo, Token variable, EntradaUnidad unidad, NodoBloque bloque){
         super();
@@ -17,6 +20,7 @@ public class NodoVarLocal extends NodoSentencia{
         this.var_local = variable;
         this.unidad_var_local = unidad;
         this.bloque_var_local = bloque;
+        this.offset = 0;
     }
 
     @Override
@@ -57,7 +61,6 @@ public class NodoVarLocal extends NodoSentencia{
     public Token get_token(){
         return var_local;
     }
-
     public Tipo getTipo(){
         return tipo;
     }
@@ -68,7 +71,10 @@ public class NodoVarLocal extends NodoSentencia{
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        //Nada ? por que no le debo asignar nada y el offset ya lo tiene
     }
+
+    public int get_offset() { return offset; }
+    public void set_offset(int offset) { this.offset = offset; }
 }

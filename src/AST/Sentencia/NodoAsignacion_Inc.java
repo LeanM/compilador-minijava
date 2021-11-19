@@ -24,10 +24,14 @@ public class NodoAsignacion_Inc extends NodoAsignacion{
     }
 
     @Override
-    public void generar_codigo() throws IOException {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
+        //Primero trabajo el acceso como la parte derecha de la asignacion
         lado_izq.generar_codigo();
         Traductor.getInstance().gen("PUSH 1");
-        Traductor.getInstance().gen("SUB");
+        Traductor.getInstance().gen("ADD");
+        //Luego trabajo el acceso como la parte izquierda de la asignacion
+        lado_izq.set_lado_izq();
+        lado_izq.generar_codigo();
     }
 
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {

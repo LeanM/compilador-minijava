@@ -12,6 +12,7 @@ public abstract class NodoEncadenado_Decorator extends NodoPrimario_Component {
     public NodoEncadenado_Decorator(Token token_primario, NodoPrimario_Component primario) {
         super(token_primario);
         primario_decorator = primario;
+        primario.set_no_es_ultimo_encadenado();
     }
 
     public NodoPrimario_Concreto obtener_primario_concreto() {
@@ -20,6 +21,11 @@ public abstract class NodoEncadenado_Decorator extends NodoPrimario_Component {
 
     public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
         this.obtener_primario_concreto().chequeo_acceso_estatico();
+    }
+
+
+    public NodoPrimario_Component get_encadenado_izq() {
+        return primario_decorator;
     }
 
 }

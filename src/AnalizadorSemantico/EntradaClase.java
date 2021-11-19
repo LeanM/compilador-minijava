@@ -45,13 +45,13 @@ public abstract class EntradaClase {
         //Tengo q hacer lo de mas de un constructor
         boolean mismos_argumentos = false;
         if (!nombreConstructor.equals(this.getNombre()))
-            throw new ExcepcionSemantica(constructor.get_token_constructor(),"Error semantico en linea "+constructor.get_token_constructor().get_nro_linea()+" : El constructor no posee el mismo nombre de la clase a la que pertenece.");
+            throw new ExcepcionSemantica(constructor.get_token_unidad(),"Error semantico en linea "+constructor.get_token_unidad().get_nro_linea()+" : El constructor no posee el mismo nombre de la clase a la que pertenece.");
         if(!lista_constructores.isEmpty()) {
             for (int i = 0; i < lista_constructores.size() && !mismos_argumentos; i++) {
                 mismos_argumentos = lista_constructores.get(i).mismos_argumentos(constructor.get_lista_argumentos());
             }
             if(mismos_argumentos)
-                throw new ExcepcionSemantica(constructor.get_token_constructor(), "Error semantico en linea " + constructor.get_token_constructor().get_nro_linea() + " : El constructor posee los mismos parametros que un constructor ya definido.");
+                throw new ExcepcionSemantica(constructor.get_token_unidad(), "Error semantico en linea " + constructor.get_token_unidad().get_nro_linea() + " : El constructor posee los mismos parametros que un constructor ya definido.");
         }
         if(!mismos_argumentos)
             lista_constructores.add(constructor);
@@ -87,7 +87,7 @@ public abstract class EntradaClase {
             LinkedList<EntradaMetodo> metodos = tabla_metodos.get(nombreMetodo);
             for(EntradaMetodo em : metodos){
                 if(em.mismos_argumentos(metodo.get_lista_argumentos()))
-                    throw new ExcepcionSemantica(metodo.get_token_metodo(),"Error Semantico en linea "+metodo.get_token_metodo().get_nro_linea() +": Ya hay un metodo declarado con el nombre "+nombreMetodo+" que posee los mismos argumentos.");
+                    throw new ExcepcionSemantica(metodo.get_token_unidad(),"Error Semantico en linea "+metodo.get_token_unidad().get_nro_linea() +": Ya hay un metodo declarado con el nombre "+nombreMetodo+" que posee los mismos argumentos.");
             }
             //Si no hay ningun metodo con los mismo argumentos
             metodo.set_clase_base(TablaSimbolos.getInstance().getClaseActual().getNombre());
@@ -109,7 +109,7 @@ public abstract class EntradaClase {
             LinkedList<EntradaMetodo> metodos = tabla_metodos.get(nombreMetodo);
             for(EntradaMetodo em : metodos){
                 if(em.mismos_argumentos(metodo.get_lista_argumentos()))
-                    throw new ExcepcionSemantica(metodo.get_token_metodo(),"Error Semantico en linea "+metodo.get_token_metodo().get_nro_linea() +": Ya hay un metodo declarado con el nombre "+nombreMetodo+" que posee los mismos argumentos.");
+                    throw new ExcepcionSemantica(metodo.get_token_unidad(),"Error Semantico en linea "+metodo.get_token_unidad().get_nro_linea() +": Ya hay un metodo declarado con el nombre "+nombreMetodo+" que posee los mismos argumentos.");
             }
             //Si no hay ningun metodo con los mismo argumentos
             metodos.add(metodo);

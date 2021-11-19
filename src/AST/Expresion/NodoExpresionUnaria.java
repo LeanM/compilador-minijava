@@ -1,14 +1,12 @@
 package AST.Expresion;
 
 import AnalizadorLexico.Token;
-import AnalizadorSemantico.ExcepcionSemantica;
-import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Resolucion_Tipos;
-import AnalizadorSemantico.Tipo;
+import AnalizadorSemantico.*;
+
+import java.io.IOException;
 
 public class NodoExpresionUnaria extends NodoExpresion {
 
-    //private Token operador_unario;
     protected NodoOperando operando;
 
     public NodoExpresionUnaria(Token op_unario, NodoOperando operando){
@@ -40,7 +38,13 @@ public class NodoExpresionUnaria extends NodoExpresion {
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
+        operando.generar_codigo();
 
+        switch (token_expresion.get_lexema()) {
+            case "!" : Traductor.getInstance().gen("NOT");
+            case "-" : Traductor.getInstance().gen("NEG");
+            case "+" : Traductor.getInstance().gen("NOT");  //Hacerlo
+        }
     }
 }
