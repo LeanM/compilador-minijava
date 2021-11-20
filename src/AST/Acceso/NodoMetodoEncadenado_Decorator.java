@@ -3,6 +3,7 @@ package AST.Acceso;
 import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -53,19 +54,6 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
         //Generar codigo parametros
         if(metodo_conformado != null) {
             LinkedList<EntradaParametro> argumentos_formales = metodo_conformado.get_lista_argumentos();
-            /*
-            int offset = 3; //Default (caso metodo encadenado a izq)
-            if(primario_decorator instanceof NodoVarEncadenada_Decorator) {
-                //El CIR de la variable encadenada a izq esta cargado en el tope de la pila
-                //offset = 0;
-            }
-            else
-                if(primario_decorator instanceof NodoAccesoVar)
-                    offset = 1;
-
-            //Cargo el CIR de el RA actual, por que va a ser el mismo del nuevo RA para el metodo
-            Traductor.getInstance().gen("LOAD "+offset);
-            */
 
             //Creo que el CIR de la variable o retorno de metodo encadenado a izquierda al ejecutar
             //primario_decorator.generar_codigo(); ya queda en el tope de la pila

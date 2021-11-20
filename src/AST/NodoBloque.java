@@ -2,8 +2,8 @@ package AST;
 
 import AST.Sentencia.NodoSentencia;
 import AST.Sentencia.NodoVarLocal;
-import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.*;
 
 import java.io.IOException;
 import java.util.Enumeration;
@@ -17,6 +17,7 @@ public class NodoBloque extends NodoSentencia {
     private EntradaUnidad unidad_de_bloque;
     private NodoBloque bloque_padre;
     private LinkedList<NodoBloque> lista_bloques_hijos;
+    private int index_etiquetas_for_if;
 
     public NodoBloque(EntradaUnidad unidad){
         super();
@@ -24,6 +25,7 @@ public class NodoBloque extends NodoSentencia {
         tabla_var_locales = new Hashtable<String,NodoVarLocal>();
         unidad_de_bloque = unidad;
         lista_bloques_hijos = new LinkedList<NodoBloque>();
+        index_etiquetas_for_if = 0;
     }
 
     public void setSentencia(NodoSentencia sentencia_nueva) {
@@ -58,6 +60,10 @@ public class NodoBloque extends NodoSentencia {
         lista_bloques_hijos.addLast(bloque_hijo);
     }
 
+    public int get_Index_etiquetas_for_if() {
+        return index_etiquetas_for_if++;
+    }
+
     @Override
     public void mostar_sentencia() {
         for(NodoSentencia ns : lista_sentencias)
@@ -67,12 +73,16 @@ public class NodoBloque extends NodoSentencia {
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         //Debo reservar espacio para las variables locales de este bloque, al salir del bloque
         //debo liberar el espacio
-        Traductor.getInstance().gen("RMEM "+tabla_var_locales.size());
+        if(!tabla_var_locales.isEmpty())
+            Traductor.getInstance().gen("RMEM "+tabla_var_locales.size());
 
-        for(NodoSentencia ns : lista_sentencias)
+        for(NodoSentencia ns : lista_sentencias) {
+            ns.set_nombre_unidad_declarada(unidad_de_bloque.get_etiqueta());
             ns.generar_codigo();
+        }
 
-        Traductor.getInstance().gen("FMEM "+tabla_var_locales.size());
+        if(!tabla_var_locales.isEmpty())
+            Traductor.getInstance().gen("FMEM "+tabla_var_locales.size());
     }
 
     public int set_offset_var_locales(int offset_base) {

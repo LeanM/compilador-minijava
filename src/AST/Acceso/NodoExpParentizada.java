@@ -5,6 +5,8 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 
+import java.io.IOException;
+
 public class NodoExpParentizada extends NodoPrimario_Concreto {
 
     private NodoExpresion expresion_parentizada;
@@ -37,7 +39,7 @@ public class NodoExpParentizada extends NodoPrimario_Concreto {
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        expresion_parentizada.generar_codigo();
     }
 }

@@ -1,9 +1,9 @@
 package AnalizadorSemantico;
 
 import AnalizadorLexico.Token;
+import Traductor.*;
 
 import java.io.IOException;
-import java.util.Hashtable;
 
 public class EntradaConstructor extends EntradaUnidad {
 
@@ -42,6 +42,7 @@ public class EntradaConstructor extends EntradaUnidad {
         Traductor.getInstance().gen("STOREFP");
         //Una vez el RA esta terminado, puedo generar el codigo de los bloques
         bloque_principal.generar_codigo();
+        Index_etiquetas.getInstance().reset_index();
 
         //RETORNO - Como es constructor no tengo que hacer store del resultado, el resultado es el objeto creado al llamarlo
         int n = lista_argumentos.size();

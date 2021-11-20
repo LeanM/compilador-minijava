@@ -2,6 +2,7 @@ package AST.Expresion;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 
@@ -42,9 +43,15 @@ public class NodoExpresionUnaria extends NodoExpresion {
         operando.generar_codigo();
 
         switch (token_expresion.get_lexema()) {
-            case "!" : Traductor.getInstance().gen("NOT");
-            case "-" : Traductor.getInstance().gen("NEG");
-            case "+" : Traductor.getInstance().gen("NOT");  //Hacerlo
+            case "!" : {
+                Traductor.getInstance().gen("NOT");break;}
+            case "-" : {Traductor.getInstance().gen("NEG");break;}
+            //case "+" : Traductor.getInstance().gen("NOT");  //Hacerlo preguntar
         }
+    }
+
+    @Override
+    public void set_lado_der() {
+        operando.set_lado_der();
     }
 }

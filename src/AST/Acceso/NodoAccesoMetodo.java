@@ -3,6 +3,7 @@ package AST.Acceso;
 import AST.Expresion.NodoExpresion;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 import java.util.LinkedList;
@@ -73,8 +74,6 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             Traductor.getInstance().gen("LOADREF "+unidad_conformada.get_offset());
             //Hago la llamada
             Traductor.getInstance().gen("CALL");
-
-            unidad_conformada.generar_codigo();
         }
     }
 }
