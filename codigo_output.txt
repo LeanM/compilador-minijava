@@ -6,10 +6,51 @@ lmet1_2_A:	NOP
 	LOADSP
 	STOREFP
 	RMEM 2
+	PUSH 0
+	STORE -1
+for_loop_lmet1_2_A_0:	NOP
+	LOAD -1
+	PUSH 5
+	LT
+	BF for_nop_lmet1_2_A_0
+	LOAD -1
+	PUSH 1
+	ADD
+	STORE -1
 	RMEM 1
-	RMEM 1
+	PUSH 5
+	LOAD -1
+	ADD
+	STORE 5
+	PUSH 0
+	STORE -2
+for_loop_lmet1_2_A_1:	NOP
+	LOAD -2
+	PUSH 1
+	LT
+	BF for_nop_lmet1_2_A_1
+	LOAD -2
+	PUSH 1
+	ADD
+	STORE -2
+	JUMP for_loop_lmet1_2_A_1
+for_nop_lmet1_2_A_1:	NOP
 	FMEM 1
-	FMEM 1
+	JUMP for_loop_lmet1_2_A_0
+for_nop_lmet1_2_A_0:	NOP
+	PUSH 0
+	STORE 0
+for_loop_lmet1_2_A_2:	NOP
+	LOAD 0
+	PUSH 2
+	LT
+	BF for_nop_lmet1_2_A_2
+	LOAD 0
+	PUSH 1
+	ADD
+	STORE 0
+	JUMP for_loop_lmet1_2_A_2
+for_nop_lmet1_2_A_2:	NOP
 	FMEM 2
 	STOREFP
 	RET 3
@@ -17,15 +58,12 @@ ldebugPrint_1_Object:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lCtorA_int_String:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
 	LOAD 3
 	PUSH 1	;a
 	SWAP
@@ -35,18 +73,6 @@ lCtorA_int_String:	NOP
 	LOADREF 0
 	LOADREF 2
 	CALL
-	LOADFP
-	LOADSP
-	STOREFP
-	RMEM 2
-	RMEM 1
-	RMEM 1
-	FMEM 1
-	FMEM 1
-	FMEM 2
-	STOREFP
-	RET 3
-	FMEM 0
 	STOREFP
 	RET 3
 	.DATA
@@ -59,8 +85,6 @@ lread_2_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STORE 3
 	STOREFP
 	RET 1
@@ -68,80 +92,60 @@ lprintBln_3_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintCln_4_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintI_5_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintIln_6_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintC_7_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintln_8_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 1
 lprintB_9_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintSln_10_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lprintS_11_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lCtorSystem:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 1
 	.DATA
@@ -151,8 +155,6 @@ lmain_5_C:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 1
 lmet1_4_B:	NOP
@@ -160,6 +162,30 @@ lmet1_4_B:	NOP
 	LOADSP
 	STOREFP
 	RMEM 1
+	PUSH 0
+	STORE 0
+	LOAD 0
+	PUSH 0
+	EQ
+	BF if_else_lmet1_4_B_0
+	PUSH 10
+	STORE 0
+	JUMP if_nop_lmet1_4_B_0
+if_else_lmet1_4_B_0:	NOP
+	RMEM 1
+	LOAD 0
+	PUSH 2
+	EQ
+	BF if_nop_lmet1_4_B_1
+	PUSH 1
+	STORE 0
+if_nop_lmet1_4_B_1:	NOP
+	PUSH 20
+	STORE -1
+	FMEM 1
+if_nop_lmet1_4_B_0:	NOP
+	PUSH 30
+	STORE 0
 	FMEM 1
 	STOREFP
 	RET 1
@@ -167,8 +193,6 @@ lmetODO_3_B:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STORE 4
 	STOREFP
 	RET 2
@@ -176,16 +200,12 @@ lmain2_6_C:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 2
 lCtorC:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 1
 	.DATA
@@ -195,7 +215,5 @@ lCtorB:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	RMEM 0
-	FMEM 0
 	STOREFP
 	RET 1

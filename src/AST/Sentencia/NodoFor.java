@@ -3,6 +3,7 @@ package AST.Sentencia;
 import AST.Expresion.NodoExpresion;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
+import Traductor.*;
 
 import java.io.IOException;
 
@@ -46,9 +47,23 @@ public class NodoFor extends NodoSentencia {
 
     @Override
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        int index_etiquetas_for = Index_etiquetas.getInstance().get_index();
+        String etiqueta_loop = "for_loop_"+nombre_unidad_declarada+"_"+ index_etiquetas_for;
+        String etiqueta_nop = "for_nop_"+nombre_unidad_declarada+"_"+ index_etiquetas_for;
         varLocal.generar_codigo();
-        condicion.generar_codigo(); //tengo q hacer los saltos
+        //Genero etiqueta del loop
+        Traductor.getInstance().gen_etiqueta(etiqueta_loop);
+        condicion.generar_codigo();
+        //Si la condicion no se cumple salto afuera del bloque del for
+        Traductor.getInstance().gen("BF "+etiqueta_nop);
         asignacion.generar_codigo();
+
+        //Le seteo el mismo nombre de metodo
+        cuerpo_for.set_nombre_unidad_declarada(nombre_unidad_declarada);
         cuerpo_for.generar_codigo();
+        //Vuelvo a loopear
+        Traductor.getInstance().gen("JUMP "+etiqueta_loop);
+        //Genero etiqueta de salida del loop
+        Traductor.getInstance().gen_etiqueta(etiqueta_nop);
     }
 }

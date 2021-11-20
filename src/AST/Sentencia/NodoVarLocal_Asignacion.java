@@ -4,6 +4,7 @@ import AST.Expresion.NodoExpresion;
 import AST.NodoBloque;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 

@@ -2,9 +2,9 @@ package AnalizadorSemantico;
 
 import AST.Sentencia.NodoSentencia;
 import AnalizadorLexico.Token;
+import Traductor.*;
 
 import java.io.IOException;
-import java.util.HashMap;
 
 
 public class EntradaMetodo extends EntradaUnidad {
@@ -27,6 +27,7 @@ public class EntradaMetodo extends EntradaUnidad {
         for(NodoSentencia ns : bloque_principal.get_lista_sentencias())
             ns.en_metodo_static();
     }
+
 
     public void esta_bien_declarado() throws ExcepcionSemantica {
         if(!tipo_unidad.esPrimitivo())
@@ -100,6 +101,7 @@ public class EntradaMetodo extends EntradaUnidad {
         Traductor.getInstance().gen("STOREFP");
         //Una vez el RA esta terminado, puedo generar el codigo de los bloques
         bloque_principal.generar_codigo();
+        Index_etiquetas.getInstance().reset_index();
 
         int n = lista_argumentos.size();
         if(!no_retorna()) {

@@ -1,6 +1,6 @@
-package AnalizadorSemantico;
+package Traductor;
 
-import AST.NodoBloque;
+import AnalizadorSemantico.*;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,6 +19,7 @@ public class Traductor {
     private static Traductor instance = null;
 
     private Traductor() throws IOException {
+        Index_etiquetas.getInstance();
         hubo_errores = false;
         codigo_output = new File("codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);

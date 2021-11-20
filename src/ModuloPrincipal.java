@@ -4,6 +4,7 @@ import AnalizadorLexico.GestorArchivo;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 import AnalizadorSintactico.Analizador_Sintactico;
+import Traductor.Traductor;
 
 import java.io.File;
 import java.io.IOException;

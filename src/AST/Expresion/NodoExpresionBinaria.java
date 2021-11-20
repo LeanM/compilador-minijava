@@ -2,6 +2,7 @@ package AST.Expresion;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 
@@ -14,7 +15,6 @@ public class NodoExpresionBinaria extends NodoExpresion {
         super(op_binario);
         this.expresion_izq = exp_izq;
         this.expresion_der = exp_der;
-        //this.operador_binario = op_binario;
     }
 
     @Override
@@ -52,19 +52,25 @@ public class NodoExpresionBinaria extends NodoExpresion {
         expresion_der.generar_codigo();
 
         switch (token_expresion.get_lexema()) {
-            case "+" : Traductor.getInstance().gen("ADD");
-            case "-" : Traductor.getInstance().gen("SUB");
-            case "*" : Traductor.getInstance().gen("MUL");
-            case "==" : Traductor.getInstance().gen("EQ");
-            case "/" : Traductor.getInstance().gen("DIV");
-            case "%" : Traductor.getInstance().gen("MOD");
-            case "&&" : Traductor.getInstance().gen("AND");
-            case "||" : Traductor.getInstance().gen("OR");
-            case "!=" : {Traductor.getInstance().gen("NOT");}  //Hacerlo
-            case "<" : Traductor.getInstance().gen("LT");
-            case ">" : Traductor.getInstance().gen("GT");
-            case "<=" : Traductor.getInstance().gen("LT"); //Hacerlo
-            case ">=" : Traductor.getInstance().gen("GT");    //Hacerlo
+            case "+" : {
+                Traductor.getInstance().gen("ADD");break;}
+            case "-" : {Traductor.getInstance().gen("SUB");break;}
+            case "*" : {Traductor.getInstance().gen("MUL");break;}
+            case "==" : {Traductor.getInstance().gen("EQ");break;}
+            case "/" : {Traductor.getInstance().gen("DIV");break;}
+            case "%" : {Traductor.getInstance().gen("MOD");break;}
+            case "&&" : {Traductor.getInstance().gen("AND");break;}
+            case "||" : {Traductor.getInstance().gen("OR");break;}
+            case "!=" : {Traductor.getInstance().gen("NE");break;}
+            case "<" : {Traductor.getInstance().gen("LT");break;}
+            case ">" : {Traductor.getInstance().gen("GT");break;}
+            case "<=" : {Traductor.getInstance().gen("LE");break;}
+            case ">=" : {Traductor.getInstance().gen("GE");break;}
         }
+    }
+
+    public void set_lado_der() {
+        expresion_izq.set_lado_der();
+        expresion_der.set_lado_der();
     }
 }

@@ -1,10 +1,9 @@
 package AST.Sentencia;
 
 import AST.Acceso.NodoPrimario_Component;
-import AST.Acceso.NodoVarEncadenada_Decorator;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Traductor;
+import Traductor.Traductor;
 
 import java.io.IOException;
 

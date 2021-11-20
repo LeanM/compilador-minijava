@@ -1,6 +1,7 @@
 package AST.Expresion;
 
 import AST.Acceso.NodoAcceso;
+import AST.Acceso.NodoAccesoVar;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
@@ -39,5 +40,9 @@ public class NodoOperando_Acceso extends NodoOperando {
     @Override
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         nodo_acceso.generar_codigo();
+    }
+
+    public void set_lado_der(){
+        nodo_acceso.set_lado_der();
     }
 }

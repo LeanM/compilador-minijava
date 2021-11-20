@@ -1,9 +1,8 @@
 package AST.Acceso;
 
-import AST.Sentencia.Var;
-import AST.Sentencia.Var_Instancia;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
 
 import java.io.IOException;
 

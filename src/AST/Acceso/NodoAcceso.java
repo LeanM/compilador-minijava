@@ -32,6 +32,7 @@ public abstract class NodoAcceso {
     public void set_lado_izq() {
         this.es_lado_izq = true;
     }
+    public void set_lado_der() {this.es_lado_izq = false;}
     public boolean es_lado_izq() {
         return es_lado_izq;
     }

@@ -22,5 +22,5 @@ public abstract class NodoExpresion {
     public abstract void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica;
     public abstract void mostrar_expresion();
     public abstract void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica;
-    //public abstract void evaluar_expresion();
+    public abstract void set_lado_der();
 }

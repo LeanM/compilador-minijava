@@ -65,13 +65,14 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                     if (metodo_origen.get_bloque_principal().get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() > token_acceso.get_nro_linea())
                         //Si esta declarada la variable local en el bloque despues del acceso [error]
                         toReturn = false;
-                        else
-                            acceso_tipo_variable = new Var_Local(bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
+                    else
+                        acceso_tipo_variable = new Var_Local(bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
                 } else
                     toReturn = false;
             } else
                 //Si son bloques distintos
                 if (bloque_acceso_var.get_tabla_var_locales().containsKey(token_acceso.get_lexema())) {
+                    //El bloque donde fue el acceso contiene la declaracion de la var local
                     if (bloque_acceso_var.get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() > token_acceso.get_nro_linea())
                         toReturn = false;
                     else
@@ -83,12 +84,13 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
                         if (bloque_padre.get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea()) {
                             //La var local esta definida en un bloque padre [correcto]
                             esta_declarada = true;
-                            //es_var_local = bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema());
                             acceso_tipo_variable = new Var_Local(bloque_padre.get_tabla_var_locales().get(token_acceso.get_lexema()),this);
                         } else bloque_padre = bloque_padre.get_bloque_padre();
                     }
-                    if(!esta_declarada && metodo_origen.get_bloque_principal().get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && metodo_origen.get_bloque_principal().get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea())
+                    if(!esta_declarada && metodo_origen.get_bloque_principal().get_tabla_var_locales().containsKey(token_acceso.get_lexema()) && metodo_origen.get_bloque_principal().get_tabla_var_locales().get(token_acceso.get_lexema()).get_token().get_nro_linea() < token_acceso.get_nro_linea()) {
                         esta_declarada = true;
+                        acceso_tipo_variable = new Var_Local(metodo_origen.get_bloque_principal().get_tabla_var_locales().get(token_acceso.get_lexema()),this);
+                    }
 
                     if (!esta_declarada)
                         toReturn = false;
@@ -96,7 +98,6 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
         }
         else
             acceso_tipo_variable = new Var_parametro(metodo_origen.get_tabla_argumentos().get(token_acceso.get_lexema()),this);
-            //es_parametro = true;
 
         return toReturn;
     }
@@ -119,9 +120,5 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
 
     public boolean puede_ser_asignado(){
         return true;
-    }
-
-    public Var get_acceso_tipo_var(){
-        return acceso_tipo_variable;
     }
 }

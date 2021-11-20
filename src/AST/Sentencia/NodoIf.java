@@ -1,9 +1,11 @@
 package AST.Sentencia;
 
 import AST.Expresion.NodoExpresion;
-import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
+import Traductor.*;
+
+import java.io.IOException;
 
 public class NodoIf extends NodoSentencia {
 
@@ -36,7 +38,16 @@ public class NodoIf extends NodoSentencia {
     }
 
     @Override
-    public void generar_codigo() {
+    public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
+        int index_etiquetas_if = Index_etiquetas.getInstance().get_index();
+        String etiqueta_nop = "if_nop_"+nombre_unidad_declarada+"_"+ index_etiquetas_if;
+        condicion.generar_codigo();
+        //Si la condicion no se cumple salto afuera del then
+        Traductor.getInstance().gen("BF "+etiqueta_nop);
 
+        //Le seteo el mismo nombre de unidad declarada
+        cuerpo_then.set_nombre_unidad_declarada(nombre_unidad_declarada);
+        cuerpo_then.generar_codigo();
+        Traductor.getInstance().gen_etiqueta(etiqueta_nop);
     }
 }

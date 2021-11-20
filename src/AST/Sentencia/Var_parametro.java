@@ -4,7 +4,7 @@ import AST.Acceso.NodoPrimario_Component;
 import AnalizadorSemantico.EntradaParametro;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
-import AnalizadorSemantico.Traductor;
+import Traductor.Traductor;
 
 import java.io.IOException;
 
