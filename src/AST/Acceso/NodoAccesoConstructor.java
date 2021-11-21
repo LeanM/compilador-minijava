@@ -54,7 +54,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             //Para no perder la referencia al nuevo CIR cuando haga STOREREF para asociarle la VT
             Traductor.getInstance().gen("DUP");
             //Hago push de la etiqueta de la VT de la clase a retornar
-            Traductor.getInstance().gen("PUSH "+token_acceso.get_lexema());
+            Traductor.getInstance().gen("PUSH VT_"+token_acceso.get_lexema());
             Traductor.getInstance().gen("STOREREF 0");
 
             //Ahora tenemos que hacer la llamada

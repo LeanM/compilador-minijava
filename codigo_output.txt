@@ -19,7 +19,7 @@ lmalloc:	NOP
 	STOREFP
 	RET 1
 	.DATA
-VT A: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A
+VT_A: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A
 	.CODE
 lmain_2_A:	NOP
 	LOADFP
@@ -31,7 +31,7 @@ lmain_2_A:	NOP
 	PUSH lmalloc
 	CALL
 	DUP
-	PUSH A
+	PUSH VT_A
 	STOREREF 0
 	DUP
 	PUSH 5	;x
@@ -119,10 +119,10 @@ lCtorA_int_int:	NOP
 	STOREFP
 	RET 3
 	.DATA
-VT Object: DW ldebugPrint_1_Object
+VT_Object: DW ldebugPrint_1_Object
 	.CODE
 	.DATA
-VT System: DW ldebugPrint_1_Object,lread_2_System,lprintBln_3_System,lprintCln_4_System,lprintI_5_System,lprintIln_6_System,lprintC_7_System,lprintln_8_System,lprintB_9_System,lprintSln_10_System,lprintS_11_System
+VT_System: DW ldebugPrint_1_Object,lread_2_System,lprintBln_3_System,lprintCln_4_System,lprintI_5_System,lprintIln_6_System,lprintC_7_System,lprintln_8_System,lprintB_9_System,lprintSln_10_System,lprintS_11_System
 	.CODE
 lread_2_System:	NOP
 	LOADFP
@@ -192,7 +192,7 @@ lCtorSystem:	NOP
 	STOREFP
 	RET 1
 	.DATA
-VT C: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B,lmain,lmain2_7_C
+VT_C: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B,lmain,lmain2_7_C
 	.CODE
 lmain:	NOP
 	LOADFP
@@ -258,7 +258,7 @@ lCtorC:	NOP
 	STOREFP
 	RET 1
 	.DATA
-VT B: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B
+VT_B: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B
 	.CODE
 lCtorB:	NOP
 	LOADFP

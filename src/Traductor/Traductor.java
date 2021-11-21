@@ -195,7 +195,7 @@ public class Traductor {
         }
 
         bw.newLine();
-        bw.write("VT "+clase.getNombre()+": DW "+etiquetas_string);
+        bw.write("VT_"+clase.getNombre()+": DW "+etiquetas_string);
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
