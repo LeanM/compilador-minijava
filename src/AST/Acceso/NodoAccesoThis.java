@@ -2,6 +2,9 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
+
+import java.io.IOException;
 
 public class NodoAccesoThis extends NodoPrimario_Concreto {
 
@@ -23,7 +26,8 @@ public class NodoAccesoThis extends NodoPrimario_Concreto {
     }
 
     @Override
-    public void generar_codigo() {
-
+    public void generar_codigo() throws IOException {
+        //Preguntar
+        Traductor.getInstance().gen("LOAD 3");
     }
 }

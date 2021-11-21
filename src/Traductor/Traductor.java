@@ -36,8 +36,11 @@ public class Traductor {
         return  instance;
     }
 
+    public static void asd() {}
+
     public void traducir() throws IOException {
         try {
+            rutina_inicializacion();
             consolidar_offsets_clases();
             generar_clases_general();
             finalizar_output();
@@ -185,7 +188,6 @@ public class Traductor {
         String etiquetas_string = "";
 
         if (!etiquetas_metodos.isEmpty())
-            //etiquetas_string = etiquetas_metodos.get(0).getNombre() + "_" + etiquetas_metodos.get(0).get_offset() + "_" + etiquetas_metodos.get(0).get_clase_base();
             etiquetas_string = etiquetas_metodos.get(0).get_etiqueta();
 
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
@@ -259,6 +261,35 @@ public class Traductor {
     public File finalizar_output() throws IOException {
         bw.close();
         return codigo_output;
+    }
+
+    public void rutina_inicializacion() throws IOException {
+        this.set_modo_code();
+        //Inicializacion del heap
+        //gen("PUSH lheap");
+        gen("RET 0");
+
+        //Inicializacion resto
+        //gen("CALL");
+        gen("PUSH lmain");
+        gen("CALL");
+        gen("HALT");
+
+        //Inicializacion rutina malloc para el heap
+        gen_etiqueta("lmalloc");
+        gen("LOADFP");
+        gen("LOADSP");
+        gen("STOREFP");
+        gen("LOADHL");
+        gen("DUP");
+        gen("PUSH 1");
+        gen("ADD");
+        gen("STORE 4");
+        gen("LOAD 3");
+        gen("ADD");
+        gen("STOREHL");
+        gen("STOREFP");
+        gen("RET 1");
     }
 
     public boolean hubo_errores() {

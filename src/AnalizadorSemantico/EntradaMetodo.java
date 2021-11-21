@@ -85,7 +85,10 @@ public class EntradaMetodo extends EntradaUnidad {
     }
 
     public String get_etiqueta() {
-        return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
+        if(this.getNombre().equals("main") && get_lista_argumentos().isEmpty())
+            return "lmain";
+        else
+            return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
     }
 
     public boolean no_retorna() {
@@ -117,6 +120,8 @@ public class EntradaMetodo extends EntradaUnidad {
 
             Traductor.getInstance().gen("STORE "+offset);
             Traductor.getInstance().gen("STOREFP");
+            //Creo que si es dinamico debo sumar 1 (como esta ahora)
+            //  Y si es estatico es solo la cant de parametros
             Traductor.getInstance().gen("RET "+ (n + 1));
         }
         else {

@@ -1,6 +1,8 @@
 package AST.Acceso;
 
 import AST.Expresion.NodoExpresion;
+import AST.Expresion.NodoOperando_Acceso;
+import AST.Expresion.NodoOperando_Literal;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
 import Traductor.Traductor;
@@ -61,26 +63,38 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
             if(!metodo_conformado.no_retorna()) {
                 //Si la unidad retorna un valor
                 Traductor.getInstance().gen("RMEM 1");
-                //Hago un swap para ir bajando el this
-                Traductor.getInstance().gen("SWAP");
+                if(!metodo_conformado.es_estatico())
+                    //Hago un swap para ir bajando el this
+                    Traductor.getInstance().gen("SWAP");
             }
+
+            System.out.println("CANT ARGS en "+metodo_conformado.getNombre()+" : "+argumentos.size());
+            System.out.println(argumentos.getFirst().getToken().get_lexema());
 
             for (int i = 0; i < argumentos_formales.size(); i++) {
                 //Esto dejaria el resultado de la expresion en la pila
                 argumentos.get(i).generar_codigo();
                 //Pongo el comentario del nombre del parametro (No se si no tengo q hacer un .STACK para q aparezca en la pila)
                 Traductor.getInstance().gen_comment(argumentos_formales.get(i).getNombre());
-                //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
-                Traductor.getInstance().gen("SWAP");
+                if(!metodo_conformado.es_estatico())
+                    //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
+                    Traductor.getInstance().gen("SWAP");
             }
 
-            //Ahora que tenemos los parametros y el this, podemos hacer la llamada al metodo (hay que buscarlo en la VT del this)
-            //Por como funciona el LOADREF hay que hacer DUP para no perder la referencia al CIR (this)
-            Traductor.getInstance().gen("DUP");
-            //Hago el LOADREF para obtener la VT en el CIR (el offset de la VT es siempre 0)
-            Traductor.getInstance().gen("LOADREF 0");
-            //Obtengo de la VT el label del metodo conformado con el offset de ese metodo
-            Traductor.getInstance().gen("LOADREF "+metodo_conformado.get_offset());
+            if(!metodo_conformado.es_estatico()) {
+                //Si el metodo es dinamico
+                //Ahora que tenemos los parametros y el this, podemos hacer la llamada al metodo (hay que buscarlo en la VT del this)
+                //Por como funciona el LOADREF hay que hacer DUP para no perder la referencia al CIR (this)
+                Traductor.getInstance().gen("DUP");
+                //Hago el LOADREF para obtener la VT en el CIR (el offset de la VT es siempre 0)
+                Traductor.getInstance().gen("LOADREF 0");
+                //Obtengo de la VT el label del metodo conformado con el offset de ese metodo
+                Traductor.getInstance().gen("LOADREF " + metodo_conformado.get_offset());
+            }
+            else
+                //Si el metodo es estatico
+                Traductor.getInstance().gen("PUSH "+metodo_conformado.get_etiqueta());
+
             //Hago la llamada
             Traductor.getInstance().gen("CALL");
         }

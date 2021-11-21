@@ -46,6 +46,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             Traductor.getInstance().gen("RMEM 1");
             //Parametro de malloc (cantidad de variables de instancia de la clase a crear + 1 (por la VT))
             int cant_variables_instancia = TablaSimbolos.getInstance().get_tabla_clases().get(token_acceso.get_lexema()).get_tabla_atributos().size();
+            //Parametro
             Traductor.getInstance().gen("PUSH "+ (cant_variables_instancia + 1));
             //La direccion de memoria de la rutina malloc
             Traductor.getInstance().gen("PUSH lmalloc");
