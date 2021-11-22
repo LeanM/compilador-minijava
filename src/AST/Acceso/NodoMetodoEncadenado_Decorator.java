@@ -57,7 +57,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
         if(metodo_conformado != null) {
             LinkedList<EntradaParametro> argumentos_formales = metodo_conformado.get_lista_argumentos();
 
-            //Creo que el CIR de la variable o retorno de metodo encadenado a izquierda al ejecutar
+            //El CIR de la variable o retorno de metodo encadenado a izquierda al ejecutar
             //primario_decorator.generar_codigo(); ya queda en el tope de la pila
 
             if(!metodo_conformado.no_retorna()) {
@@ -72,7 +72,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
                 //Esto dejaria el resultado de la expresion en la pila
                 argumentos.get(i).generar_codigo();
                 //Pongo el comentario del nombre del parametro (No se si no tengo q hacer un .STACK para q aparezca en la pila)
-                Traductor.getInstance().gen_comment(argumentos_formales.get(i).getNombre());
+                Traductor.getInstance().gen_comment_stack(argumentos_formales.get(i).getNombre());
                 if(!metodo_conformado.es_estatico())
                     //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
                     Traductor.getInstance().gen("SWAP");

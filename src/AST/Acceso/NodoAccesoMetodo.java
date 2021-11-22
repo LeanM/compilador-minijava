@@ -51,6 +51,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             //Cargo el CIR de el RA actual, por que va a ser el mismo del nuevo RA para el metodo
             //Si el metodo es estatico no debo cargarlo
             if(!((EntradaMetodo) unidad_conformada).es_estatico())
+                //Si el metodo es dinamico
                 Traductor.getInstance().gen("LOAD 3");
             if(!unidad_conformada.no_retorna()) {
                 //Si la unidad retorna un valor
@@ -64,7 +65,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
                 //Esto dejaria el resultado de la expresion en la pila
                 argumentos.get(i).generar_codigo();
                 //Pongo el comentario del nombre del parametro (No se si no tengo q hacer un .STACK para q aparezca en la pila)
-                Traductor.getInstance().gen_comment(argumentos_formales.get(i).getNombre());
+                Traductor.getInstance().gen_comment_stack(argumentos_formales.get(i).getNombre());
                 if(!((EntradaMetodo) unidad_conformada).es_estatico())
                     //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
                     Traductor.getInstance().gen("SWAP");

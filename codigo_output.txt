@@ -1,6 +1,7 @@
-	.DATA
-	.CODE
+
+	.HEAP
 	RET 0
+	.CODE
 	PUSH lmain
 	CALL
 	HALT
@@ -34,16 +35,22 @@ lmain_2_A:	NOP
 	PUSH VT_A
 	STOREREF 0
 	DUP
-	PUSH 5	;x
+	PUSH 5
+	.STACK
+	;x
+	.CODE
 	SWAP
-	PUSH 0	;y
+	PUSH 0
+	.STACK
+	;y
+	.CODE
 	SWAP
 	PUSH lCtorA_int_int
 	CALL
 	STORE 0
 	FMEM 1
 	STOREFP
-	RET 2
+	RET 1
 lmet1_3_A:	NOP
 	LOADFP
 	LOADSP
@@ -102,15 +109,21 @@ ldebugPrint_1_Object:	NOP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lCtorA_int_int:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	LOAD 3
-	PUSH 1	;a
+	PUSH 1
+	.STACK
+	;a
+	.CODE
 	SWAP
-	PUSH 2	;b
+	PUSH 2
+	.STACK
+	;b
+	.CODE
 	SWAP
 	DUP
 	LOADREF 0
@@ -130,61 +143,61 @@ lread_2_System:	NOP
 	STOREFP
 	STORE 3
 	STOREFP
-	RET 1
+	RET 0
 lprintBln_3_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintCln_4_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintI_5_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintIln_6_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintC_7_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintln_8_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 1
+	RET 0
 lprintB_9_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintSln_10_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lprintS_11_System:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	STOREFP
-	RET 2
+	RET 1
 lCtorSystem:	NOP
 	LOADFP
 	LOADSP
@@ -198,11 +211,14 @@ lmain:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	PUSH 99	;o
+	PUSH 99
+	.STACK
+	;o
+	.CODE
 	PUSH lmain2_7_C
 	CALL
 	STOREFP
-	RET 1
+	RET 0
 lmet1_5_B:	NOP
 	LOADFP
 	LOADSP
@@ -232,12 +248,12 @@ if_nop_lmet1_5_B_0:	NOP
 	PUSH 30
 	STORE 3
 	STOREFP
-	RET 2
+	RET 1
 lmetODO_4_B:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	STORE 4
+	STORE 5
 	STOREFP
 	RET 2
 lmain2_7_C:	NOP
@@ -246,11 +262,14 @@ lmain2_7_C:	NOP
 	STOREFP
 	LOAD 3
 	PUSH 1
-	ADD	;a
+	ADD
+	.STACK
+	;a
+	.CODE
 	PUSH lmet1_5_B
 	CALL
 	STOREFP
-	RET 2
+	RET 1
 lCtorC:	NOP
 	LOADFP
 	LOADSP
