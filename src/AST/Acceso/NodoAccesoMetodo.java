@@ -49,7 +49,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
             LinkedList<EntradaParametro> argumentos_formales = unidad_conformada.get_lista_argumentos();
 
             //Cargo el CIR de el RA actual, por que va a ser el mismo del nuevo RA para el metodo
-            //Creo que si el metodo es estatico no debo cargarlo
+            //Si el metodo es estatico no debo cargarlo
             if(!((EntradaMetodo) unidad_conformada).es_estatico())
                 Traductor.getInstance().gen("LOAD 3");
             if(!unidad_conformada.no_retorna()) {

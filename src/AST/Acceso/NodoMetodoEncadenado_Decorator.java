@@ -64,12 +64,9 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
                 //Si la unidad retorna un valor
                 Traductor.getInstance().gen("RMEM 1");
                 if(!metodo_conformado.es_estatico())
-                    //Hago un swap para ir bajando el this
+                    //Hago un swap para ir bajando el this si es dinamico
                     Traductor.getInstance().gen("SWAP");
             }
-
-            System.out.println("CANT ARGS en "+metodo_conformado.getNombre()+" : "+argumentos.size());
-            System.out.println(argumentos.getFirst().getToken().get_lexema());
 
             for (int i = 0; i < argumentos_formales.size(); i++) {
                 //Esto dejaria el resultado de la expresion en la pila
