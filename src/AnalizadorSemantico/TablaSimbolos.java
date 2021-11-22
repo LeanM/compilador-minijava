@@ -242,6 +242,9 @@ public class TablaSimbolos {
             }
             if(iguales) {
                 toReturn = em;
+                for (int i = 0; i < argumentos_actuales.size(); i++) {
+                    argumentos_actuales.get(i).esta_bien_definido();
+                }
                 break;
             }
         }
@@ -271,6 +274,9 @@ public class TablaSimbolos {
             }
             if(iguales) {
                 toReturn = ec;
+                for (int i = 0; i < argumentos_actuales.size() && iguales; i++) {
+                    argumentos_actuales.get(i).esta_bien_definido();
+                }
                 break;
             }
         }

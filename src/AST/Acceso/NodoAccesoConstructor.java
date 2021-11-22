@@ -46,6 +46,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             Traductor.getInstance().gen("RMEM 1");
             //Parametro de malloc (cantidad de variables de instancia de la clase a crear + 1 (por la VT))
             int cant_variables_instancia = TablaSimbolos.getInstance().get_tabla_clases().get(token_acceso.get_lexema()).get_tabla_atributos().size();
+            //Parametro
             Traductor.getInstance().gen("PUSH "+ (cant_variables_instancia + 1));
             //La direccion de memoria de la rutina malloc
             Traductor.getInstance().gen("PUSH lmalloc");
@@ -53,7 +54,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
             //Para no perder la referencia al nuevo CIR cuando haga STOREREF para asociarle la VT
             Traductor.getInstance().gen("DUP");
             //Hago push de la etiqueta de la VT de la clase a retornar
-            Traductor.getInstance().gen("PUSH "+token_acceso.get_lexema());
+            Traductor.getInstance().gen("PUSH VT_"+token_acceso.get_lexema());
             Traductor.getInstance().gen("STOREREF 0");
 
             //Ahora tenemos que hacer la llamada
@@ -69,7 +70,7 @@ public class NodoAccesoConstructor extends NodoAccesoUnidad{
                 //Esto dejaria el resultado de la expresion en la pila
                 argumentos.get(i).generar_codigo();
                 //Pongo el comentario del nombre del parametro (No se si no tengo q hacer un .STACK para q aparezca en la pila)
-                Traductor.getInstance().gen_comment(argumentos_formales.get(i).getNombre());
+                Traductor.getInstance().gen_comment_stack(argumentos_formales.get(i).getNombre());
                 //Hago un swap para ir bajando el this, asi este queda por debajo de los parametros
                 Traductor.getInstance().gen("SWAP");
             }

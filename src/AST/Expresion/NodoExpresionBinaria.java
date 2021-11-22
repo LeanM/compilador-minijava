@@ -52,8 +52,7 @@ public class NodoExpresionBinaria extends NodoExpresion {
         expresion_der.generar_codigo();
 
         switch (token_expresion.get_lexema()) {
-            case "+" : {
-                Traductor.getInstance().gen("ADD");break;}
+            case "+" : {Traductor.getInstance().gen("ADD");break;}
             case "-" : {Traductor.getInstance().gen("SUB");break;}
             case "*" : {Traductor.getInstance().gen("MUL");break;}
             case "==" : {Traductor.getInstance().gen("EQ");break;}

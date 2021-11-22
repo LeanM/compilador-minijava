@@ -51,7 +51,7 @@ public class NodoCasting extends NodoAcceso{
 
     @Override
     public void generar_codigo() {
-
+        //Creo que debo cambiarle al CIR la VT por la VT del casting
     }
 
 }

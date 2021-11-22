@@ -85,7 +85,10 @@ public class EntradaMetodo extends EntradaUnidad {
     }
 
     public String get_etiqueta() {
-        return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
+        if(this.getNombre().equals("main") && get_lista_argumentos().isEmpty())
+            return "lmain";
+        else
+            return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
     }
 
     public boolean no_retorna() {
@@ -107,21 +110,32 @@ public class EntradaMetodo extends EntradaUnidad {
         if(!no_retorna()) {
             //RETORNO
             int offset;
-            if (n == 0)
-                if(this.es_estatico())
+            if (n == 0) {
+                if (this.es_estatico())
                     offset = 3;
                 else
                     offset = 4;//4 por que es la pos despues del this
-            else
-                offset = lista_argumentos.get(0).get_offset();
+            }
+            else {
+                // Le sumo uno por que el espacio de retorno esta arriba del primer parametro
+                offset = lista_argumentos.get(0).get_offset() + 1;
+            }
 
             Traductor.getInstance().gen("STORE "+offset);
             Traductor.getInstance().gen("STOREFP");
-            Traductor.getInstance().gen("RET "+ (n + 1));
+            //Creo que si es dinamico debo sumar 1 (como esta ahora)
+            //  Y si es estatico es solo la cant de parametros
+            if(this.es_estatico())
+                Traductor.getInstance().gen("RET "+ n);
+            else
+                Traductor.getInstance().gen("RET "+ (n + 1));
         }
         else {
             Traductor.getInstance().gen("STOREFP");
-            Traductor.getInstance().gen("RET "+ (n + 1));
+            if(this.es_estatico())
+                Traductor.getInstance().gen("RET "+ n);
+            else
+                Traductor.getInstance().gen("RET "+ (n + 1));
         }
     }
 }
