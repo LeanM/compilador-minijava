@@ -18,6 +18,7 @@ public class NodoBloque extends NodoSentencia {
     private NodoBloque bloque_padre;
     private LinkedList<NodoBloque> lista_bloques_hijos;
     private int index_etiquetas_for_if;
+    private int cant_vars_locales_cargadas_total;
 
     public NodoBloque(EntradaUnidad unidad){
         super();
@@ -26,6 +27,7 @@ public class NodoBloque extends NodoSentencia {
         unidad_de_bloque = unidad;
         lista_bloques_hijos = new LinkedList<NodoBloque>();
         index_etiquetas_for_if = 0;
+        cant_vars_locales_cargadas_total = 0;
     }
 
     public void setSentencia(NodoSentencia sentencia_nueva) {
@@ -64,6 +66,18 @@ public class NodoBloque extends NodoSentencia {
         return index_etiquetas_for_if++;
     }
 
+    public void set_cant_var_locales_cargadas(int n) {
+        this.cant_vars_locales_cargadas_total = n;
+    }
+
+    public int get_cant_var_locales_cargadas_total () {
+        return cant_vars_locales_cargadas_total;
+    }
+
+    public EntradaUnidad get_unidad_bloque() {
+        return unidad_de_bloque;
+    }
+
     @Override
     public void mostar_sentencia() {
         for(NodoSentencia ns : lista_sentencias)
@@ -73,10 +87,14 @@ public class NodoBloque extends NodoSentencia {
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         //Debo reservar espacio para las variables locales de este bloque, al salir del bloque
         //debo liberar el espacio
-        if(!tabla_var_locales.isEmpty())
-            Traductor.getInstance().gen("RMEM "+tabla_var_locales.size());
+        if(!tabla_var_locales.isEmpty()) {
+            Traductor.getInstance().gen("RMEM " + tabla_var_locales.size());
+            cant_vars_locales_cargadas_total += tabla_var_locales.size();
+        }
 
         for(NodoSentencia ns : lista_sentencias) {
+            if(ns instanceof NodoBloque)
+                ((NodoBloque) ns).set_cant_var_locales_cargadas(cant_vars_locales_cargadas_total);
             ns.set_nombre_unidad_declarada(unidad_de_bloque.get_etiqueta());
             ns.generar_codigo();
         }

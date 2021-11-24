@@ -25,7 +25,6 @@ public abstract class NodoOperando_Literal extends NodoOperando {
 
     public void generar_codigo() throws IOException {
         Traductor.getInstance().gen("PUSH "+token_expresion.get_lexema());
-        //No se si funciona asi con los string
     }
 
     public void set_lado_der() {}

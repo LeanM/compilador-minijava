@@ -107,35 +107,13 @@ public class EntradaMetodo extends EntradaUnidad {
         Index_etiquetas.getInstance().reset_index();
 
         int n = lista_argumentos.size();
-        if(!no_retorna()) {
-            //RETORNO
-            int offset;
-            if (n == 0) {
-                if (this.es_estatico())
-                    offset = 3;
-                else
-                    offset = 4;//4 por que es la pos despues del this
-            }
-            else {
-                // Le sumo uno por que el espacio de retorno esta arriba del primer parametro
-                offset = lista_argumentos.get(0).get_offset() + 1;
-            }
+        if(no_retorna()) {
+            Traductor.getInstance().gen("STOREFP");
+            if(this.es_estatico())
+                Traductor.getInstance().gen("RET "+ n);
+            else
+                Traductor.getInstance().gen("RET "+ (n + 1));
+        }
 
-            Traductor.getInstance().gen("STORE "+offset);
-            Traductor.getInstance().gen("STOREFP");
-            //Creo que si es dinamico debo sumar 1 (como esta ahora)
-            //  Y si es estatico es solo la cant de parametros
-            if(this.es_estatico())
-                Traductor.getInstance().gen("RET "+ n);
-            else
-                Traductor.getInstance().gen("RET "+ (n + 1));
-        }
-        else {
-            Traductor.getInstance().gen("STOREFP");
-            if(this.es_estatico())
-                Traductor.getInstance().gen("RET "+ n);
-            else
-                Traductor.getInstance().gen("RET "+ (n + 1));
-        }
     }
 }
