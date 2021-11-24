@@ -19,8 +19,8 @@ public class ModuloPrincipal {
     public static void main (String [] args){
         TablaSimbolos.getInstance().inicializar_tabla_simbolos();
 
-        //String programa = "pruebaTRADUCTOR_vars_locales.txt";
-        String programa = "prueba_simple.txt";
+        String programa = "pruebaTRADUCTOR_vars_locales.txt";
+        //String programa = "prueba_simple.txt";
         try {
             //programa = args[0];
         }
