@@ -72,7 +72,7 @@ public class NodoVarLocal extends NodoSentencia{
 
     @Override
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
-        //Nada ? por que no le debo asignar nada y el offset ya lo tiene
+        //Nada
     }
 
     public int get_offset() { return offset; }

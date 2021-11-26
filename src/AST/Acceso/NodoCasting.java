@@ -2,6 +2,9 @@ package AST.Acceso;
 
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.*;
+import Traductor.Traductor;
+
+import java.io.IOException;
 
 public class NodoCasting extends NodoAcceso{
 
@@ -50,8 +53,8 @@ public class NodoCasting extends NodoAcceso{
     }
 
     @Override
-    public void generar_codigo() {
-        //Creo que debo cambiarle al CIR la VT por la VT del casting
+    public void generar_codigo() throws IOException {
+        //No debo hacer nada
     }
 
 }

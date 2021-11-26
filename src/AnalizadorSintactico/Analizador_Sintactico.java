@@ -935,8 +935,8 @@ public class Analizador_Sintactico {
         match("pr_return");
         NodoExpresion nodoExpresion = expresion_Vacio();
         if (nodoExpresion != null)
-            toReturn = new NodoReturn_Expresion(token_return,nodoExpresion,TS.getUnidadActual().get_tipo());
-        else toReturn = new NodoReturn(token_return,TS.getUnidadActual().get_tipo());
+            toReturn = new NodoReturn_Expresion(token_return,nodoExpresion, TS.getUnidadActual().get_bloque_actual());
+        else toReturn = new NodoReturn(token_return, TS.getUnidadActual().get_bloque_actual());
 
         return toReturn;
     }

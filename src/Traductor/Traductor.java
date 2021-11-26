@@ -21,13 +21,12 @@ public class Traductor {
     private Traductor() throws IOException {
         Index_etiquetas.getInstance();
         hubo_errores = false;
-        codigo_output = new File("codigo_output.txt");
+        codigo_output = new File("C:/Users/Lean/Desktop/CeIVM2021/codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);
         bw = new BufferedWriter(fw);
-        //modo_actual = ".DATA";
-        modo_actual = "";
-        //bw.write((char) 9);
-        //bw.write(".DATA");
+        modo_actual = ".CODE";
+        bw.write((char) 9);
+        bw.write(".CODE");
     }
 
     public static Traductor getInstance() throws IOException {
@@ -161,7 +160,6 @@ public class Traductor {
 
         //Asigno los primeros offset a los parametros de la unidad
         for(EntradaParametro ep : unidad.get_lista_argumentos()) {
-            //System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
             ep.set_offset(offset_base--);
         }
 
@@ -169,8 +167,22 @@ public class Traductor {
     }
 
     public void consolidar_offsets_constructores(EntradaClase clase){
-        for (EntradaConstructor ec : clase.get_lista_constructores())
+        for (EntradaConstructor ec : clase.get_lista_constructores()) {
             consolidar_offsets_varlocales_params(ec);
+        }
+
+        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
+        EntradaClase clase_hija;
+        LinkedList<EntradaClase> lista_descendientes_hijo = new LinkedList<EntradaClase>();
+        while(enum_clases.hasMoreElements()){
+            clase_hija = enum_clases.nextElement();
+            if(clase_hija.getClaseSuper().get_lexema().equals(clase.getNombre()))
+                lista_descendientes_hijo.add(clase_hija);
+        }
+
+        for (EntradaClase descendiente : lista_descendientes_hijo) {
+            consolidar_offsets_constructores(descendiente);
+        }
     }
 
     public void generar_clases_general() throws IOException, ExcepcionTipo, ExcepcionSemantica {
@@ -195,8 +207,8 @@ public class Traductor {
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
 
-        bw.newLine();
-        bw.write("VT_"+clase.getNombre()+": DW "+etiquetas_string);
+        gen_etiqueta("VT_"+clase.getNombre());
+        gen("DW "+etiquetas_string);
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
@@ -250,15 +262,6 @@ public class Traductor {
         }
     }
 
-    public void set_modo_heap() throws IOException {
-        if(!modo_actual.equals(".HEAP")){
-            bw.newLine();
-            bw.write((char) 9);
-            bw.write(".HEAP");
-            this.modo_actual = ".HEAP";
-        }
-    }
-
     public void gen(String instruccion) throws IOException {
         bw.newLine();
         bw.write((char) 9);
@@ -266,17 +269,8 @@ public class Traductor {
     }
 
     public void gen_comment_stack(String comment) throws IOException {
-        String modo_actual = this.modo_actual;
-        set_modo_stack();
-        bw.newLine();
         bw.write((char) 9);
         bw.write(";"+comment);
-
-        switch (modo_actual) {
-            case ".CODE" : {set_modo_code();break;}
-            case ".DATA" : {set_modo_data();break;}
-            case ".HEAP" : {set_modo_heap();break;}
-        }
     }
 
     public void gen_etiqueta(String etiqueta) throws IOException {
@@ -286,6 +280,11 @@ public class Traductor {
         bw.write("NOP");
     }
 
+    public void gen_basico(String text) throws IOException {
+        bw.newLine();
+        bw.write(text);
+    }
+
     public File finalizar_output() throws IOException {
         bw.close();
         return codigo_output;
@@ -293,14 +292,14 @@ public class Traductor {
 
     public void rutina_inicializacion() throws IOException {
         //this.set_modo_code();
-        this.set_modo_heap();
+        //this.set_modo_heap();
         //Inicializacion del heap
+        //No es necesario
         //gen("PUSH lheap");
-        gen("RET 0");
+        //gen("RET 0");
 
         this.set_modo_code();
         //Inicializacion resto
-        //gen("CALL");
         gen("PUSH lmain");
         gen("CALL");
         gen("HALT");

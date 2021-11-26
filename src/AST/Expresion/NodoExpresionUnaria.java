@@ -46,7 +46,7 @@ public class NodoExpresionUnaria extends NodoExpresion {
             case "!" : {
                 Traductor.getInstance().gen("NOT");break;}
             case "-" : {Traductor.getInstance().gen("NEG");break;}
-            //case "+" : Traductor.getInstance().gen("NOT");  //Hacerlo preguntar
+            case "+" : break;  //Nada
         }
     }
 
