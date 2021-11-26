@@ -4,9 +4,11 @@ public String texto;
 public int numero;
 //constructores
 A (int x, int y) {
-	//int f = met1(x,y);
-	//debugPrint(f);
+	printSln("HOLA");
 	met1(x,y);
+	int f = met2();
+	println();
+	debugPrint(f);
 }
 //metodos
 static void main() {
@@ -15,6 +17,7 @@ static void main() {
 dynamic void met1(int a, int b){
 	for(int i = 0; i < a ; i++){
 		debugPrint(b);
+		println();
 		for(int k = 0; k < a; k++) {
 			printBln(k<a);
 		}
@@ -23,7 +26,9 @@ dynamic void met1(int a, int b){
 	for(int j = 0; j<2; j++){}
 	//return 2;
 }
-dynamic void met2(int b) {
-	debugPrint(b);
+dynamic int met2() {
+	int u = 8;
+	met1(2,1);
+	return 2;
 }
 }

@@ -206,7 +206,7 @@ public class Traductor {
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
-        
+
         gen_etiqueta("VT_"+clase.getNombre());
         gen("DW "+etiquetas_string);
 
@@ -278,6 +278,11 @@ public class Traductor {
         bw.write(etiqueta+":");
         bw.write((char) 9);
         bw.write("NOP");
+    }
+
+    public void gen_basico(String text) throws IOException {
+        bw.newLine();
+        bw.write(text);
     }
 
     public File finalizar_output() throws IOException {

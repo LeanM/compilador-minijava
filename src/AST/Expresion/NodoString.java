@@ -26,8 +26,7 @@ public class NodoString extends NodoOperando_Literal {
     public void generar_codigo() throws IOException {
         Traductor.getInstance().set_modo_data();
         String nombre_etiqueta = token_expresion.get_lexema().replace("\"","");
-        Traductor.getInstance().gen_etiqueta("l_"+nombre_etiqueta);
-        Traductor.getInstance().gen("DW "+token_expresion.get_lexema()+",0");
+        Traductor.getInstance().gen_basico("l_"+nombre_etiqueta+": DW "+token_expresion.get_lexema()+",0");
         Traductor.getInstance().set_modo_code();
         Traductor.getInstance().gen("PUSH "+"l_"+nombre_etiqueta);
     }
