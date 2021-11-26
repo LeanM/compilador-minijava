@@ -56,14 +56,19 @@ public class NodoFor extends NodoSentencia {
         condicion.generar_codigo();
         //Si la condicion no se cumple salto afuera del bloque del for
         Traductor.getInstance().gen("BF "+etiqueta_nop);
-        asignacion.generar_codigo();
 
         //Le seteo el mismo nombre de metodo
         cuerpo_for.set_nombre_unidad_declarada(nombre_unidad_declarada);
         cuerpo_for.generar_codigo();
+
+        //Actualizo la variable de loop
+        asignacion.generar_codigo();
+
         //Vuelvo a loopear
         Traductor.getInstance().gen("JUMP "+etiqueta_loop);
         //Genero etiqueta de salida del loop
         Traductor.getInstance().gen_etiqueta(etiqueta_nop);
+
+
     }
 }
