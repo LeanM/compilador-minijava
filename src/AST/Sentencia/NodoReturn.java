@@ -35,11 +35,13 @@ public class NodoReturn extends NodoSentencia {
 
     @Override
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
-        //Nada? hacer el retorno de la llamada aca?
+        //Cant argumentos
         int n = nodo_bloque.get_unidad_bloque().get_lista_argumentos().size();
-        Traductor.getInstance().gen("STOREFP");
         //Aca debo hacer que todas las variables locales que se cargaron sean liberadas
         Traductor.getInstance().gen("FMEM "+nodo_bloque.get_cant_var_locales_cargadas_total());
+
+        //Actualizo el fp para que apunte al RA del llamador
+        Traductor.getInstance().gen("STOREFP");
 
         //Si es dinamico debo sumar 1 (como esta ahora)
         //Si es estatico es solo la cant de parametros

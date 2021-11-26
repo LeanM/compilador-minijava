@@ -48,11 +48,14 @@ public class NodoReturn_Expresion extends NodoReturn{
             offset = nodo_bloque.get_unidad_bloque().get_lista_argumentos().get(0).get_offset() + 1;
         }
 
+        //Hago STORE de la expresion del return
         Traductor.getInstance().gen("STORE " + offset);
-        Traductor.getInstance().gen("STOREFP");
 
         //Aca debo hacer que todas las variables locales que se cargaron sean liberadas
         Traductor.getInstance().gen("FMEM "+nodo_bloque.get_cant_var_locales_cargadas_total());
+
+        //Actualizo el fp para que apunte al RA del llamador
+        Traductor.getInstance().gen("STOREFP");
 
         //Si es dinamico debo sumar 1 (como esta ahora)
         //Si es estatico es solo la cant de parametros
