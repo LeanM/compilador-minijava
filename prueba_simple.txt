@@ -1,21 +1,29 @@
-class A{
+class A extends System{
 //atributos
 public String texto;
 public int numero;
 //constructores
 A (int x, int y) {
-	met1(1,2);
+	//int f = met1(x,y);
+	//debugPrint(f);
+	met1(x,y);
 }
 //metodos
 static void main() {
-	A clase_a = new A(5,0);
+	A a = new A(5,1);
 }
 dynamic void met1(int a, int b){
-	for(int i = 0; i < 5 ; i++){
-		a = 5 + i;
-		for(int k = 0; k < 1; k++) {}
+	for(int i = 0; i < a ; i++){
+		debugPrint(b);
+		for(int k = 0; k < a; k++) {
+			printBln(k<a);
+		}
 	}
 	
 	for(int j = 0; j<2; j++){}
+	//return 2;
+}
+dynamic void met2(int b) {
+	debugPrint(b);
 }
 }

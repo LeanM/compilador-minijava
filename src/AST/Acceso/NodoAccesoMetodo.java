@@ -6,6 +6,8 @@ import AnalizadorSemantico.*;
 import Traductor.Traductor;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.LinkedList;
 
 public class NodoAccesoMetodo extends NodoAccesoUnidad{
@@ -46,7 +48,66 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         //Generar codigo parametros
         if(unidad_conformada != null) {
-            if (!unidad_conformada.getNombre().equals("debugPrint")) {
+            if(Arrays.asList("debugPrint","read","printI","printB","printC","printS","println","printIln","printBln","printCln","printSln").contains(unidad_conformada.getNombre())) {
+                switch (unidad_conformada.getNombre()) {
+                    //Ejecuto el Iprint
+                    case "debugPrint" :
+                    case "printI" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("IPRINT");
+                        break;
+                    }
+                    case "printC" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("CPRINT");
+                        break;
+                    }
+                    case "printB" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("BPRINT");
+                    }
+                    case "printS" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("SPRINT");
+                        break;
+                    }
+                    case "read" : {
+                        Traductor.getInstance().gen("READ");
+                        break;
+                    }
+                    case "println" : {
+                        Traductor.getInstance().gen("PRNLN");
+                        break;
+                    }
+                    case "printBln" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("BPRINT");
+                        Traductor.getInstance().gen("PRNLN");
+                        break;
+                    }
+                    case "printIln" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("IPRINT");
+                        Traductor.getInstance().gen("PRNLN");
+                        break;
+                    }
+                    case "printCln" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("CPRINT");
+                        Traductor.getInstance().gen("PRNLN");
+                        break;
+                    }
+                    case "printSln" : {
+                        argumentos.get(0).generar_codigo();
+                        Traductor.getInstance().gen("SPRINT");
+                        Traductor.getInstance().gen("PRNLN");
+                        break;
+                    }
+
+                }
+
+            }
+            else {
                 LinkedList<EntradaParametro> argumentos_formales = unidad_conformada.get_lista_argumentos();
 
                 //Cargo el CIR de el RA actual, por que va a ser el mismo del nuevo RA para el metodo
@@ -88,11 +149,7 @@ public class NodoAccesoMetodo extends NodoAccesoUnidad{
                 Traductor.getInstance().gen("CALL");
             }
 
-            else {
-                //Ejecuto el Iprint
-                argumentos.get(0).generar_codigo();
-                Traductor.getInstance().gen("IPRINT");
-            }
+
         }
     }
 }

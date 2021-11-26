@@ -17,16 +17,16 @@ lmalloc:	NOP
 	STOREFP
 	RET 1
 	.DATA
-VT_A: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A
+VT_A: DW ldebugPrint_1_Object,lmain,lmet1_3_A
 	.CODE
-lmain_2_A:	NOP
+lmain:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	PUSH 1234
 	IPRINT
 	STOREFP
-	RET 1
+	RET 0
 lmet1_3_A:	NOP
 	LOADFP
 	LOADSP
@@ -35,30 +35,22 @@ lmet1_3_A:	NOP
 	PUSH 0
 	STORE -1
 for_loop_lmet1_3_A_0:	NOP
-	LOAD -1
 	PUSH 5
 	LT
 	BF for_nop_lmet1_3_A_0
-	LOAD -1
 	PUSH 1
 	ADD
-	STORE -1
 	RMEM 1
 	PUSH 5
-	LOAD -1
 	ADD
-	STORE 5
 	PUSH 0
 	STORE -2
 for_loop_lmet1_3_A_1:	NOP
-	LOAD -2
 	PUSH 1
 	LT
 	BF for_nop_lmet1_3_A_1
-	LOAD -2
 	PUSH 1
 	ADD
-	STORE -2
 	JUMP for_loop_lmet1_3_A_1
 for_nop_lmet1_3_A_1:	NOP
 	FMEM 1
@@ -67,14 +59,11 @@ for_nop_lmet1_3_A_0:	NOP
 	PUSH 0
 	STORE 0
 for_loop_lmet1_3_A_2:	NOP
-	LOAD 0
 	PUSH 2
 	LT
 	BF for_nop_lmet1_3_A_2
-	LOAD 0
 	PUSH 1
 	ADD
-	STORE 0
 	JUMP for_loop_lmet1_3_A_2
 for_nop_lmet1_3_A_2:	NOP
 	FMEM 2
@@ -166,78 +155,6 @@ lprintS_11_System:	NOP
 	STOREFP
 	RET 1
 lCtorSystem:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-	.DATA
-VT_C: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B,lmain,lmain2_7_C
-	.CODE
-lmain:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	PUSH 99	;o
-	PUSH lmain2_7_C
-	CALL
-	STOREFP
-	RET 0
-lmet1_5_B:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	PUSH 0
-	STORE 3
-	LOAD 3
-	PUSH 0
-	EQ
-	BF if_else_lmet1_5_B_0
-	PUSH 10
-	STORE 3
-	JUMP if_nop_lmet1_5_B_0
-if_else_lmet1_5_B_0:	NOP
-	RMEM 1
-	LOAD 3
-	PUSH 2
-	EQ
-	BF if_nop_lmet1_5_B_1
-	PUSH 1
-	STORE 3
-if_nop_lmet1_5_B_1:	NOP
-	PUSH 20
-	STORE 0
-	FMEM 1
-if_nop_lmet1_5_B_0:	NOP
-	PUSH 30
-	STORE 3
-	STOREFP
-	RET 1
-lmetODO_4_B:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-lmain2_7_C:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOAD 3
-	PUSH 1
-	ADD	;a
-	PUSH lmet1_5_B
-	CALL
-	STOREFP
-	RET 1
-lCtorC:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-	.DATA
-VT_B: DW ldebugPrint_1_Object,lmain_2_A,lmet1_3_A,lmetODO_4_B,lmet1_5_B
-	.CODE
-lCtorB:	NOP
 	LOADFP
 	LOADSP
 	STOREFP

@@ -21,7 +21,7 @@ public class Traductor {
     private Traductor() throws IOException {
         Index_etiquetas.getInstance();
         hubo_errores = false;
-        codigo_output = new File("codigo_output.txt");
+        codigo_output = new File("C:/Users/Lean/Desktop/CeIVM2021/codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);
         bw = new BufferedWriter(fw);
         modo_actual = ".CODE";
@@ -160,7 +160,6 @@ public class Traductor {
 
         //Asigno los primeros offset a los parametros de la unidad
         for(EntradaParametro ep : unidad.get_lista_argumentos()) {
-            //System.out.println("METODO : "+ unidad.getNombre() +" param : " + ep.getNombre() + " OFFSET : "+ offset_base);
             ep.set_offset(offset_base--);
         }
 
@@ -168,8 +167,22 @@ public class Traductor {
     }
 
     public void consolidar_offsets_constructores(EntradaClase clase){
-        for (EntradaConstructor ec : clase.get_lista_constructores())
+        for (EntradaConstructor ec : clase.get_lista_constructores()) {
             consolidar_offsets_varlocales_params(ec);
+        }
+
+        Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
+        EntradaClase clase_hija;
+        LinkedList<EntradaClase> lista_descendientes_hijo = new LinkedList<EntradaClase>();
+        while(enum_clases.hasMoreElements()){
+            clase_hija = enum_clases.nextElement();
+            if(clase_hija.getClaseSuper().get_lexema().equals(clase.getNombre()))
+                lista_descendientes_hijo.add(clase_hija);
+        }
+
+        for (EntradaClase descendiente : lista_descendientes_hijo) {
+            consolidar_offsets_constructores(descendiente);
+        }
     }
 
     public void generar_clases_general() throws IOException, ExcepcionTipo, ExcepcionSemantica {
@@ -193,9 +206,9 @@ public class Traductor {
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
-
-        bw.newLine();
-        bw.write("VT_"+clase.getNombre()+": DW "+etiquetas_string);
+        
+        gen_etiqueta("VT_"+clase.getNombre());
+        gen("DW "+etiquetas_string);
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos
