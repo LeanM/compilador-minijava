@@ -4,10 +4,9 @@ public String texto;
 public int numero;
 //constructores
 A (int x, int y) {
-	//printSln("HOLA");
-	//met1(x,y);
-	int f = met2();
-	//int f = 20;
+	printSln("HOLA");
+	println();
+	int f = met2(x,y);
 	println();
 	debugPrint(f);
 }
@@ -26,10 +25,8 @@ dynamic void met1(int a, int b){
 	
 	for(int j = 0; j<2; j++){}
 }
-dynamic int met2() {
-	int u = 15;
-	int f = 20;
-	int j = 30;
+dynamic int met2(int a, int b) {
+	met1(a,b);
 	return 2;
 }
 }
