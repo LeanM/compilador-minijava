@@ -27,7 +27,6 @@ public class NodoAccesoThis extends NodoPrimario_Concreto {
 
     @Override
     public void generar_codigo() throws IOException {
-        //Preguntar
         Traductor.getInstance().gen("LOAD 3");
     }
 }

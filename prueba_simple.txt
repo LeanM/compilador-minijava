@@ -21,9 +21,11 @@ static void main() {
 	//A b = null;
 	//met3('f');
 	//Prueba p = new Prueba(60);
+	A be = new B();
 	B b = new B();
-	b.metodoB();
+	((B) b.metodoB()).metodoB();
 	b = null;
+	A.metStatic(08);
 }
 
 dynamic void met1(int a, int b){
@@ -76,8 +78,10 @@ static void metStatic(int f) {
 
 class B extends A{
 	
-dynamic void metodoB() {
+dynamic A metodoB() {
+	String a = null;
 	debugPrint(20);
+	return new B();
 }
 
 

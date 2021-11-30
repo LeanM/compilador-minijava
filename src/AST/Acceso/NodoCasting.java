@@ -53,8 +53,9 @@ public class NodoCasting extends NodoAcceso{
     }
 
     @Override
-    public void generar_codigo() throws IOException {
-        //No debo hacer nada
+    public void generar_codigo() throws IOException, ExcepcionTipo, ExcepcionSemantica {
+        primario.generar_codigo();
+        //No debo hacer nada despues
     }
 
 }

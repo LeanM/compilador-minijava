@@ -34,7 +34,8 @@ public class ModuloPrincipal {
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
             TablaSimbolos.getInstance().chequeo_sentencias();
-            Traductor.getInstance().traducir();
+            if(!TablaSimbolos.getInstance().huboErrores())
+                Traductor.getInstance().traducir();
 
             mostrarClases(); //fines de prueba
             //mostrarAST();

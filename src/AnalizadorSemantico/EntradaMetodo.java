@@ -87,8 +87,17 @@ public class EntradaMetodo extends EntradaUnidad {
     public String get_etiqueta() {
         if(this.getNombre().equals("main") && get_lista_argumentos().isEmpty())
             return "lmain";
-        else
-            return "l"+this.getNombre()+"_"+offset+"_"+clase_base;
+        else {
+            if(this.es_estatico()) {
+                String toReturn = "l"+"_"+this.getNombre()+"_"+clase_base;
+                for(EntradaParametro ep : lista_argumentos){
+                    toReturn = toReturn + "_" + ep.get_tipo().getNombre();
+                }
+                return toReturn;
+            }
+            else
+                return "l" + this.getNombre() + "_" + offset + "_" + clase_base;
+        }
     }
 
     public boolean no_retorna() {
