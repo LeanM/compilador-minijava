@@ -5,7 +5,7 @@ import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
 import AnalizadorSemantico.Tipo;
 import AnalizadorSemantico.TipoPrimitivo;
-import Traductor.Traductor;
+import Traductor.*;
 
 import java.io.IOException;
 
@@ -25,9 +25,10 @@ public class NodoString extends NodoOperando_Literal {
 
     public void generar_codigo() throws IOException {
         Traductor.getInstance().set_modo_data();
-        String nombre_etiqueta = token_expresion.get_lexema().replace("\"","");
-        Traductor.getInstance().gen_basico("l_"+nombre_etiqueta+": DW "+token_expresion.get_lexema()+",0");
+        //String nombre_etiqueta = token_expresion.get_lexema().replace("\"","");
+        String nombre_etiqueta = Label_String_Generador.getInstance().get_label();
+        Traductor.getInstance().gen_basico(nombre_etiqueta+": DW "+token_expresion.get_lexema()+",0");
         Traductor.getInstance().set_modo_code();
-        Traductor.getInstance().gen("PUSH "+"l_"+nombre_etiqueta);
+        Traductor.getInstance().gen("PUSH "+nombre_etiqueta);
     }
 }

@@ -40,7 +40,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
         Tipo toReturn;
-        if(metodo_conformado != null)
+        if(metodo_conformado == null)
             throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+token_acceso.get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_encadenado_izq.getNombre()+" )");
         else
             toReturn = metodo_conformado.get_tipo();

@@ -562,13 +562,16 @@ public class Analizador_Sintactico {
     private NodoAcceso casting_ExpresionParentizada() throws ExcepcionSintactica {
         NodoAcceso toReturn;
         NodoPrimario_Component primario_encadenado;
+
         if (token_actual.get_id_token().equals("idClase")) {
+            //Casting
             Token clase = token_actual;
             match("idClase");
             match("parCierra");
             NodoPrimario_Component nodoPrimario = primario();
             primario_encadenado = encadenado(nodoPrimario);
-            toReturn = new NodoCasting(primario_encadenado,clase);
+            toReturn = new NodoCasting(primario_encadenado, clase);
+
         }
         else {
             NodoExpParentizada nodoExpParentizada = new NodoExpParentizada(expresion(),TS.getClaseActual().getNombre());

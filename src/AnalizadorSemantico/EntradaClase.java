@@ -149,9 +149,11 @@ public abstract class EntradaClase {
         while(enum_metodos.hasMoreElements()){
             lista_metodos = enum_metodos.nextElement();
             for(EntradaMetodo metodo : lista_metodos) {
-                tabla_orden_offset.put(metodo.get_offset(), metodo);
-                if(metodo.get_offset() > offset_max)
-                    offset_max = metodo.get_offset();
+                if(!metodo.es_estatico()) {
+                    tabla_orden_offset.put(metodo.get_offset(), metodo);
+                    if (metodo.get_offset() > offset_max)
+                        offset_max = metodo.get_offset();
+                }
             }
         }
         for(int i = 1; i <= offset_max; i++){
