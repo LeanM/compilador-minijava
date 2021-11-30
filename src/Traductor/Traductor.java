@@ -20,6 +20,7 @@ public class Traductor {
 
     private Traductor() throws IOException {
         Index_etiquetas.getInstance();
+        Label_String_Generador.getInstance();
         hubo_errores = false;
         codigo_output = new File("C:/Users/Lean/Desktop/CeIVM2021/codigo_output.txt");
         FileWriter fw = new FileWriter(codigo_output);
@@ -53,8 +54,6 @@ public class Traductor {
     public void consolidar_offsets_clases() {
         int next_offset = 1, next_offset_atr = 1;
         EntradaClase object = TablaSimbolos.getInstance().get_entrada_clase("Object");
-        //Pongo offset al metodo debugPrint de Object (el unico metodo de la clase)
-        object.get_tabla_metodos().get("debugPrint").getFirst().set_offset(next_offset++);
 
         Enumeration<EntradaClase> enum_clases = TablaSimbolos.getInstance().get_tabla_clases().elements();
         EntradaClase clase;
@@ -95,12 +94,15 @@ public class Traductor {
                     if(metodo_redefinido_heredado != null) {
                         metodo_hijo.set_offset(metodo_redefinido_heredado.get_offset());
                     }
-                    else
-                        metodo_hijo.set_offset(offset_base++);
+                    else {
+                        if (!metodo_hijo.es_estatico())
+                            metodo_hijo.set_offset(offset_base++);
+                    }
                 }
                 else {
                     //Si el padre no contiene un metodo con el mismo nombre
-                    metodo_hijo.set_offset(offset_base++);
+                    if(!metodo_hijo.es_estatico())
+                        metodo_hijo.set_offset(offset_base++);
                 }
                 consolidar_offsets_varlocales_params(metodo_hijo);
             }
@@ -206,9 +208,12 @@ public class Traductor {
         for (int i = 1; i < etiquetas_metodos.size(); i++) {
             etiquetas_string = etiquetas_string + "," + etiquetas_metodos.get(i).get_etiqueta();
         }
-
-        gen_etiqueta("VT_"+clase.getNombre());
-        gen("DW "+etiquetas_string);
+        if(etiquetas_metodos.isEmpty())
+            gen_etiqueta("VT_"+clase.getNombre());
+        else {
+            gen_etiqueta("VT_" + clase.getNombre());
+            gen("DW " + etiquetas_string);
+        }
 
         this.set_modo_code();
         //A partir de aca van los metodos y el codigo de los mismos

@@ -4,6 +4,7 @@ import AST.Acceso.NodoAcceso;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
+import Traductor.Traductor;
 
 import java.io.IOException;
 
@@ -41,5 +42,7 @@ public class NodoLlamada extends NodoSentencia{
     @Override
     public void generar_codigo() throws ExcepcionTipo, ExcepcionSemantica, IOException {
         nodo_acceso.generar_codigo();
+        if(!nodo_acceso.get_tipo_acceso().getNombre().equals("void"))
+            Traductor.getInstance().gen("POP");
     }
 }

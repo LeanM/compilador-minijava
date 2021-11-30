@@ -4,16 +4,28 @@ public String texto;
 public int numero;
 //constructores
 A (int x, int y) {
-	printSln("HOLA");
+	texto = "EAAA AA";
+	printSln("HOLA COMO VA");
 	println();
-	int f = met2(x,y);
+	//int f = met2(x,y);
+	met2(x,y);
 	println();
-	debugPrint(f);
+	//debugPrint(f);
 }
 //metodos
 static void main() {
-	A a = new A(5,1);
+	A a = new A(6,1);
+	//int f = a.met2(3,3);
+	//(a).met4(a).met1(5,1);
+	//a.met1(5,1);
+	//A b = null;
+	//met3('f');
+	//Prueba p = new Prueba(60);
+	B b = new B();
+	b.metodoB();
+	b = null;
 }
+
 dynamic void met1(int a, int b){
 	for(int i = 0; i < a ; i++){
 		debugPrint(b);
@@ -27,6 +39,55 @@ dynamic void met1(int a, int b){
 }
 dynamic int met2(int a, int b) {
 	met1(a,b);
-	return 2;
+	if(a == 5)
+		debugPrint(0);
+	else{
+		if(true){
+			debugPrint(1);	
+		}
+	}
+	b--;
+	b = b + (89/2);
+	a++;
+	this.met3('h');
+	return a;
 }
+
+dynamic void met3(char c) {
+	printCln(c);
+	c = 'a';
+	printCln(c);
+	boolean bool = 5 == 0;
+	if(bool || (5<6 && (false || (7 != 8))))
+		debugPrint(90);
+}
+
+dynamic A met4(A a) {
+
+	return a;
+}
+
+static void metStatic(int f) {
+	printSln("EN_METODO_ESTATICO");
+	println();
+}
+}
+//TERMINA CLASE A
+
+class B extends A{
+	
+dynamic void metodoB() {
+	debugPrint(20);
+}
+
+
+}
+
+
+class Prueba {
+
+Prueba (int p) {
+	A.metStatic(p);
+}
+
 }
