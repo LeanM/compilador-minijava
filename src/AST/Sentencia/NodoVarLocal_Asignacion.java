@@ -21,6 +21,10 @@ public class NodoVarLocal_Asignacion extends NodoVarLocal{
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         super.esta_bien_definido();
         expresion_de_asignacion.esta_bien_definido();
+
+        if(en_metodo_static)
+            expresion_de_asignacion.chequeo_acceso_estatico();
+
         if(!expresion_de_asignacion.get_tipo_expresion().es_de_tipo(tipo))
             throw new ExcepcionTipo(expresion_de_asignacion.getToken(),"El lado derecho de la asignacion no conforma al tipo del lado izquierdo");
 

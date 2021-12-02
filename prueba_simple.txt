@@ -20,12 +20,18 @@ static void main() {
 	//a.met1(5,1);
 	//A b = null;
 	//met3('f');
-	//Prueba p = new Prueba(60);
+	Prueba p = new Prueba(60);
 	A be = new B();
 	B b = new B();
 	((B) b.metodoB()).metodoB();
 	b = null;
 	A.metStatic(08);
+	C c = new C();
+	c.met2(5,5);
+}
+
+static int b(){
+    return 5;
 }
 
 dynamic void met1(int a, int b){
@@ -39,6 +45,11 @@ dynamic void met1(int a, int b){
 	
 	for(int j = 0; j<2; j++){}
 }
+
+static A c(){
+    return new A(1,1);
+}
+
 dynamic int met2(int a, int b) {
 	met1(a,b);
 	if(a == 5)
@@ -55,6 +66,7 @@ dynamic int met2(int a, int b) {
 	return a;
 }
 
+
 dynamic void met3(char c) {
 	printCln(c);
 	c = 'a';
@@ -62,6 +74,8 @@ dynamic void met3(char c) {
 	boolean bool = 5 == 0;
 	if(bool || (5<6 && (false || (7 != 8))))
 		debugPrint(90);
+	if(((5/5)+((5*8)))>40)
+	    debugPrint(95);
 }
 
 dynamic A met4(A a) {
@@ -79,7 +93,6 @@ static void metStatic(int f) {
 class B extends A{
 	
 dynamic A metodoB() {
-	String a = null;
 	debugPrint(20);
 	return new B();
 }
@@ -89,9 +102,21 @@ dynamic A metodoB() {
 
 
 class Prueba {
-
+public A a1;
+public B b1;
 Prueba (int p) {
 	A.metStatic(p);
+	this.m1();
 }
+
+dynamic void m1(){
+    a1 = (A) b1;
+    (A.c().texto) = "HOLA";
+
+}
+}
+
+
+class C extends B {
 
 }

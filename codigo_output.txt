@@ -18,9 +18,215 @@ lmalloc:	NOP
 	RET 1
 	.DATA
 VT_A:	NOP
-	DW lmet2_1_A,lmet1_2_A,lmet4_3_A,lmet3_4_A
+	DW lmet4_1_A,lmet3_2_A,lmet2_3_A,lmet1_4_A
 	.CODE
-lmet2_1_A:	NOP
+l_printCln_System_char:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_metStatic_A_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	.DATA
+lString_0: DW "EN_METODO_ESTATICO",0
+	.CODE
+	PUSH lString_0
+	SPRINT
+	PRNLN
+	PRNLN
+	STOREFP
+	RET 1
+l_printS_System_String:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+lmain:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 5
+	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_A
+	STOREREF 0
+	DUP
+	PUSH 6	;x
+	SWAP
+	PUSH 1	;y
+	SWAP
+	PUSH lCtorA_int_int
+	CALL
+	STORE -1
+	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_Prueba
+	STOREREF 0
+	DUP
+	PUSH 60	;p
+	SWAP
+	PUSH lCtorPrueba_int
+	CALL
+	STORE -3
+	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_B
+	STOREREF 0
+	DUP
+	PUSH lCtorB
+	CALL
+	STORE -2
+	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_B
+	STOREREF 0
+	DUP
+	PUSH lCtorB
+	CALL
+	STORE 0
+	LOAD 0
+	RMEM 1
+	SWAP
+	DUP
+	LOADREF 0
+	LOADREF 5
+	CALL
+	RMEM 1
+	SWAP
+	DUP
+	LOADREF 0
+	LOADREF 5
+	CALL
+	POP
+	PUSH 0
+	STORE 0
+	PUSH 08	;f
+	PUSH l_metStatic_A_int
+	CALL
+	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_C
+	STOREREF 0
+	DUP
+	PUSH lCtorC
+	CALL
+	STORE -4
+	LOAD -4
+	RMEM 1
+	SWAP
+	PUSH 5	;a
+	SWAP
+	PUSH 5	;b
+	SWAP
+	DUP
+	LOADREF 0
+	LOADREF 3
+	CALL
+	POP
+	FMEM 5
+	STOREFP
+	RET 0
+l_debugPrint_Object_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_printIln_System_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+lmet4_1_A:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	LOAD 4
+	STORE 5
+	FMEM 0
+	STOREFP
+	RET 2
+lmet3_2_A:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 1
+	LOAD 4
+	CPRINT
+	PRNLN
+	PUSH 'a'
+	STORE 4
+	LOAD 4
+	CPRINT
+	PRNLN
+	PUSH 5
+	PUSH 0
+	EQ
+	STORE 0
+	LOAD 0
+	PUSH 5
+	PUSH 6
+	LT
+	PUSH 0
+	PUSH 7
+	PUSH 8
+	NE
+	OR
+	AND
+	OR
+	BF if_nop_lmet3_2_A_0
+	PUSH 90
+	IPRINT
+if_nop_lmet3_2_A_0:	NOP
+	PUSH 5
+	PUSH 5
+	DIV
+	PUSH 5
+	PUSH 8
+	MUL
+	ADD
+	PUSH 40
+	GT
+	BF if_nop_lmet3_2_A_1
+	PUSH 95
+	IPRINT
+if_nop_lmet3_2_A_1:	NOP
+	FMEM 1
+	STOREFP
+	RET 2
+l_printI_System_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_printBln_System_boolean:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+lmet2_3_A:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -31,22 +237,22 @@ lmet2_1_A:	NOP
 	SWAP
 	DUP
 	LOADREF 0
-	LOADREF 2
+	LOADREF 4
 	CALL
 	LOAD 5
 	PUSH 5
 	EQ
-	BF if_else_lmet2_1_A_0
+	BF if_else_lmet2_3_A_0
 	PUSH 0
 	IPRINT
-	JUMP if_nop_lmet2_1_A_0
-if_else_lmet2_1_A_0:	NOP
+	JUMP if_nop_lmet2_3_A_0
+if_else_lmet2_3_A_0:	NOP
 	PUSH 1
-	BF if_nop_lmet2_1_A_1
+	BF if_nop_lmet2_3_A_1
 	PUSH 1
 	IPRINT
-if_nop_lmet2_1_A_1:	NOP
-if_nop_lmet2_1_A_0:	NOP
+if_nop_lmet2_3_A_1:	NOP
+if_nop_lmet2_3_A_0:	NOP
 	LOAD 4
 	PUSH 1
 	SUB
@@ -66,18 +272,222 @@ if_nop_lmet2_1_A_0:	NOP
 	SWAP
 	DUP
 	LOADREF 0
-	LOADREF 4
+	LOADREF 2
 	CALL
 	LOAD 5
 	STORE 6
 	FMEM 0
 	STOREFP
 	RET 3
-lmain:	NOP
+l_println_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 0
+lmet1_4_A:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	RMEM 2
+	PUSH 0
+	STORE -1
+for_loop_lmet1_4_A_0:	NOP
+	LOAD -1
+	LOAD 5
+	LT
+	BF for_nop_lmet1_4_A_0
+	RMEM 1
+	LOAD 4
+	IPRINT
+	PRNLN
+	PUSH 0
+	STORE -2
+for_loop_lmet1_4_A_1:	NOP
+	LOAD -2
+	LOAD 5
+	LT
+	BF for_nop_lmet1_4_A_1
+	LOAD -2
+	LOAD 5
+	LT
+	BPRINT
+	PRNLN
+	LOAD -2
+	PUSH 1
+	ADD
+	STORE -2
+	JUMP for_loop_lmet1_4_A_1
+for_nop_lmet1_4_A_1:	NOP
+	FMEM 1
+	LOAD -1
+	PUSH 1
+	ADD
+	STORE -1
+	JUMP for_loop_lmet1_4_A_0
+for_nop_lmet1_4_A_0:	NOP
+	PUSH 0
+	STORE 0
+for_loop_lmet1_4_A_2:	NOP
+	LOAD 0
+	PUSH 2
+	LT
+	BF for_nop_lmet1_4_A_2
+	LOAD 0
+	PUSH 1
+	ADD
+	STORE 0
+	JUMP for_loop_lmet1_4_A_2
+for_nop_lmet1_4_A_2:	NOP
+	FMEM 2
+	STOREFP
+	RET 3
+l_printC_System_char:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_printB_System_boolean:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_read_System:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+l_c_A:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
 	RMEM 1
+	PUSH 3
+	PUSH lmalloc
+	CALL
+	DUP
+	PUSH VT_A
+	STOREREF 0
+	DUP
+	PUSH 1	;x
+	SWAP
+	PUSH 1	;y
+	SWAP
+	PUSH lCtorA_int_int
+	CALL
+	STORE 3
+	FMEM 0
+	STOREFP
+	RET 0
+l_printSln_System_String:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+l_b_A:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	PUSH 5
+	STORE 3
+	FMEM 0
+	STOREFP
+	RET 0
+lCtorA_int_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	.DATA
+lString_1: DW "EAAA AA",0
+	.CODE
+	PUSH lString_1
+	LOAD 3
+	SWAP
+	STOREREF 1
+	.DATA
+lString_2: DW "HOLA COMO VA",0
+	.CODE
+	PUSH lString_2
+	SPRINT
+	PRNLN
+	PRNLN
+	LOAD 3
+	RMEM 1
+	SWAP
+	LOAD 5	;a
+	SWAP
+	LOAD 4	;b
+	SWAP
+	DUP
+	LOADREF 0
+	LOADREF 3
+	CALL
+	POP
+	PRNLN
+	STOREFP
+	RET 3
+	.DATA
+VT_Object:	NOP
+	.CODE
+	.DATA
+VT_Prueba:	NOP
+	DW lm1_1_Prueba
+	.CODE
+lm1_1_Prueba:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	LOAD 3
+	LOADREF 2
+	LOAD 3
+	SWAP
+	STOREREF 1
+	.DATA
+lString_3: DW "HOLA",0
+	.CODE
+	PUSH lString_3
+	RMEM 1
+	PUSH l_c_A
+	CALL
+	SWAP
+	STOREREF 1
+	STOREFP
+	RET 1
+lCtorPrueba_int:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	LOAD 4	;f
+	PUSH l_metStatic_A_int
+	CALL
+	LOAD 3
+	DUP
+	LOADREF 0
+	LOADREF 1
+	CALL
+	STOREFP
+	RET 2
+	.DATA
+VT_System:	NOP
+	.CODE
+lCtorSystem:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	STOREFP
+	RET 1
+	.DATA
+VT_C:	NOP
+	DW lmet4_1_A,lmet3_2_A,lmet2_3_A,lmet1_4_A,lmetodoB_5_B
+	.CODE
+lmetodoB_5_B:	NOP
+	LOADFP
+	LOADSP
+	STOREFP
+	PUSH 20
+	IPRINT
 	RMEM 1
 	PUSH 3
 	PUSH lmalloc
@@ -88,217 +498,11 @@ lmain:	NOP
 	DUP
 	PUSH lCtorB
 	CALL
-	STORE 0
-	LOAD 0
-	RMEM 1
-	SWAP
-	DUP
-	LOADREF 0
-	LOADREF 5
-	CALL
-	POP
-	FMEM 1
-	STOREFP
-	RET 0
-lmet1_2_A:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	RMEM 2
-	PUSH 0
-	STORE -1
-for_loop_lmet1_2_A_0:	NOP
-	LOAD -1
-	LOAD 5
-	LT
-	BF for_nop_lmet1_2_A_0
-	RMEM 1
-	LOAD 4
-	IPRINT
-	PUSH 0
-	STORE -2
-for_loop_lmet1_2_A_1:	NOP
-	LOAD -2
-	LOAD 5
-	LT
-	BF for_nop_lmet1_2_A_1
-	LOAD -2
-	PUSH 1
-	ADD
-	STORE -2
-	JUMP for_loop_lmet1_2_A_1
-for_nop_lmet1_2_A_1:	NOP
-	FMEM 1
-	LOAD -1
-	PUSH 1
-	ADD
-	STORE -1
-	JUMP for_loop_lmet1_2_A_0
-for_nop_lmet1_2_A_0:	NOP
-	PUSH 0
-	STORE 0
-for_loop_lmet1_2_A_2:	NOP
-	LOAD 0
-	PUSH 2
-	LT
-	BF for_nop_lmet1_2_A_2
-	LOAD 0
-	PUSH 1
-	ADD
-	STORE 0
-	JUMP for_loop_lmet1_2_A_2
-for_nop_lmet1_2_A_2:	NOP
-	FMEM 2
-	STOREFP
-	RET 3
-ldebugPrint_0_Object:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lmetStatic_0_A:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lmet4_3_A:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOAD 4
-	STORE 5
+	STORE 4
 	FMEM 0
 	STOREFP
-	RET 2
-lmet3_4_A:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	RMEM 1
-	PUSH 'a'
-	STORE 4
-	PUSH 5
-	PUSH 0
-	EQ
-	STORE 0
-	LOAD 0
-	PUSH 5
-	PUSH 6
-	LT
-	PUSH 0
-	PUSH 7
-	PUSH 8
-	NE
-	OR
-	AND
-	OR
-	BF if_nop_lmet3_4_A_0
-	PUSH 90
-	IPRINT
-if_nop_lmet3_4_A_0:	NOP
-	FMEM 1
-	STOREFP
-	RET 2
-lCtorA_int_int:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOAD 3
-	RMEM 1
-	SWAP
-	LOAD 5	;a
-	SWAP
-	LOAD 4	;b
-	SWAP
-	DUP
-	LOADREF 0
-	LOADREF 1
-	CALL
-	POP
-	STOREFP
-	RET 3
-	.DATA
-VT_Object:	NOP
-	DW 
-	.CODE
-	.DATA
-VT_Prueba:	NOP
-	DW 
-	.CODE
-lCtorPrueba_int:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	LOAD 4	;f
-	PUSH lmetStatic_0_A
-	CALL
-	STOREFP
-	RET 2
-	.DATA
-VT_System:	NOP
-	DW 
-	.CODE
-lread_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-lprintBln_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
 	RET 1
-lprintCln_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintI_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintIln_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintC_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintln_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 0
-lprintB_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintSln_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lprintS_0_System:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	STOREFP
-	RET 1
-lCtorSystem:	NOP
+lCtorC:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
@@ -306,24 +510,11 @@ lCtorSystem:	NOP
 	RET 1
 	.DATA
 VT_B:	NOP
-	DW lmet2_1_A,lmet1_2_A,lmet4_3_A,lmet3_4_A,lmetodoB_5_B
+	DW lmet4_1_A,lmet3_2_A,lmet2_3_A,lmet1_4_A,lmetodoB_5_B
 	.CODE
-lmetodoB_5_B:	NOP
-	LOADFP
-	LOADSP
-	STOREFP
-	PUSH 20
-	IPRINT
-	PUSH 50
-	STORE 4
-	FMEM 0
-	STOREFP
-	RET 1
 lCtorB:	NOP
 	LOADFP
 	LOADSP
 	STOREFP
-	PUSH 10
-	IPRINT
 	STOREFP
 	RET 1

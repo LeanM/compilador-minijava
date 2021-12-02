@@ -3,13 +3,17 @@ class A {
 private int g;
 
 dynamic int m1(){
-    int a = met();
-    met1();
+    int a;
+    //met1();
     a = met2();
     a++;
     a--;
     ;
-    return "hola";
+    return a;
 }
 static void main(){}
+
+dynamic int met2() {
+    return 5;
+}
 }

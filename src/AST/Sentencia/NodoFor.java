@@ -27,6 +27,9 @@ public class NodoFor extends NodoSentencia {
         varLocal.esta_bien_definido();
         condicion.esta_bien_definido();
 
+        if(en_metodo_static)
+            condicion.chequeo_acceso_estatico();
+
         if(!condicion.get_tipo_expresion().getNombre().equals("boolean"))
             throw new ExcepcionTipo(condicion.getToken(),"Error de tipo : La expresion condicion en un for debe ser de tipo boolean");
 

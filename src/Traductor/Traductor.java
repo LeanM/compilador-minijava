@@ -14,20 +14,19 @@ public class Traductor {
     private boolean hubo_errores;
     private File codigo_output;
     private BufferedWriter bw;
-    private String modo_actual;
+    private String modo_actual, nombre_salida;
 
     private static Traductor instance = null;
 
-    private Traductor() throws IOException {
+    private Traductor() {
+        nombre_salida = "codigo_output.txt";
         Index_etiquetas.getInstance();
         Label_String_Generador.getInstance();
         hubo_errores = false;
-        codigo_output = new File("C:/Users/Lean/Desktop/CeIVM2021/codigo_output.txt");
-        FileWriter fw = new FileWriter(codigo_output);
-        bw = new BufferedWriter(fw);
-        modo_actual = ".CODE";
-        bw.write((char) 9);
-        bw.write(".CODE");
+    }
+
+    public void set_nombre_salida(String nombre) {
+        this.nombre_salida = nombre;
     }
 
     public static Traductor getInstance() throws IOException {
@@ -37,10 +36,15 @@ public class Traductor {
         return  instance;
     }
 
-    public static void asd() {}
 
     public void traducir() throws IOException {
         try {
+            codigo_output = new File(nombre_salida);
+            FileWriter fw = new FileWriter(codigo_output);
+            bw = new BufferedWriter(fw);
+            modo_actual = ".CODE";
+            bw.write((char) 9);
+            bw.write(".CODE");
             rutina_inicializacion();
             consolidar_offsets_clases();
             generar_clases_general();

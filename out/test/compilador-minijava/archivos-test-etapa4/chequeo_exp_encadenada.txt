@@ -14,14 +14,15 @@ class A {
         f--;
         //c--;
         b = null;
-        //this.m2().b = null;
+        this.m2().b = null;
         //this.m2().a = 0;
         //this.m2().a = null;
         //this.main() = null;
         //main() = null;
         //this.main().f() = 0;
         String a = "asd";
-
+        (C.mc().mc2().m2().c) = null;
+        debugPrint(555);
     }
 
     dynamic A m2(){

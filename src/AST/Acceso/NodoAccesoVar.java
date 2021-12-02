@@ -27,8 +27,11 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
             if (!TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().containsKey(token_acceso.get_lexema()))
                 //No esta en los atributos
                 throw new ExcepcionTipo(token_acceso, "La variable a la que se quiere acceder no esta declarada como variable local en el alcance, ni es argumento de la unidad, ni atributo visible de la clase.");
-            else
-                acceso_tipo_variable = new Var_Instancia(TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().get(token_acceso.get_lexema()),this);
+            else {
+                if(metodo_origen.es_estatico() && !TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().get(token_acceso.get_lexema()).es_estatico())
+                    throw new ExcepcionTipo(token_acceso,"No se puede acceder a un atributo dinamico desde un contexto estatico");
+                acceso_tipo_variable = new Var_Instancia(TablaSimbolos.getInstance().get_tabla_clases().get(key_clase).get_tabla_atributos().get(token_acceso.get_lexema()), this);
+            }
         }
     }
 
@@ -106,7 +109,7 @@ public class NodoAccesoVar extends NodoPrimario_Concreto{
     public void chequeo_acceso_estatico() throws ExcepcionSemantica {
         EntradaAtributo entradaAtributo = TablaSimbolos.getInstance().conforma_atributo(token_acceso,key_clase);
         if(entradaAtributo != null)
-            if(!entradaAtributo.es_estatico()){
+            if(!entradaAtributo.es_estatico() && metodo_origen.es_estatico()){
                 if(!metodo_origen.get_tabla_argumentos().containsKey(token_acceso.get_lexema()) && !metodo_origen.get_tabla_var_locales().containsKey(token_acceso.get_lexema()))
                     throw new ExcepcionSemantica(token_acceso,"No se puede acceder al atributo dinamico "+entradaAtributo.getNombre()+" desde un contexto estatico");
             }

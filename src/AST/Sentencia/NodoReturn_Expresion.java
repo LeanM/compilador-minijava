@@ -22,6 +22,10 @@ public class NodoReturn_Expresion extends NodoReturn{
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         expresion.esta_bien_definido();
+
+        if(en_metodo_static)
+            expresion.chequeo_acceso_estatico();
+
         if(nodo_bloque.get_unidad_bloque().get_tipo().getNombre().equals("void") || !expresion.get_tipo_expresion().es_de_tipo(nodo_bloque.get_unidad_bloque().get_tipo()))
             throw new ExcepcionTipo(token_return,"El tipo de la expresion de retorno no conforma el tipo que retorna el metodo, o el metodo es de tipo void");
     }

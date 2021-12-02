@@ -7,8 +7,9 @@ class A {
     public A a;
 
     dynamic void m1(int f){
-        (B) c = null;
-        //(C) b = null;
+        b = new B();
+        c = (C) b;
+        (C) b = null;
         //a = (A) b;
     }
 

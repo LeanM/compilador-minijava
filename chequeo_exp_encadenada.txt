@@ -3,12 +3,10 @@ class A {
     public B b;
     public C c;
     public int a;
+    public static int a1;
     public boolean var_bool;
 
     dynamic void m1(int f){
-        //(this.m2()).main();
-        //b.metB().a;
-        //(5+(10/2)).a;
         f++;
         //b++;
         f--;
@@ -21,14 +19,25 @@ class A {
         //main() = null;
         //this.main().f() = 0;
         String a = "asd";
-        (C.mc().mc2().m2().c) = null;
+        (C.mc().mc2().m2());
         debugPrint(555);
     }
 
     dynamic A m2(){
+
         return this;
     }
 
+    static A m5() {
+        return new A();
+    }
+
+    static void metet(int p1){
+        //if(m5().c == null);
+        //C f = this.c;
+
+
+    }
 
 
 }
@@ -45,14 +54,14 @@ class C extends B {
     public static C c;
 
 static C mc() {
-    return this;
+    return new C();
 }
 static A mc2() {
     return new A();
 }
 
 static void main() {
-    //C.mc3();
+    C asd = new C();
     C.c = null;
     mc2().m1(1);
 }

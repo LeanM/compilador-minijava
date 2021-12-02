@@ -112,6 +112,10 @@ public abstract class EntradaUnidad {
         return token_unidad.get_lexema();
     }
 
+        public boolean es_estatico() {
+            return false;
+        }
+
         public abstract void esta_bien_declarado() throws ExcepcionSemantica;
         public abstract boolean no_retorna();
         public abstract int get_offset();
