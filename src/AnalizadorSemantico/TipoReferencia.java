@@ -20,7 +20,7 @@ public class TipoReferencia extends Tipo{
     public boolean es_de_tipo(Tipo tipo) throws ExcepcionSemantica {
         boolean toReturn = false;
 
-        if(tipo.esPrimitivo() && !tipo.getNombre().equals("String"))
+        if(tipo.esPrimitivo())
             toReturn = false;
         else {
             if (this.getNombre().equals("null") || tipo.getNombre().equals("null"))

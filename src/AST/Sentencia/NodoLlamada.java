@@ -1,6 +1,7 @@
 package AST.Sentencia;
 
 import AST.Acceso.NodoAcceso;
+import AST.Acceso.NodoAccesoThis;
 import AnalizadorLexico.Token;
 import AnalizadorSemantico.ExcepcionSemantica;
 import AnalizadorSemantico.ExcepcionTipo;
@@ -24,6 +25,11 @@ public class NodoLlamada extends NodoSentencia{
     @Override
     public void esta_bien_definido() throws ExcepcionTipo, ExcepcionSemantica {
         nodo_acceso.esta_bien_definido();
+        if(nodo_acceso instanceof NodoAccesoThis){
+            if (((NodoAccesoThis) nodo_acceso).es_ultimo_encadenado())
+                throw new ExcepcionSemantica(nodo_acceso.getToken(),"No es valido llamar al this sin concatenar un metodo o un atributo");
+        }
+
         if(nodo_acceso.puede_ser_asignado())
             throw new ExcepcionTipo(nodo_acceso.getToken(),"No es una sentencia correcta, un acceso sin asignacion no puede ser una variable.");
 

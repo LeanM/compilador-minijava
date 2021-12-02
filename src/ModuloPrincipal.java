@@ -18,10 +18,12 @@ public class ModuloPrincipal {
 
     public static void main (String [] args){
         TablaSimbolos.getInstance().inicializar_tabla_simbolos();
-        //String programa = "pruebaTRADUCTOR_vars_locales.txt";
-        String programa = "prueba_simple.txt";
+
+        String programa = "";
+        String nombre_salida = "codigo_output.txt";
         try {
-            //programa = args[0];
+            programa = args[0];
+            nombre_salida = args[1];
         }
         catch (ArrayIndexOutOfBoundsException e){ e.printStackTrace();}
 
@@ -34,10 +36,11 @@ public class ModuloPrincipal {
             analizador_sintactico.inicial();
             TablaSimbolos.getInstance().chequeo_semantico();
             TablaSimbolos.getInstance().chequeo_sentencias();
-            if(!TablaSimbolos.getInstance().huboErrores())
+            if(!TablaSimbolos.getInstance().huboErrores()) {
+                Traductor.getInstance().set_nombre_salida(nombre_salida);
                 Traductor.getInstance().traducir();
-
-            mostrarClases(); //fines de prueba
+            }
+            //mostrarClases(); //fines de prueba
             //mostrarAST();
             if (!analizador_lexico.hubo_errores() && !analizador_sintactico.hubo_errores() && !TablaSimbolos.getInstance().huboErrores() && !Traductor.getInstance().hubo_errores()) {
                 System.out.println("Compilacion Exitosa");

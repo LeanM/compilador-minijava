@@ -464,9 +464,7 @@ public class Analizador_Sintactico {
             Token idMetVar = token_actual;
             match("idMetVar");
             primario_encadenado = metodo_var(idMetVar,nodo_acceso_estatico);
-            //nodo_acceso_estatico.setEncadenado(encadenado);
             toReturn = accesoEstatico_Continuacion(primario_encadenado);
-            //estatico_encadenado_asignacion(nodo_acceso_estatico);
         }
         else {
             //nada
@@ -474,23 +472,6 @@ public class Analizador_Sintactico {
 
         return toReturn;
     }
-    /*
-    private void estatico_encadenado_asignacion(NodoAccesoEstatico nodoAccesoEstatico) throws ExcepcionSintactica {
-
-        if(token_actual.get_id_token().equals("asig=")){
-            match("asig=");
-            expresion();
-        }
-        else
-            //Primeros <accesoEstatico_continuacion>
-            if(token_actual.get_id_token().equals("pun."))
-                accesoEstatico_Continuacion();
-            else {
-                //nada por que -> e
-            }
-    }
-    */
-
 
     private NodoVarLocal varLocal_Continuacion(Tipo tipo) throws ExcepcionSintactica, ExcepcionSemantica {
         NodoVarLocal toReturn;
@@ -564,6 +545,8 @@ public class Analizador_Sintactico {
         NodoPrimario_Component primario_encadenado;
 
         if (token_actual.get_id_token().equals("idClase")) {
+            toReturn = casting_estatico();
+            /*
             //Casting
             Token clase = token_actual;
             match("idClase");
@@ -572,12 +555,39 @@ public class Analizador_Sintactico {
             primario_encadenado = encadenado(nodoPrimario);
             toReturn = new NodoCasting(primario_encadenado, clase);
 
+             */
+
         }
         else {
             NodoExpParentizada nodoExpParentizada = new NodoExpParentizada(expresion(),TS.getClaseActual().getNombre());
             match("parCierra");
             toReturn = encadenado(nodoExpParentizada);
         }
+        return toReturn;
+    }
+
+    private NodoAcceso casting_estatico() throws ExcepcionSintactica {
+        NodoAcceso toReturn;
+        NodoPrimario_Component primario_encadenado;
+        Token clase = token_actual;
+        match("idClase");
+        if(token_actual.get_id_token().equals("pun.")) {
+            NodoAccesoEstatico nodoAccesoEstatico = new NodoAccesoEstatico(new TipoReferencia(clase),TS.getClaseActual().getNombre());
+            match("pun.");
+            Token idMetVar = token_actual;
+            match("idMetVar");
+            primario_encadenado = metodo_var(idMetVar,nodoAccesoEstatico);
+            nodoAccesoEstatico.set_encadenado_estatico(primario_encadenado);
+            toReturn = accesoEstatico_Continuacion(primario_encadenado);
+            match("parCierra");
+        }
+        else {
+            match("parCierra");
+            NodoPrimario_Component nodoPrimario = primario();
+            primario_encadenado = encadenado(nodoPrimario);
+            toReturn = new NodoCasting(primario_encadenado, clase);
+        }
+
         return toReturn;
     }
 

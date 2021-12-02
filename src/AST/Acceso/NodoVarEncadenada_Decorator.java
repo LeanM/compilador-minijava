@@ -54,4 +54,12 @@ public class NodoVarEncadenada_Decorator extends NodoEncadenado_Decorator{
             Traductor.getInstance().gen("SWAP");Traductor.getInstance().gen("STOREREF "+atributo_conformado.get_offset());
         }
     }
+
+    public void chequeo_acceso_estatico() throws ExcepcionTipo, ExcepcionSemantica {
+        if(atributo_conformado!=null) {
+            if (!atributo_conformado.es_estatico())
+                throw new ExcepcionSemantica(token_acceso, "No se puede acceder a un atributo dinamico en un contexto estatico");
+        }
+        primario_decorator.chequeo_acceso_estatico();
+    }
 }

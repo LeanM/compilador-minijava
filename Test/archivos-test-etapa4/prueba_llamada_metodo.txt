@@ -16,12 +16,12 @@ class A {
 
 }
 
-class B {
+class B extends A{
     public int entero;
 
     dynamic void metodo(){
-        //m2();
-        //m2().b.entero = 0;
+        m2();
+        m2().b.entero = 0;
     }
 
 }

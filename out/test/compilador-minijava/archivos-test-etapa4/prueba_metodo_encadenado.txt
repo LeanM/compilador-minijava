@@ -7,7 +7,7 @@ class A {
         main();
         b.metodo();
         m2().main();
-        //b.m1().metodo();
+        this.m2().b.metodo();
     }
 
     dynamic A m2(){

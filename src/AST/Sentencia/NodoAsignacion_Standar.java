@@ -22,6 +22,9 @@ public class NodoAsignacion_Standar extends NodoAsignacion{
         super.esta_bien_definido();
         lado_der.esta_bien_definido();
 
+        if(en_metodo_static)
+            lado_der.chequeo_acceso_estatico();
+
         if(!lado_izq.puede_ser_asignado())
             throw new ExcepcionTipo(tipo_asignacion,"El lado izquierdo de la asignacion debe ser una variable local, un parametro del metodo o un atributo visible de la clase.");
 

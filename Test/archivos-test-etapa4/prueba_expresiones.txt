@@ -12,7 +12,6 @@ dynamic void m1(){
     b = C.a;
     ch = 'c';
     texto = "hola";
-    texto = null;
 }
 static void main(){}
 }
