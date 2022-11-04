@@ -40,6 +40,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
     @Override
     public Tipo get_tipo_acceso() throws ExcepcionTipo, ExcepcionSemantica {
         Tipo toReturn;
+        esta_bien_definido();
         if(metodo_conformado == null)
             throw new ExcepcionTipo(token_acceso,"La llamada a metodo "+token_acceso.get_lexema()+" no conforma con ningun metodos de la clase del encadenado de la izquierda ( "+tipo_encadenado_izq.getNombre()+" )");
         else
@@ -58,6 +59,7 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
         if(metodo_conformado != null) {
 
             if (Arrays.asList("debugPrint", "read", "printI", "printB", "printC", "printS", "println", "printIln", "printBln", "printCln", "printSln").contains(metodo_conformado.getNombre())) {
+                Traductor.getInstance().gen("POP");
                 switch (metodo_conformado.getNombre()) {
                     //Ejecuto el Iprint
                     case "debugPrint" :
@@ -128,6 +130,18 @@ public class NodoMetodoEncadenado_Decorator extends NodoEncadenado_Decorator{
                     if (!metodo_conformado.es_estatico())
                         //Hago un swap para ir bajando el this si es dinamico
                         Traductor.getInstance().gen("SWAP");
+                    else {
+                        //Si es estatico
+                        //Swapeo para tener la referencia del encadenado
+                        Traductor.getInstance().gen("SWAP");
+                        Traductor.getInstance().gen("POP");
+                    }
+                }
+                else {
+                    if (metodo_conformado.es_estatico()) {
+                        //Si es estatico
+                        Traductor.getInstance().gen("POP");
+                    }
                 }
 
                 for (int i = 0; i < argumentos_formales.size(); i++) {

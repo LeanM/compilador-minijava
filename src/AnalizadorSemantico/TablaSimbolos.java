@@ -119,7 +119,7 @@ public class TablaSimbolos {
         while (enum_metodos.hasMoreElements()) {
             lista_metodos_actuales = enum_metodos.nextElement();
             for(EntradaMetodo em : lista_metodos_actuales)
-                if(!(em.getNombre().equals("main") && em.es_estatico() && em.get_lista_argumentos().isEmpty()))
+                if(!(em.getNombre().equals("main")  && em.es_estatico() && em.get_lista_argumentos().isEmpty()))
                     consolidarMetodo_a_clase(em,clase);
         }
         clase.metodos_consolidados();

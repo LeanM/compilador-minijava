@@ -19,11 +19,11 @@ public class ModuloPrincipal {
     public static void main (String [] args){
         TablaSimbolos.getInstance().inicializar_tabla_simbolos();
 
-        String programa = "";
+        String programa = "pruebaTRADUCTOR.txt";
         String nombre_salida = "codigo_output.txt";
         try {
-            programa = args[0];
-            nombre_salida = args[1];
+            //programa = args[0];
+            //nombre_salida = args[1];
         }
         catch (ArrayIndexOutOfBoundsException e){ e.printStackTrace();}
 
